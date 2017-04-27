@@ -47,6 +47,12 @@ public class ADD2 extends HttpServlet {
 <<<<<<< .mine
         
         System.out.println("prueba tortoise hecha por yeison");
+
+
+        System.out.println("prueba tortoise hecha por Os");
+        System.out.println("prueba tortoise hecha por car");
+        System.out.println("prueba tortoise hecha por Gomez");
+
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();
