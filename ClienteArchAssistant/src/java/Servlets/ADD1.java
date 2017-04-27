@@ -36,7 +36,7 @@ import servicios.Rationaleadd;
 
 /**
  *
- * @author Prometheus
+ * @author Oscar Dario Gomez Burbano :D :D :D
  */
 @WebServlet(name = "ADD1", urlPatterns = {"/ADD1"})
 @MultipartConfig
