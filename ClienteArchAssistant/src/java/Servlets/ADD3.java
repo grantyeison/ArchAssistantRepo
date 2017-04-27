@@ -8,6 +8,7 @@ package Servlets;
 import Beans.ArchAssistantBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
+import servicios.Atributocalidad;
+import servicios.Escenario;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 
@@ -45,9 +48,28 @@ public class ADD3 extends HttpServlet {
         String regresar = request.getParameter("btnAdd3anterior");
         
         if (guardar != null)
-        {
+        {            
             ArchAssistantBean archB = new ArchAssistantBean();
+            
             Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+            for(Escenario es: archB.ListEscenarios(proy)){
+                String impactoOpc = (String)request.getParameter("impacto_"+es.getEscID());
+                if(impactoOpc!=null){
+                    String estado = (String)es.getEscEstado();
+                    if(estado!=null){
+                        String[] aux = estado.split(";");
+                        if (aux.length > 1) {
+                            aux[1] = impactoOpc;
+                            es.setEscEstado(aux[0]+";"+aux[1]);
+                        }
+                        es.setEscEstado(aux[0]+";"+impactoOpc);
+                    }else{
+                        es.setEscEstado(";"+impactoOpc);
+                    }
+                    modificarEscenario(es);  
+                    archB.crear
+                }
+            }
             Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add3");
             if (rata == null)
             {
@@ -133,6 +155,13 @@ public class ADD3 extends HttpServlet {
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         port.modificarProyecto(parameter);
+    }
+
+    private void modificarEscenario(servicios.Escenario parameter) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.modificarEscenario(parameter);
     }
 
 }
