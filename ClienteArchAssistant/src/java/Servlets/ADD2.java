@@ -44,6 +44,20 @@ public class ADD2 extends HttpServlet {
         String guardar = request.getParameter("btnAdd2Guardar");
         String continuar = request.getParameter("btnAdd2Continuar");
         String regresar = request.getParameter("btnAdd2anterior");
+<<<<<<< .mine
+        
+        System.out.println("prueba tortoise hecha por yeison");
+        if (guardar != null)
+        {
+            ArchAssistantBean archB = new ArchAssistantBean();
+            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+||||||| .r2
+        
+        if (guardar != null)
+        {
+            ArchAssistantBean archB = new ArchAssistantBean();
+            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+=======
         ArchAssistantBean archB = new ArchAssistantBean();
         if (request.getParameter("selPadre") != null) {
             String modPadre = request.getParameter("selPadre");        
@@ -68,6 +82,7 @@ public class ADD2 extends HttpServlet {
         if (guardar != null) {
            
             Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+>>>>>>> .r3
             Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add2");
             if (rata == null) {
                 rata = new Rationaleadd();
