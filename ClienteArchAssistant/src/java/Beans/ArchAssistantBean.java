@@ -10,9 +10,12 @@ import java.util.List;
 import servicios.Atributocalidad;
 import servicios.Escenario;
 import servicios.Modulo;
+import servicios.Patron;
+import servicios.Preocupacion;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 import servicios.Rationaleqaw;
+import servicios.Tactica;
 
 /**
  *
@@ -105,8 +108,8 @@ public class ArchAssistantBean {
         if (ratq4 != null)
         {
             ratio = ratq4.getRatQawDescripcion();
-            indiceAtribs = ratio.indexOf("~|~|");
-            if (indiceAtribs > 0)
+            indiceAtribs = ratio.indexOf(",~|~|");
+            if (indiceAtribs != 0)
             {
                 String ac = ratio.substring(0, indiceAtribs);
                 listAc = ac.split(",");
@@ -117,9 +120,11 @@ public class ArchAssistantBean {
             if (listAc != null)
             {
                 for (String id : listAc)
-                {
+                {   
+                    //AtributosEscogidos.add(atr);
                     if (Integer.parseInt(id) == atr.getAcID())
                     {
+                        
                         AtributosEscogidos.add(atr);
                     }/**/
                 }
@@ -127,6 +132,47 @@ public class ArchAssistantBean {
         }
         return AtributosEscogidos;
     }
+    
+    public Modulo buscarMod(int id)
+    {
+        return buscarModulo(id);
+    }
+    
+    public Modulo buscarModDescomposicion(Proyecto id)
+    {
+        return buscarModuloDescomposicion(id);
+    }
+    
+    public void crearMod(Modulo nMod)
+    {
+        crearModulo(nMod);
+    }
+    
+     public void modificarMod(Modulo Mod)
+    {
+        modificarModulo(Mod);
+    }
+     
+    public List<Tactica> ListarTacticas(){
+        return listarTactica();
+    }
+    
+    public List<Patron> ListarPatronesT(){
+        return listarPatrones();
+    }
+    
+    public List<Escenario> ListarCandidatosDriver(Proyecto py){
+        return obtenerDriverArquitectonicos(py);
+    }
+    
+    public List<Preocupacion> ListarPreocupacionPorAtri(Atributocalidad atr){
+        return listarPreocupacionPorAtributo(atr);
+    }
+    
+    public List<Tactica> ListarTacticaPorPreo(Preocupacion pre){
+        return listarTacticaPorPreocupacion(pre);
+    }
+            
     private static java.util.List<servicios.Proyecto> listarProyectos(java.lang.String parameter) {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
@@ -186,7 +232,48 @@ public class ArchAssistantBean {
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         port.crearModulo(parameter);
     }
+    
+    private static void modificarModulo(servicios.Modulo parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.modificarModulo(parameter);
+    }
 
-  
+    private static Modulo buscarModuloDescomposicion(servicios.Proyecto idProy) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.buscarModuloDescomposicion(idProy);
+    }
+
+    private static java.util.List<servicios.Tactica> listarTactica() {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarTactica();
+    }
+
+    private static java.util.List<servicios.Patron> listarPatrones() {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarPatrones();
+    }
+
+    private static java.util.List<servicios.Escenario> obtenerDriverArquitectonicos(servicios.Proyecto parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.obtenerDriverArquitectonicos(parameter);
+    }
+
+    private static java.util.List<servicios.Preocupacion> listarPreocupacionPorAtributo(servicios.Atributocalidad parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarPreocupacionPorAtributo(parameter);
+    }
+
+    private static java.util.List<servicios.Tactica> listarTacticaPorPreocupacion(servicios.Preocupacion parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarTacticaPorPreocupacion(parameter);
+    }
+
     
 }

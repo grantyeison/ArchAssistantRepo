@@ -16,7 +16,16 @@
         <title>ArchAssistant - ADD</title>
     </head>
     <body>
-        <form name="add-1" action="ADD1">
+        <script> 
+            function seleccionarArchivo(elemento)
+            {                
+                var file = elemento.files[0];
+                var objHidden = document.formulario.nomarchivo;
+                objHidden.value = file.name;
+                alert("archivo seleccionado " +objHidden.value());
+            }
+        </script>
+        <form name="add-1" action="ADD1" enctype="multipart/form-data" method="POST">
             <h1 align="center">ArchAssistant</h1>
             <h2 align="center">ADD</h2>
             <h2 align="center"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
@@ -59,84 +68,87 @@
                     List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
                     for (Escenario esce : listaEsc)
                     {
-                      out.println("<tr>");
-                      out.println("<td>");
-                      out.println(esce.getEscID());
-                      out.println("</td>");
-                      out.println("<td>");
-                      out.println(esce.getEscNombre());
-                      out.println("</td>");
-                      out.println("<td>");
-                      out.println(esce.getEscEstimulo());
-                      out.println("</td>");
-                      if (esce.getEscFuente() != null)
-                      {
-                        out.println("<td>");
-                        out.println(esce.getEscFuente());
-                        out.println("</td>");
-                      }
-                      else
-                      {
-                        out.println("<td>&nbsp;</td>");
-                      }
-                      out.println("<td>"+esce.getEscAmbiente());
-                      out.println("</td>");
-                      if (esce.getEscArtefacto()!= null)
-                      {
-                        out.println("<td>");
-                        out.println(esce.getEscArtefacto());
-                        out.println("</td>");
-                      }
-                      else
-                      { 
-                        out.println("<td>&nbsp;</td>");
-                      }
-                      out.println("<td>"+esce.getEscRespuesta());
-                      out.println("</td>");
-                      if (esce.getEscMedidaRespuesta() != null)
-                      {
-                        out.println("<td>");
-                        out.println(esce.getEscMedidaRespuesta());
-                        out.println("</td>");
-                      }
-                      else
-                      {
-                         out.println("<td>&nbsp;</td>");
-                      }
-                      out.println("<td>");
-                      if (esce.getEscPrioridad() != null)
-                        {
-                            out.println(esce.getEscPrioridad());
+                        if (esce.getEscPrioridad()!=null && esce.getEscPrioridad()>0){                            
+                            /*
+                            out.println("<tr>");
+                            out.println("<td>");
+                            out.println(esce.getEscID());
+                            out.println("</td>");
+                            */
+                            out.println("<td>");
+                            out.println(esce.getEscNombre());
+                            out.println("</td>");
+                            out.println("<td>");
+                            out.println(esce.getEscEstimulo());
+                            out.println("</td>");
+                            if (esce.getEscFuente() != null) {
+                                out.println("<td>");
+                                out.println(esce.getEscFuente());
+                                out.println("</td>");
+                            } else {
+                                out.println("<td>&nbsp;</td>");
+                            }
+                            out.println("<td>" + esce.getEscAmbiente());
+                            out.println("</td>");
+                            if (esce.getEscArtefacto() != null) {
+                                out.println("<td>");
+                                out.println(esce.getEscArtefacto());
+                                out.println("</td>");
+                            } else {
+                                out.println("<td>&nbsp;</td>");
+                            }
+                            out.println("<td>" + esce.getEscRespuesta());
+                            out.println("</td>");
+                            if (esce.getEscMedidaRespuesta() != null) {
+                                out.println("<td>");
+                                out.println(esce.getEscMedidaRespuesta());
+                                out.println("</td>");
+                            } else {
+                                out.println("<td>&nbsp;</td>");
+                            }
+                            out.println("<td>");
+                            if (esce.getEscPrioridad() != null) {
+                                out.println(esce.getEscPrioridad());
+                            } else {
+                                out.println(0);
+                            }
+                            out.println("</td>");
+                            out.println("</tr>");
+                        }                        
+                        else{
+
+                                
                         }
-                        else
-                        {
-                            out.println(0);
-                        }
-                      out.println("</td>");
-                      out.println("</tr>");
                     }
                 %>
               </tbody>
            </table>
             <h2>Rationale:</h2>
-            <textarea rows="5" cols="120" name="ratadd1">
-                <%
-                    ArchAssistantBean p = new ArchAssistantBean();
+            <textarea rows="5" cols="100" name="ratadd1"><%
+                ArchAssistantBean p = new ArchAssistantBean();
                     Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(),"add1");
                     if (rata != null)
                     {
                         out.print(rata.getRatAddDescripcion());
-                    }
-                %>
-            </textarea>
-            <table width="100" border="0">
-              <tbody>
-                <tr>
-                    <td><input type="submit" value="Guardar" name="btnAdd1Guardar"/></td>
-                    <td><input type="submit" value="Continuar" name="btnAdd1Continuar"/></td>
-                </tr>
-              </tbody>
-            </table>
+                    }%>
+            </textarea>  
+            <div>
+                <table width="100" border="0">
+                    <tbody>
+                        <tr>
+                            <input type="file" name="archivo" onchange="seleccionarArchivo(this) "/>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="Guardar" name="btnAdd1Guardar"/></td>
+                            <td>
+                                <input type="submit" value="Continuar" name="btnAdd1Continuar"/>
+                                <input type="hidden" name="nomarchivo" value="" />
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>
         </form>
     </body>
 </html>
