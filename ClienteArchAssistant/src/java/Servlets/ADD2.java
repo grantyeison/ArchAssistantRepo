@@ -46,7 +46,7 @@ public class ADD2 extends HttpServlet {
         String regresar = request.getParameter("btnAdd2anterior");
 <<<<<<< .mine
         
-        System.out.println("prueba tortoise hecha por yeison");
+        System.out.println("prueba tortoise para ver merge");
 
 
         System.out.println("prueba tortoise hecha por Os");
