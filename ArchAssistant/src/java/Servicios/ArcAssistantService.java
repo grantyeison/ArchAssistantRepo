@@ -7,24 +7,23 @@ package Servicios;
 
 import Beans.*;
 import Modelo.Atributocalidad;
+import Modelo.Controlador;
 import Modelo.Escenario;
 import Modelo.Interface;
 import Modelo.Modulo;
 import Modelo.Patron;
+import Modelo.Preocupacion;
 import Modelo.Proyecto;
 import Modelo.Rationaleadd;
 import Modelo.Rationaleqaw;
 import Modelo.Tactica;
 import Modelo.Usuario;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.fileupload.FileItem;
 
 /**
  *
@@ -42,6 +41,9 @@ public class ArcAssistantService {
     RationaleAddBean rataB;
     RationaleQawBean ratqB;
     TacticaBean tacB;
+    PreocupacionBean preB;
+    ControladorBean conB;
+    
     UsuarioBean usuB;
 
     /**
@@ -545,4 +547,100 @@ public class ArcAssistantService {
         return modB.Listar(parameter);
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "BuscarModuloDescomposicion")
+    public Modulo BuscarModuloDescomposicion(@WebParam(name = "idProy") Proyecto idProy) {
+        //TODO write your implementation code here:
+        modB = new ModuloBean();
+        return modB.BuscarModDescomposicion(idProy);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ObtenerDriverArquitectonicos")
+    public List<Escenario> ObtenerDriverArquitectonicos(@WebParam(name = "parameter") Proyecto parameter) {
+        escB = new EscenarioBean();
+        return escB.ListarEscenariosArquitectonicos(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ListarPreocupacionPorAtributo")
+    public List<Preocupacion> ListarPreocupacionPorAtributo(@WebParam(name = "parameter") Atributocalidad parameter) {
+        preB = new PreocupacionBean();
+        return preB.ListarPorAtributo(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ListarTacticaPorPreocupacion")
+    public List<Tactica> ListarTacticaPorPreocupacion(@WebParam(name = "parameter") Preocupacion parameter) {
+        //TODO write your implementation code here:
+        tacB = new TacticaBean();        
+        return tacB.BuscarPorPreocupacion(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "CrearControlador")
+    public Void CrearControlador(@WebParam(name = "parameter") Controlador parameter) {
+        //TODO write your implementation code here:
+        conB = new ControladorBean();
+        conB.Crear(parameter);
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ModificarControlador")
+    public Void ModificarControlador(@WebParam(name = "parameter") Controlador parameter) {
+        //TODO write your implementation code here:
+        conB = new ControladorBean();
+        conB.Modificar(parameter);
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "BuscarControlador")
+    public Controlador BuscarControlador(@WebParam(name = "parameter") int parameter) {
+        //TODO write your implementation code here:
+        conB = new ControladorBean();        
+        return conB.Buscar(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ListarControlador")
+    public List<Controlador> ListarControlador(@WebParam(name = "parameter") Proyecto parameter) {
+        //TODO write your implementation code here:
+        conB = new ControladorBean();        
+        return conB.Listar(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "EliminarControlador")
+    public Void EliminarControlador(@WebParam(name = "parameter") Controlador parameter) {
+        //TODO write your implementation code here:
+        conB = new ControladorBean();
+        conB.Eliminar(parameter);
+        return null;
+    }
+
+
+
+
+
 }
+

@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Modelo.Modulo;
+import Modelo.Controlador;
 import Modelo.Proyecto;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -17,73 +17,70 @@ import javax.persistence.Query;
  *
  * @author Prometheus
  */
-public class ModuloJPADAO implements ModuloDAO
+public class ControladorJPADAO implements ControladorDAO
 {
 
     EntityManager em;
     EntityManagerFactory emf;
 
 
-    public ModuloJPADAO() 
+    public ControladorJPADAO() 
     {
         emf = Persistence.createEntityManagerFactory("ArchAssistantPU");
         em = emf.createEntityManager();
     }
+   
     
     @Override
-    public List<Modulo> ListarModulos(Proyecto proy) 
-    {
-        Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.tblProyectoProID = ?1");
-        q.setParameter(1, proy);
-        return q.getResultList();
-        
-    }
-
-    @Override
-    public void CrearModulo(Modulo mod) 
-    {
-        em.getTransaction().begin();
-        em.persist(mod);
-        em.getTransaction().commit();
-    }
-
-    @Override
-    public Modulo BuscarModulo(int id) 
+    public Controlador BuscarControlador(int id) 
     {
         /*Query q = em.createNamedQuery("SELECT m FROM Modulo m WHERE m.modId = ?1");
         q.setParameter(1, id);
         return (Modulo) q.getResultList().get(0);*/
-        Modulo mod = new Modulo();
-        mod = em.find(mod.getClass(), id);
-        return mod;
+        Controlador con = new Controlador();
+        con = em.find(con.getClass(), id);
+        return con;
     }
 
     @Override
-    public void ModificarModulo(Modulo mod) 
+    public void EliminarControlador(Controlador con) 
     {
         em.getTransaction().begin();
-        em.merge(mod);
+        em.remove(con);
         em.getTransaction().commit();
     }
-
+/*
     @Override
-    public void EliminarModulo(Modulo mod) 
-    {
-        em.getTransaction().begin();
-        em.remove(mod);
-        em.getTransaction().commit();
-    }
-
-    @Override
-    public Modulo BuscarModuloDescomposicion(Proyecto Proy) {
+    public Controlador BuscarModuloDescomposicion(Proyecto Proy) {
         Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.tblProyectoProID = ?1 AND m.modFinal=?2");
         q.setParameter(1, Proy);
         q.setParameter(2, "Descomposicion");
-        return (Modulo)q.getResultList().get(0);
+        return (Controlador)q.getResultList().get(0);
         //Modulo mod = new Modulo();
         //mod = em.find(mod.getClass(), id);
         
         //return mod;
     }
-    
+*/
+
+    @Override
+    public List<Controlador> ListarControlador(Proyecto proy) {
+        Query q = em.createQuery("SELECT m FROM Controlador");
+        q.setParameter(1, proy);
+        return q.getResultList();
+    }
+
+    @Override
+    public void CrearControlador(Controlador con) {
+        em.getTransaction().begin();
+        em.persist(con);
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public void ModificarControlador(Controlador con) {
+        em.getTransaction().begin();
+        em.merge(con);
+        em.getTransaction().commit();
+    }    
 }

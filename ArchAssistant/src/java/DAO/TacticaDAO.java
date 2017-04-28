@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Modelo.Preocupacion;
 import Modelo.Tactica;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface TacticaDAO
     void ModificarTactica(Tactica tac);
     
     void EliminarTactica(Tactica tac);
+    
+    List<Tactica> BuscarTacticaPorPreocupacion(Preocupacion pre);
 }

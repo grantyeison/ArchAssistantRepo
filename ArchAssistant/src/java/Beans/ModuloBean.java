@@ -50,4 +50,9 @@ public class ModuloBean
         dao.ModificarModulo(atr);
     }
     
+    public Modulo BuscarModDescomposicion(Proyecto id)
+    {
+        return dao.BuscarModuloDescomposicion(id);
+    }
+    
 }

@@ -17,58 +17,48 @@ import javax.persistence.Query;
  *
  * @author Prometheus
  */
-public class EscenarioJPADAO implements EscenarioDAO
-{
+public class EscenarioJPADAO implements EscenarioDAO {
 
     EntityManager em;
     EntityManagerFactory emf;
 
-    public EscenarioJPADAO()  
-    {
+    public EscenarioJPADAO() {
         emf = Persistence.createEntityManagerFactory("ArchAssistantPU");
         em = emf.createEntityManager();
     }
 
-    
-    
     @Override
-    public List<Escenario> ListarEscenarios(Proyecto proy) 
-    {
+    public List<Escenario> ListarEscenarios(Proyecto proy) {
         Query q = em.createQuery("SELECT e FROM Escenario e WHERE e.tblProyectoProID = ?1");
         q.setParameter(1, proy);
         return q.getResultList();
     }
 
     @Override
-    public void CrearEscenario(Escenario esc) 
-    {
+    public void CrearEscenario(Escenario esc) {
         em.getTransaction().begin();
         em.persist(esc);
         em.getTransaction().commit();
     }
 
     @Override
-    public Escenario BuscarEscenario(int id) 
-    {
+    public Escenario BuscarEscenario(int id) {
         Escenario esc = new Escenario();
         esc = em.find(esc.getClass(), id);
         return esc;
     }
 
     @Override
-    public void ModificarEscenario(Escenario esc) 
-    {
+    public void ModificarEscenario(Escenario esc) {
         em.getTransaction().begin();
         em.merge(esc);
         em.getTransaction().commit();
     }
 
     @Override
-    public void EliminarEscenario(Escenario esc) 
-    {
-        em.getTransaction().begin();        
-        try 
-        {
+    public void EliminarEscenario(Escenario esc) {
+        em.getTransaction().begin();
+        try {
             Escenario e = em.find(Escenario.class, esc.getEscID());
             e.getTblProyectoProID().getEscenarioList().remove(e);
             e.setTblProyectoProID(null);
@@ -78,13 +68,17 @@ public class EscenarioJPADAO implements EscenarioDAO
             //esc.setTblModuloModId(null);
             em.remove(e);
             em.getTransaction().commit();
-        } 
-        catch (Exception exe) 
-        {
+        } catch (Exception exe) {
             em.close();
         }
-        
-        
+
     }
-    
+
+    @Override
+    public List<Escenario> ListarEscenariosArq(Proyecto proy) {
+        Query q = em.createQuery("SELECT e FROM Escenario e WHERE e.tblProyectoProID = ?1 and e.escEstado='%;%");
+        q.setParameter(1, proy);
+        return q.getResultList();
+    }
+
 }

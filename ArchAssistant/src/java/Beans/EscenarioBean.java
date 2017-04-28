@@ -55,4 +55,8 @@ public class EscenarioBean
         dao.ModificarEscenario(atr);
     }
     
+    public List<Escenario> ListarEscenariosArquitectonicos(Proyecto proy)
+    {
+        return dao.ListarEscenarios(proy);
+    }
 }

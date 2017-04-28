@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Modelo.Preocupacion;
 import Modelo.Tactica;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -49,7 +50,7 @@ public class TacticaJPADAO implements TacticaDAO
     @Override
     public Tactica BuscarTactica(int id)  
     {
-        Query q = em.createNamedQuery("SELECT t FROM Tactica t WHERE t.tacID = ?1");
+        Query q = em.createNamedQuery("SELECT t FROM Tactica t WHERE t.tacID= ?1");
         q.setParameter(1, id);
         return (Tactica) q.getResultList().get(0);
     }
@@ -68,6 +69,13 @@ public class TacticaJPADAO implements TacticaDAO
         em.getTransaction().begin();
         em.remove(tac);
         em.getTransaction().commit();
+    }
+
+    @Override
+    public List<Tactica> BuscarTacticaPorPreocupacion(Preocupacion pre) {
+        Query q = em.createNamedQuery("SELECT t FROM Tactica t WHERE t.Tbl_Preocupacion_preID = ?1");
+        q.setParameter(1, pre);
+        return (List<Tactica>) q.getResultList();
     }
     
 }

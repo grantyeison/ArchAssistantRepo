@@ -7,6 +7,7 @@ package Beans;
 
 import DAO.TacticaDAO;
 import DAO.TacticaJPADAO;
+import Modelo.Preocupacion;
 import java.util.List;
 import javax.ejb.EJB;
 import Modelo.Tactica;
@@ -54,4 +55,8 @@ public class TacticaBean
         dao.ModificarTactica(atr);
     }
     
+    public List<Tactica> BuscarPorPreocupacion(Preocupacion pre)
+    {
+        return dao.BuscarTacticaPorPreocupacion(pre);
+    }
 }

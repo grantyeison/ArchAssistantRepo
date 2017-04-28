@@ -20,6 +20,8 @@ public interface ModuloDAO
     
     Modulo BuscarModulo(int id);
     
+    Modulo BuscarModuloDescomposicion(Proyecto idProy);
+    
     void ModificarModulo (Modulo mod);
     
     void EliminarModulo (Modulo mod);

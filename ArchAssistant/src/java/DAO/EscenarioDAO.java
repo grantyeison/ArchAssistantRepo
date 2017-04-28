@@ -24,4 +24,6 @@ public interface EscenarioDAO
     void ModificarEscenario (Escenario esc);
     
     void EliminarEscenario (Escenario esc);
+    
+    List<Escenario> ListarEscenariosArq(Proyecto proy);    
 }
