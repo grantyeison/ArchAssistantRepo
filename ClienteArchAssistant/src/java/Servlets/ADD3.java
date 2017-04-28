@@ -67,7 +67,7 @@ public class ADD3 extends HttpServlet {
                         es.setEscEstado(";"+impactoOpc);
                     }
                     modificarEscenario(es);  
-                    archB.crear
+                    //archB.crear
                 }
             }
             Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add3");
