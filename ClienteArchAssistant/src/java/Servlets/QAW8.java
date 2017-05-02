@@ -46,7 +46,7 @@ public class QAW8 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnQaw8Guardar");
-        String continuar = request.getParameter("btnQaw8Continuar");
+        //String continuar = request.getParameter("btnQaw8Continuar");
         String inicio = request.getParameter("btnQaw8Inicio");
         String regresar = request.getParameter("btnQaw8anterior");
         String Refinar = request.getParameter("btnQaw8Refinar");
@@ -90,7 +90,7 @@ public class QAW8 extends HttpServlet {
                 }
             }
         }
-        
+        /*
         if (continuar != null)
         {
             if (request.getParameter("ratqaw8")!= "")
@@ -104,7 +104,7 @@ public class QAW8 extends HttpServlet {
                 }
             }
         }
-        
+        */
         if (regresar != null)
         {
             response.sendRedirect("qaw7.jsp");

@@ -67,7 +67,7 @@ public class GestionarProyectos extends HttpServlet {
             request.getSession().setAttribute("proyectoActual", pro);
             if (pro.getProAvance().equals("qaw8"))
             {
-                response.sendRedirect("add0.jsp");
+                //response.sendRedirect("add0.jsp");
             }
             else
             {

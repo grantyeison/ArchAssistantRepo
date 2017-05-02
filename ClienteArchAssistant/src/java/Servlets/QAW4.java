@@ -117,18 +117,17 @@ public class QAW4 extends HttpServlet {
             
             descripcion = request.getParameter("ratqaw4");
             
-            if (ratq.getRatQawDescripcion() != null)
+            
+            if (!ratq.getRatQawDescripcion().isEmpty())
             {
-                if (!ratq.getRatQawDescripcion().isEmpty())
-                {
-                    ratio = ratq.getRatQawDescripcion();
-                }
+                ratio = ratq.getRatQawDescripcion();
             }
+            
             if (ratio != null || ratio != "")
             {
                 indAtri = ratio.indexOf("~|~|");
             }
-            if (indAtri > 0)
+            if (indAtri != 0)
             {
                 atributos = ratio.substring(0,indAtri);
             }
