@@ -178,9 +178,9 @@
             <table width="100" border="0">
               <tbody>
                 <tr>
-                    <td><input type="submit" value="Regresar" name="btnQaw8anterior"/></td>
+                  <td><input type="submit" value="Regresar" name="btnQaw8anterior"/></td>
                   <td><input type="submit" value="Inicio" name="btnQaw8Inicio"/></td>
-                  <td><input type="submit" value="Continuar" name="btnQaw8Continuar"/></td>
+                  <!--<td><input type="submit" value="Continuar" name="btnQaw8Continuar"/></td>-->
                 </tr>
               </tbody>
             </table>

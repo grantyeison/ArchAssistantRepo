@@ -4,7 +4,6 @@
     Author     : Prometheus
 --%>
 
-<%@page import="java.util.LinkedList"%>
 <%@page import="java.io.File"%>
 <%@page import="Servlets.GuardarArchivo"%>
 <%@page import="java.util.List"%>
@@ -49,12 +48,14 @@
                     ArchAssistantBean p = new ArchAssistantBean();
                     Rationaleqaw ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
                     List<Atributocalidad> listaAtributos = p.ListarAtr();
-                    List<Atributocalidad> atrEscogidos = = new LinkedList<Atributocalidad>();
-                    if (ratq.getRatQawDescripcion() != null)
+                    List<Atributocalidad> atrEscogidos = p.ObtenerAtributosEscogidos(ratq);
+                    if (atrEscogidos != null)
                     {
-                        atrEscogidos = p.ObtenerAtributosEscogidos(ratq);
+                        for (Atributocalidad atr2 : atrEscogidos)
+                        {
+                            System.out.println("¨¨¨¨¨¨¨¨¨"+atr2.getAcID());
+                        }
                     }
-                    
                     out.println("<table border=\"0\">");
                     out.println("<tbody>");
                     
