@@ -66,8 +66,12 @@
                             out.println("<tr><td>" + pro.getProID()+ "</td>");
                             out.println("<td>" + pro.getProNombre()+ "</td>");
                             out.println("<td>" + pro.getProDescripcion()+ "</td>");
-                            out.println("<td>" + pro.getProAvance()+ "</td></tr>");
-                        } 
+                            out.println("<td>" + pro.getProAvance()+ "</td>");
+                            if (pro.getProAvance().equals("qaw8"))
+                            {
+                                out.println("<td><input type=\"submit\" value=\"Seleccionar\" name=\"btnGenerarReporte"+pro.getProID()+"\"/></td></tr>");
+                            }
+                        }
                     %>
                 </tbody>
             </table>
