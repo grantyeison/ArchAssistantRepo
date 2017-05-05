@@ -5,6 +5,17 @@
  */
 package Beans;
 
+import Servlets.GuardarArchivo;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import servicios.Atributocalidad;
@@ -22,6 +33,69 @@ import servicios.Tactica;
  * @author Prometheus
  */
 public class ArchAssistantBean {
+    //fuentes para el documento: 
+    private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 26, Font.BOLDITALIC);
+    private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+         
+    private static final Font categoryFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+    private static final Font subcategoryFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+    private static final Font blueFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.ITALIC);    
+    private static final Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+     
+    
+    public void GenerarReporteQAW(Proyecto pro) throws FileNotFoundException, DocumentException, IOException
+    {
+        
+        Rationaleqaw ratq;
+        String paso = pro.getProAvance();
+        Paragraph parrafo;
+        int anexo = 1;
+        GuardarArchivo arch = new GuardarArchivo();
+        List<File> archivos = null;
+        FileOutputStream archivo = new FileOutputStream(System.getProperty("user.home")+File.separator+"Downloads"+File.separator+"InformeQAW"+pro.getProNombre()+".pdf");
+        String razonamiento;
+        Document documento = new Document();
+        PdfWriter.getInstance(documento, archivo);
+        documento.open();
+        parrafo = new Paragraph("INFORME QAW ",chapterFont);
+        parrafo.setAlignment(1);
+        documento.add(parrafo);
+        parrafo = new Paragraph("Proyecto "+pro.getProNombre(),categoryFont);
+        parrafo.setAlignment(1);
+        documento.add(parrafo);
+        parrafo = new Paragraph("ArchAssistant\n\n",blueFont);
+        parrafo.setAlignment(1);
+        documento.add(parrafo);
+        for (int i = 1; i <= 8; i ++)
+        {
+            ratq = obtenerRationaleQAW(pro.getProID(), "qaw"+String.valueOf(i));
+            documento.add(new Paragraph("QAW paso "+i+"\n",subcategoryFont));
+            if (ratq != null)
+            {
+                archivos = arch.listarArchivos(ratq.getRatQawArchivo());
+                razonamiento = ratq.getRatQawDescripcion();
+                if (razonamiento != null)
+                {            
+                    documento.add(new Paragraph(razonamiento+"\n\n",paragraphFont));
+                }
+                if (archivos != null)
+                {
+                    documento.add(new Paragraph("Archivos anexos:\n",smallBold));
+                    for(File archi : archivos)
+                    {
+                        documento.add(new Paragraph("Anexo"+anexo+": "+archi.getName(),blueFont));
+                        anexo++;
+                    }
+                }
+            }
+            else
+            {
+                documento.add(new Paragraph("No se registró información para este paso\n\n",paragraphFont));
+            }
+        }
+        documento.close();    
+        archivo.close();
+    }
     
     public List<Proyecto> Listar(String usuario)
     {

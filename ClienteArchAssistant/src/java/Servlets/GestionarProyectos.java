@@ -5,8 +5,14 @@
  */
 package Servlets;
 
+import Beans.ArchAssistantBean;
+import com.itextpdf.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,6 +78,26 @@ public class GestionarProyectos extends HttpServlet {
             else
             {
                 response.sendRedirect(pro.getProAvance()+".jsp");
+            }
+        }
+        
+        List<Proyecto> lista;
+        ArchAssistantBean p = new ArchAssistantBean();
+        Usuario usu = (Usuario) request.getSession().getAttribute("validUsuario");
+        lista = p.Listar(usu.getUsuUsuario());
+        for (Proyecto proy : lista)
+        {
+            if (request.getParameter("btnGenerarReporte"+proy.getProID()) != null)
+            {
+                try 
+                {
+                    p.GenerarReporteQAW(proy);
+                } 
+                catch (FileNotFoundException ex) {
+                    Logger.getLogger(GestionarProyectos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (DocumentException ex) {
+                    Logger.getLogger(GestionarProyectos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
