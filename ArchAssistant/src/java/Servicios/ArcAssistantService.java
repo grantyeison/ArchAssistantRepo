@@ -588,6 +588,7 @@ public class ArcAssistantService {
     /**
      * Web service operation
      */
+    /*
     @WebMethod(operationName = "CrearControlador")
     public Void CrearControlador(@WebParam(name = "parameter") Controlador parameter) {
         //TODO write your implementation code here:
@@ -598,7 +599,7 @@ public class ArcAssistantService {
 
     /**
      * Web service operation
-     */
+     
     @WebMethod(operationName = "ModificarControlador")
     public Void ModificarControlador(@WebParam(name = "parameter") Controlador parameter) {
         //TODO write your implementation code here:
@@ -609,7 +610,7 @@ public class ArcAssistantService {
 
     /**
      * Web service operation
-     */
+     
     @WebMethod(operationName = "BuscarControlador")
     public Controlador BuscarControlador(@WebParam(name = "parameter") int parameter) {
         //TODO write your implementation code here:
@@ -619,7 +620,7 @@ public class ArcAssistantService {
 
     /**
      * Web service operation
-     */
+     
     @WebMethod(operationName = "ListarControlador")
     public List<Controlador> ListarControlador(@WebParam(name = "parameter") Proyecto parameter) {
         //TODO write your implementation code here:
@@ -629,7 +630,7 @@ public class ArcAssistantService {
 
     /**
      * Web service operation
-     */
+     
     @WebMethod(operationName = "EliminarControlador")
     public Void EliminarControlador(@WebParam(name = "parameter") Controlador parameter) {
         //TODO write your implementation code here:
@@ -638,7 +639,7 @@ public class ArcAssistantService {
         return null;
     }
 
-
+*/
 
 
 
