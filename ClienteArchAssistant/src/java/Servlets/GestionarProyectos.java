@@ -92,12 +92,14 @@ public class GestionarProyectos extends HttpServlet {
                 try 
                 {
                     p.GenerarReporteQAW(proy);
+                    response.sendRedirect("InicioUsuario.jsp");
                 } 
                 catch (FileNotFoundException ex) {
                     Logger.getLogger(GestionarProyectos.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DocumentException ex) {
                     Logger.getLogger(GestionarProyectos.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             }
         }
     }
