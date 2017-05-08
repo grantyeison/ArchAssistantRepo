@@ -36,9 +36,9 @@
                             <tr>
                                 <input type="submit" name="CerrarSesion" value="Cerrar Sesión"/>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <input type="submit" name="perfil" value="perfil"/>
-                            </tr>
+                            </tr>-->
                         </table>
                     </td>
                 </tr>
