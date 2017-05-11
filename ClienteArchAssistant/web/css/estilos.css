@@ -26,8 +26,32 @@ and open the template in the editor.
     padding: 8px;
 }
 
+.tblCentContent{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    
+}
+
+.tblCentContent td, tr {
+    padding: 8px;
+}
+.tblCentfull{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.tblCentfull td, tr {
+    padding: 8px;
+}
+
 .title{
     text-align: center;
     padding-top: 50px;
+}
+.bienvenida{
+    text-align: center;
 }
 
