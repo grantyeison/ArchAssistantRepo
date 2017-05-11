@@ -16,6 +16,10 @@ and open the template in the editor.
     text-align: right;
 }
 
+.alCen{
+    text-align: center;
+}
+
 .tblCent{
     margin: auto;
     width: 25%;
@@ -39,7 +43,6 @@ and open the template in the editor.
 .tblCentfull{
     width: 100%;
     text-align: center;
-    margin-top: 50px;
     margin-bottom: 30px;
 }
 
@@ -51,6 +54,11 @@ and open the template in the editor.
     text-align: center;
     padding-top: 50px;
 }
+
+.parrafo{
+    text-align: justify;
+}
+
 .bienvenida{
     text-align: center;
 }

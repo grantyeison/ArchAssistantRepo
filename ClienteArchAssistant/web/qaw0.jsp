@@ -37,9 +37,9 @@
                     </tr>
                   </tbody>
                 </table>
-                <h3 class="page-header">Que es QAW?</h3>
+                <h2 class="page-header">Que es QAW?</h2>
 
-                <p class="col-lg-6 col-md-9 col-sm-12">
+                <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
                     QAW o Taller de Atributos de Calidad en español es un método optimizado que involucra 
                     a los stakeholders del sistema es decir, los usuarios, instaladores, administradores 
                     (de la base de datos, de redes, de escritorios de ayuda, etc.), arquitectos, compradores, 
@@ -61,7 +61,7 @@
                 
                 <img src="resourses/qaw.png" class="img-rounded"/>
                 
-                <p class="col-lg-6 col-md-9 col-sm-12">
+                <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
                     Figura I. Entradas, salidas y participantes QAW
                     Para este proceso debe haber al menos 5 stakeholders presentes pero no más de 30 por un solo taller, 
                     es importante tener en cuenta que todos los participantes del QAW deben estar enfocados y 
