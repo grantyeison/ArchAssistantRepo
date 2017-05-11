@@ -10,40 +10,41 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ArchAssistant inicio</title>
-        <link rel="stylesheet" href="assets/css/" /><!---->
+        
+        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
+        <link rel="stylesheet" href="./css/estilos.css" /><!---->
         <script language="JavaScript">
             function usuarioNoValido()
             {
                 window.alert("usuario no válido, verifique usuario y contraseña");
             }
-         </script>   
+        </script>   
+        <script src="./js/jquery-3.2.1.js"></script>
+        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
+        <script src="./js/bootstrap.min.js"></script>
+        <!--<script src="./js/bootstrap.js"></script>-->
     </head>
     <body class="loading">
-        <div id="wrapper">
-            <div id="bg"></div>
-            <div id="overlay"></div>
-            <div id="main">
-                <h1>Iniciar Sesión</h1>
-                <form action="AutenticarUsuario" method="POST">
-                    <table border="0">
-                        <tbody>
-                            <tr>
-                                <td>Usuario:</td>
-                                <td><input type="text" name="txtUsuario" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td>Contraseña</td>
-                                <td><input type="password" name="txtpass" value="" /></td>
-                            </tr>
-                            <tr>
-                                <td><input type="submit" value="Registrar Usuario" name="btnRegistrar" /></td>
-                                <td><input type="submit" value="Ingresar" name="btnIngresarUsuario" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </form>
-            </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h1 class="title">Iniciar Sesión</h1>
+            <form action="AutenticarUsuario" method="POST">
+                <table border="0" class="tblCent">
+                    <tbody>
+                        <tr>
+                            <th>Usuario:</th>
+                            <td><input type="text" name="txtUsuario" value="" class="form-control" placeholder="Usuario" /></td>
+                        </tr>
+                        <tr>
+                            <th>Contraseña</th>
+                            <td><input type="password" name="txtpass" value="" class="form-control" placeholder="Contraseñia"/></td>
+                        </tr>
+                        <tr>                            
+                            <td class="alIzq"><input type="submit" value="Ingresar" name="btnIngresarUsuario" class="btn btn-primary" /></td>
+                            <td class="alDer"><input type="submit" value="Registrar Usuario" name="btnRegistrar" class="btn btn-primary"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>        
         </div>
     </body>
 </html>
