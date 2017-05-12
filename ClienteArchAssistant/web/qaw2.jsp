@@ -65,15 +65,19 @@
                 </div>
             </form>
 
-            <form name="qaw-2" action="QAW2" method="post" enctype="multipart/form-data">
-                 <div class="col-lg-5 col-md-6 col-sm-12"> 
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <div>
                     <h2 class="page-header">Archivos:</h2>
-                    
-                    <table width="400" border="0" class="tblCent">
-                        <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                        <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
-                    </table>
-                    
+                    <form name="qaw-2" action="QAW2" method="post" enctype="multipart/form-data">
+                        <table width="400" border="0" class="tblCent">
+                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
+                            <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="divScroll">
+                    <form name="qaw-2" action="QAW2"> 
+
                     <table width="400" border="0" class="tblCentfull">
                       <tbody>
                         <%
@@ -97,9 +101,9 @@
                          %>
                       </tbody>
                     </table>
-                 </div>
-            </form>
-
+                  </form>
+                </div>
+            </div>
             <form name="qaw-2" action="QAW2">    
                 <table border="0" class="tblCentfull">
                   <tbody>

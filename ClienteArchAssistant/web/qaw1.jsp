@@ -25,7 +25,7 @@
             <form name="qaw-1" action="QAW1">
                 <h2 class="subtitle">QAW</h2>
                 <h2 class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
-                <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
+                    <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
                 <table width="100%" border="0" class="tblCentfull">
                     <tbody>
                         <tr>
@@ -67,19 +67,25 @@
                 </div>
             </form>
 
-            <form name="qaw-1" action="QAW1" method="post" enctype="multipart/form-data">
-                <div class="col-lg-5 col-md-6 col-sm-12"> 
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <div>
                     <h2 class="page-header">Archivos:</h2>
-                    <table width="400" border="0" class="tblCent">
-                        <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                            <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
-                    </table>
-                    <div class="divScroll">
+                    <form name="qaw-1" action="QAW1" method="post" enctype="multipart/form-data">
+                        <table width="400" border="0" class="tblCent">
+                            <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
+                                <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="divScroll">
+                    <form name="qaw-1" action="QAW1"> 
+
                         <table width="400" border="0" class="tblCentfull">
                             <tbody>
                                 <%
                                     GuardarArchivo arch = new GuardarArchivo();
                                     List<File> archivos = null;
+                                    System.out.println("rationale: ******** " + ratq.getRatQawArchivo());
                                     if (ratq != null) {
                                         archivos = arch.listarArchivos(ratq.getRatQawArchivo());
                                     }
@@ -87,18 +93,22 @@
                                         for (File archivo : archivos) {
                                             out.print("<tr>");
                                             out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                            out.print("<td class='alDer'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnQawEliminar"
+                                                    + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
+                                                    + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar"
+                                                    + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
+                                                    + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
+                                                    + "</span></button>" + "</td>");
                                             out.print("</tr>");
                                         }
                                     }
                                 %>
                             </tbody>
                         </table>
-                    </div>
+                    </form>
                 </div>
-            </form>
-
+            </div>
             <form name="qaw-1" action="QAW1"> 
                 <table width="100" border="0" class="tblCentfull">
                     <tbody>
