@@ -55,7 +55,8 @@
                 </tr>
                 <tr>
                     <td><input type="submit" value="Regresar" name="btnAdd8anterior"/></td>
-                    <td><input type="submit" value="Continuar" name="btnAdd8Continuar"/></td>
+                    <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                        <td><input type="submit" value="Continuar" name="btnAdd8Continuar"/></td>
                     <td><input type="submit" value="Finalizar" name="btnAdd8Finalizar"/></td>
                 </tr>
               </tbody>

@@ -184,7 +184,8 @@
               <tbody>
                 <tr>
                   <td><input type="submit" value="Regresar" name="btnQaw8anterior"/></td>
-                  <td><input type="submit" value="Inicio" name="btnQaw8Inicio"/></td>
+                  <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                        <td><input type="submit" value="Inicio" name="btnQaw8Inicio"/></td>
                   <!--<td><input type="submit" value="Continuar" name="btnQaw8Continuar"/></td>-->
                 </tr>
               </tbody>

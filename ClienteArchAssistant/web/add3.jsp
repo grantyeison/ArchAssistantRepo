@@ -259,6 +259,7 @@
                     </tr>
                     <tr>
                         <td><input type="submit" value="Regresar" name="btnAdd3anterior"/></td>
+                        <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
                         <td><input type="submit" value="Continuar" name="btnAdd3Continuar"/></td>
                     </tr>
                 </tbody>

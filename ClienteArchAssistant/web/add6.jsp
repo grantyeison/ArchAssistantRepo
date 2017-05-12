@@ -180,7 +180,8 @@
                 </tr>
                 <tr>
                     <td><input type="submit" value="Regresar" name="btnAdd6anterior"/></td>
-                    <td><input type="submit" value="Continuar" name="btnAdd6Continuar"/></td>
+                    <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                        <td><input type="submit" value="Continuar" name="btnAdd6Continuar"/></td>
                 </tr>
               </tbody>
             </table>

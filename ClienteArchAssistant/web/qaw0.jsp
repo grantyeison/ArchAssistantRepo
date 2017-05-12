@@ -59,7 +59,7 @@
                     en una notación funcional [IEEE 98] donde los insumos fluyen por la izquierda, salidas fluyen 
                     hacia la derecha, y los participantes del método se indican desde abajo[14][15]. </p>
                 
-                <img src="resourses/qaw.png" class="img-rounded"/>
+                <img src="img/qaw.png" class="img-rounded"/>
                 
                 <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
                     Figura I. Entradas, salidas y participantes QAW
@@ -76,7 +76,7 @@
 
                 <table class="tblCentfull">
                     <tr>
-                        <td class="alDer"><input type="submit" value="volver" name="btnQaw0Cancelar" class="btn btn-primary btn-lg"/></td>
+                        <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
                         <td class="alIzq"><input type="submit" value="Continuar" name="btnQaw0Continuar" class="btn btn-primary btn-lg"/></td>
                     </tr>
                 </table>

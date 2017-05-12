@@ -158,7 +158,8 @@
               <tbody>
                 <tr>
                     <td><input type="submit" value="Regresar" name="btnQaw7anterior"/></td>
-                  <td><input type="submit" value="Continuar" name="btnQaw7Continuar"/></td>
+                  <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                        <td><input type="submit" value="Continuar" name="btnQaw7Continuar"/></td>
                 </tr>
               </tbody>
             </table>

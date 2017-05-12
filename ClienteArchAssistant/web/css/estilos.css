@@ -30,6 +30,10 @@ body{
     text-align: center;
 }
 
+.margenS{
+    padding: 8px;
+}
+
 .tblCent{
     margin: auto;
     width: 25%;

@@ -141,7 +141,8 @@
                         <tr>
                             <td><input type="submit" value="Guardar" name="btnAdd1Guardar"/></td>
                             <td>
-                                <input type="submit" value="Continuar" name="btnAdd1Continuar"/>
+                                <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                        <input type="submit" value="Continuar" name="btnAdd1Continuar"/>
                                 <input type="hidden" name="nomarchivo" value="" />
                             </td>
                             

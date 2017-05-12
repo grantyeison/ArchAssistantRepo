@@ -110,10 +110,11 @@
                 </div>
             </div>
             <form name="qaw-1" action="QAW1"> 
-                <table width="100" border="0" class="tblCentfull">
+                <table width="100" border="0" class="tblCent">
                     <tbody>
                         <tr>
-                            <td class="alDer"><input type="submit" value="Continuar" name="btnQaw1Continuar" class="btn btn-primary btn-lg"/></td>
+                            <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                            <td class="alCen"><input type="submit" value="Continuar" name="btnQaw1Continuar" class="btn btn-primary btn-lg"/></td>
                         </tr>
                     </tbody>
                 </table>
