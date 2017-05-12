@@ -12,6 +12,11 @@ and open the template in the editor.
     text-align: left;
 }
 
+.divScroll {
+    overflow: scroll;
+    height: 300px;
+}
+
 .alDer{
     text-align: right;
 }
@@ -53,6 +58,11 @@ and open the template in the editor.
 .title{
     text-align: center;
     padding-top: 50px;
+}
+
+.subtitle{
+    text-align: center;
+    padding-top: 25px;
 }
 
 .parrafo{
