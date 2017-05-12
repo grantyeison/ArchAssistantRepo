@@ -48,7 +48,7 @@ public class GestionarProyectos extends HttpServlet {
         String crear, eliminar, seleccionar;
         crear = request.getParameter("btnCrearProyecto");
         eliminar = request.getParameter("btnEliminarProyecto");
-        seleccionar = request.getParameter("btnSeleccionarProyecto");
+        seleccionar = request.getParameter("txtIdProyecto");
                 
         if (crear != null)
         {
@@ -131,9 +131,11 @@ public class GestionarProyectos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        request.getSession().invalidate();
-        response.sendRedirect("index.jsp");
+        String cerrar = request.getParameter("BtnCerrarSesion");
+        if(cerrar!=null){
+            request.getSession().invalidate();
+            response.sendRedirect("index.jsp");
+        }
     }
 
     /**
