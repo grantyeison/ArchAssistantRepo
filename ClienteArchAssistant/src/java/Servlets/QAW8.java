@@ -51,7 +51,11 @@ public class QAW8 extends HttpServlet {
         String regresar = request.getParameter("btnQaw8anterior");
         String Refinar = request.getParameter("btnQaw8Refinar");
         String codigoEscenario = request.getParameter("txtQaw8CodigoSeleccionar");
-                
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }        
         if (Refinar != null)
         {
             Escenario esc = buscarEscenario(Integer.parseInt(codigoEscenario));

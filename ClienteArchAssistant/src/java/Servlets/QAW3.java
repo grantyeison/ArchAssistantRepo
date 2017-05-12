@@ -57,11 +57,14 @@ public class QAW3 extends HttpServlet {
         ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        //           fichero = new File(UPLOAD_DIRECTORY+request.getSession().getAttribute("proyectoActual")+"\\QAW3",uploaded.getName());
-         
         guardar = request.getParameter("btnQaw3Guardar");
         continuar = request.getParameter("btnQaw3Continuar");
         regresar = request.getParameter("btnQaw3anterior");
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (guardar != null)
         {
             Rationaleqaw ratq = archB.RationaleQAW(pro.getProID(), "qaw3");
@@ -106,13 +109,13 @@ public class QAW3 extends HttpServlet {
             for (File archivo : archivos)
             {
                 //String descargar = request.getParameter("btnQaw3Bajar"+archivo.getName());
-                if (request.getParameter("btnQaw3Bajar"+archivo.getName())!= null)
+                if (request.getParameter("btnQawBajar"+archivo.getName())!= null)
                 {
                     arch.descargar(archivo.getAbsolutePath(), archivo.getName());
                     response.sendRedirect("qaw3.jsp");
                 }
 
-                if (request.getParameter("btnQaw3Eliminar"+archivo.getName())!= null)
+                if (request.getParameter("btnQawEliminar"+archivo.getName())!= null)
                 {
                     arch.eliminarArchivo(archivo.getAbsolutePath());
                     response.sendRedirect("qaw3.jsp");

@@ -50,7 +50,11 @@ public class QAW7 extends HttpServlet {
         String regresar = request.getParameter("btnQaw7anterior");
         String prioridades = request.getParameter("btnQaw7Prioridad");
         String code;
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (prioridades != null)
         { 
             code = request.getParameter("txtQaw7CodigoSeleccionar");

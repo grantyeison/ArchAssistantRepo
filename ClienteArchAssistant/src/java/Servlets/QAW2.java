@@ -47,7 +47,11 @@ public class QAW2 extends HttpServlet {
         String guardar = request.getParameter("btnQaw2Guardar");
         String continuar = request.getParameter("btnQaw2Continuar");
         String regresar = request.getParameter("btnQaw2anterior");
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();

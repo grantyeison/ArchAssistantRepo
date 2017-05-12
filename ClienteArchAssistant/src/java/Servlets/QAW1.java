@@ -46,7 +46,11 @@ public class QAW1 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnQaw1Guardar");
         String continuar = request.getParameter("btnQaw1Continuar");
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();

@@ -57,7 +57,11 @@ public class QAW4 extends HttpServlet {
         List<Atributocalidad> seleccionados;
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if(guardarAtributos != null)
         {
             String atris = "";
@@ -158,7 +162,7 @@ public class QAW4 extends HttpServlet {
         }
         if (regresar != null)
         {
-            response.sendRedirect("qaw4.jsp");
+            response.sendRedirect("qaw3.jsp");
         }
         
         Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw4");
@@ -169,13 +173,13 @@ public class QAW4 extends HttpServlet {
             for (File archivo : archivos)
             {
                 //String descargar = request.getParameter("btnQaw3Bajar"+archivo.getName());
-                if (request.getParameter("btnQaw4Bajar"+archivo.getName())!= null)
+                if (request.getParameter("btnQawBajar"+archivo.getName())!= null)
                 {
                     arch.descargar(archivo.getAbsolutePath(), archivo.getName());
                     response.sendRedirect("qaw4.jsp");
                 }
 
-                if (request.getParameter("btnQaw4Eliminar"+archivo.getName())!= null)
+                if (request.getParameter("btnQawEliminar"+archivo.getName())!= null)
                 {
                     arch.eliminarArchivo(archivo.getAbsolutePath());
                     response.sendRedirect("qaw4.jsp");

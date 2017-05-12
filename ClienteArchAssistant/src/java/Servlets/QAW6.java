@@ -52,7 +52,11 @@ public class QAW6 extends HttpServlet {
         String EliminarEsc = request.getParameter("btnQaw6EliminarEscenario");
         String siguienteAtr = request.getParameter("btnQaw6SiguienteAtributo");
         String codigoEscenario;
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (siguienteAtr != null)
         {
             request.getSession().setAttribute("sigAtr", 1);
