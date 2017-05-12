@@ -7,6 +7,11 @@ and open the template in the editor.
     Created on : 10/05/2017, 08:10:44 PM
     Author     : GOMEZ
 */
+/*
+body{
+    //background-image: url('../img/cielo_azul.jpg');
+}
+*/
 
 .alIzq{
     text-align: left;
@@ -73,3 +78,23 @@ and open the template in the editor.
     text-align: center;
 }
 
+.btn-file{
+    position: relative;
+    overflow: visible;
+}
+
+.btn-file input[type=file]{
+    position: absolute;
+    top:0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    
+    background: inherit;
+    display: block;   
+    /*outline: none;*/
+}
