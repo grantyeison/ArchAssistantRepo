@@ -366,8 +366,7 @@ public class ArchAssistantBean {
         {
             ratio = ratq4.getRatQawDescripcion();
             indiceAtribs = ratio.indexOf(",~|~|");
-            System.out.println("^^^^^^^^^^^^^^^^"+ratq4.getRatQawDescripcion());
-            if (indiceAtribs != 0)
+            if (indiceAtribs > 0)
             {
                 String ac = ratio.substring(0, indiceAtribs);
                 listAc = ac.split(",");
@@ -379,12 +378,11 @@ public class ArchAssistantBean {
             {
                 for (String id : listAc)
                 {   
-                    //AtributosEscogidos.add(atr);
                     if (Integer.parseInt(id) == atr.getAcID())
                     {
                         
                         AtributosEscogidos.add(atr);
-                    }/**/
+                    }
                 }
             }
         }
