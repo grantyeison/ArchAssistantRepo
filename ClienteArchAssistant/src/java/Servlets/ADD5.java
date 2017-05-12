@@ -43,7 +43,11 @@ public class ADD5 extends HttpServlet {
         String guardar = request.getParameter("btnAdd5Guardar");
         String continuar = request.getParameter("btnAdd5Continuar");
         String regresar = request.getParameter("btnAdd5anterior");
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();

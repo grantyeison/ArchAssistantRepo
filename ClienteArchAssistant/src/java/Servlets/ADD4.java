@@ -45,7 +45,11 @@ public class ADD4 extends HttpServlet {
         String continuar = request.getParameter("btnAdd4Continuar");
         String regresar = request.getParameter("btnAdd4anterior");
         String crearModulo = request.getParameter("btnCrearModulo");
-
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (guardar != null) {
             ArchAssistantBean archB = new ArchAssistantBean();
             Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");

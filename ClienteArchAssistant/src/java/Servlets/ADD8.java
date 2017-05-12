@@ -44,7 +44,11 @@ public class ADD8 extends HttpServlet {
         String continuar = request.getParameter("btnAdd8Continuar");
         String regresar = request.getParameter("btnAdd8anterior");
         String finalizar = request.getParameter("btnAdd8Finalizar");
-        
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();

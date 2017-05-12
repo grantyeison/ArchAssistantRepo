@@ -45,6 +45,11 @@ public class ADD2 extends HttpServlet {
         String continuar = request.getParameter("btnAdd2Continuar");
         String regresar = request.getParameter("btnAdd2anterior");
         ArchAssistantBean archB = new ArchAssistantBean();
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (request.getParameter("selPadre") != null) {
             String modPadre = request.getParameter("selPadre");        
             Modulo padre = archB.buscarMod(Integer.parseInt(modPadre));

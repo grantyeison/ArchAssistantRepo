@@ -65,7 +65,11 @@ public class ADD1 extends HttpServlet {
         String nomArch = null;
         String ratAdd = "";
         File fichero = null;
-                
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }        
         /*FileItemFactory es una interfaz para crear FileItem*/
         FileItemFactory factory = new DiskFileItemFactory();
         /*ServletFileUpload esta clase convierte los input file a FileItem*/
