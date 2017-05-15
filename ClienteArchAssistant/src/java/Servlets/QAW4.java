@@ -9,7 +9,6 @@ import Beans.ArchAssistantBean;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.AbstractList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
 import servicios.Atributocalidad;
@@ -79,9 +77,6 @@ public class QAW4 extends HttpServlet {
                 }
             }
             atris += "~|~|";
-            System.out.println(atris);
-            //HttpSession sesion = request.getSession();
-            //sesion.setAttribute("atributosSeleccionados", seleccionados);
             
             Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw4");
             if (ratq == null)
@@ -151,6 +146,11 @@ public class QAW4 extends HttpServlet {
         {
             if (request.getParameter("ratqaw4")!= "")
             {
+                ArchAssistantBean p = new ArchAssistantBean();
+                Rationaleqaw ratq = p.RationaleQAW(proy.getProID(), "qaw4");
+                List<Atributocalidad> atrEscogidos = p.ObtenerAtributosEscogidos(ratq);
+                
+                request.getSession().setAttribute("AtributoActual",atrEscogidos.get(0));
                 response.sendRedirect("qaw5.jsp");
             }
             else
@@ -239,15 +239,16 @@ public class QAW4 extends HttpServlet {
             ratq.setRatQawPaso("qaw4");
         
         }
+        
         if (ratq.getRatQawDescripcion()== null)
         {
-            ratq.setRatQawDescripcion("~|~|\n debes registrar el rationale en este espacio!!");
+            ratq.setRatQawDescripcion("debes registrar el rationale en este espacio!!");
         }
-        //System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+ratq.getRatQawID());
+
         ratq.setRatQawArchivo(DirectorioArchivo);
-        //    ratq.setRatQawDescripcion("~|~|\n debes registrar el rationale en este espacio!!");
         guardarRationaleQaw(ratq);
          
+                
         response.sendRedirect("qaw4.jsp");
     }
 
