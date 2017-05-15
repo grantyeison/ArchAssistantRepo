@@ -18,11 +18,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ArchAssistant - QAW</title>
-        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
-        <link rel="stylesheet" href="./css/estilos.css" /><!---->
-        <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
-        <script src="./js/bootstrap.min.js"></script>
     </head>
     <body>
         <form name="qaw-5" action="QAW5">
@@ -117,10 +112,12 @@
               <%
                   ArchAssistantBean archB = new ArchAssistantBean();
                   List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
+                  
                   if (atrActual != null)
                   {
                     for (Escenario esce : listaEsc)
                     {
+                        System.out.println("escenarios " + esce.getTblAtributoCalidadacID());
                       if (esce.getTblAtributoCalidadacID().getAcID() == atrActual.getAcID())
                       {
                           out.println("<tr>");
@@ -200,8 +197,7 @@
               <tbody>
                 <tr>
                     <td><input type="submit" value="Regresar" name="btnQaw5anterior"/></td>
-                  <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
-                        <td><input type="submit" value="Continuar" name="btnQaw5Continuar"/></td>
+                  <td><input type="submit" value="Continuar" name="btnQaw5Continuar"/></td>
                 </tr>
               </tbody>
             </table>

@@ -27,14 +27,15 @@
         <script src="./js/funciones.js"></script>
         <script type="text/javascript">
             $(document).ready(function (evt) {
-                $('#tbl').on('dblclick', 'tr td', function (evt) {
-                    var target, id, valorSeleccionado;
+                $('#tbl').on("click", 'tr td', function (evt) {
+                    var target, id;
                     target = $(event.target);
                     id = target.parent().data('id');
                     $('#txtIdProyecto').val(id);
-                    //valorSeleccionado = target.text();
-                    $('#gestionarProyectos').submit();
-
+                    $('#session').setAttribute("idProyecto",id);
+                    
+                    //local storage:
+                    localStorage.setItem("IdProy",id);
                 });
             });
         </script>
@@ -57,14 +58,14 @@
                     </tr>
                 </table>
             </form>
-            <form name="gestionarProyectos" id="gestionarProyectos" action="GestionarProyectos" method="POST">
-                <table border="1" class="tblCentContent table table-hover">
+            <form name="gestionarProyectos" id="gestionarProyectos" action="GestionarProyectos">
+                <table border="1" class="tblCentContent table table-hover ">
                     <thead>
                         <tr>
-                            <th>Código</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
                             <th>Avance</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody id="tbl">
@@ -73,30 +74,40 @@
                             ArchAssistantBean p = new ArchAssistantBean();
                             lista = p.Listar(validUsuario.getUsuUsuario());
                             for (Proyecto pro : lista) {
-                                out.println("<tr data-id='" + pro.getProID() + "'><td></td>");
-                                out.println("<td>" + pro.getProNombre() + "</td>");
-                                out.println("<td>" + pro.getProDescripcion() + "</td>");
+                                out.println("<tr data-id='" + pro.getProID() + "'>");
+                                out.println("<td class=\"ancho\">" + pro.getProNombre() + "</td>");
+                                out.println("<td class=\"parrafo\">" + pro.getProDescripcion() + "</td>");
                                 out.println("<td>" + pro.getProAvance() + "</td>");
+                                //out.println("<td>");
+                                
+                                out.println("<td class=\"ancho\"><button type=\"submit\" value=\"Seleccionar\" name=\"btnSeleccionarProyecto"+pro.getProID()+"\" class=\"btn btn-primary\" >  <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span></button>");
+                                out.println("<button type=\"submit\" value=\"Eliminar\" name=\"btnEliminarProyecto"+pro.getProID()+"\" class=\"btn btn-primary\">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>");
+                                
                                 if (pro.getProAvance().equals("qaw8")) {
-                                    out.println("<td><input type=\"submit\" value=\"Reporte\" name=\"btnGenerarReporte" + pro.getProID() + "\" class =\"btn btn-primary\"/></td></tr>");
+                                    out.println("<button type=\"submit\" value=\"Reporte\" name=\"btnGenerarReporte" + pro.getProID() + "\" class =\"btn btn-primary\">  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button></td></tr>");
+                                }
+                                else
+                                {
+                                    out.println("</td></tr>");
                                 }
                             }
                         %>
                     </tbody>
                 </table>
-                <table border="0" class="tblCent">
+                <table border="0" class="tblCentContent table table-hover">
                     <tbody>
-                        <!--<tr>
-                            <td>ID del proyecto: </td>
-                             buscar ccampos de texto y botones con iconos para eliminar, seleccionar y crear 
-                            <td><input readonly  hidden type="text" name="txtIdProyecto" id="txtIdProyecto" /></td>
-                        </tr>
-                        -->
+                        <!--
                         <tr>
-                            <!--<td><input type="submit" id="btnSel" value="Seleccionar" name="btnSeleccionarProyecto" class="btn btn-primary"/></td>-->
-                            <td><input type="submit" value="Eliminar" name="btnEliminarProyecto" class="btn btn-primary"/></td>
-                            <td><input type="submit" value="Nuevo" name="btnCrearProyecto" class="btn btn-primary"/></td>
-                    <span class="btn btn-primary btn-file"> Browse<input type="file"> </span>
+                             <td>ID del proyecto: </td>
+                            buscar ccampos de texto y botones con iconos para eliminar, seleccionar y crear 
+                            <td><input hidden  type="text" name="txtIdProyecto" id="txtIdProyecto" /></td>
+                            
+                        </tr>-->
+                        <tr>
+                        <!--    <td><input type="submit" id="btnSel" value="Seleccionar" name="btnSeleccionarProyecto" class="btn btn-primary"/></td>-->
+                        
+                        <td class="alDer"><button type="submit" value="Nuevo" name="btnCrearProyecto" class="btn btn-primary"/>  <span class="glyphicon glyphicon-plus" aria-hidden="true"/></button></td>
+                    <!--<span class="btn btn-primary btn-file"> Browse<input type="file"> </span>-->
                         </tr>
                     </tbody>
                 </table>

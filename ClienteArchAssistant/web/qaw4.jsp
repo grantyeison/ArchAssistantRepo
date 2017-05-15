@@ -62,10 +62,8 @@
                     out.println("<table border=\"0\" class=\"tblCentContent\">");
                     out.println("<tbody>");
                     Atributocalidad atr;
-                    for (int i = 0 ; i<=listaAtributos.size(); i+=3) 
-                    {
-                        if (listaAtributos.size() > i)
-                        {
+                    for (int i = 0; i <= listaAtributos.size(); i += 3) {
+                        if (listaAtributos.size() > i) {
                             atr = listaAtributos.get(i);
                             out.println("<tr>");
                             out.println("<td class=\"alIzq\">");
@@ -76,13 +74,12 @@
                                 }
                             }
                             out.println(">\t" + atr.getAcNombre());
-                            out.println("<input readonly hidden='true' value ='"+atr.getAcDescripcion()+ "' id=atrDesc'"+atr.getAcID()+"'/>");
+                            out.println("<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>");
                             out.println("</td>");
                         }
-                        
-                        if (listaAtributos.size() > i+1)
-                        {
-                            atr = listaAtributos.get(i+1);
+
+                        if (listaAtributos.size() > i + 1) {
+                            atr = listaAtributos.get(i + 1);
                             out.println("<td class=\"alIzq\">");
                             out.println("<input type=\"checkbox\" name=\"chk" + atr.getAcID() + "\" ");
                             for (Atributocalidad atrEsc : atrEscogidos) {
@@ -91,13 +88,12 @@
                                 }
                             }
                             out.println(">\t" + atr.getAcNombre());
-                            out.println("<input readonly hidden='true' value ='"+atr.getAcDescripcion()+ "' id=atrDesc'"+atr.getAcID()+"'/>");
+                            out.println("<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>");
                             out.println("</td>");
                         }
-                        
-                        if (listaAtributos.size() > i+2)
-                        {
-                            atr = listaAtributos.get(i+2);
+
+                        if (listaAtributos.size() > i + 2) {
+                            atr = listaAtributos.get(i + 2);
                             out.println("<td class=\"alIzq\">");
                             out.println("<input type=\"checkbox\" class=\"margenS\" name=\"chk" + atr.getAcID() + "\" ");
                             for (Atributocalidad atrEsc : atrEscogidos) {
@@ -106,13 +102,13 @@
                                 }
                             }
                             out.println(">\t" + atr.getAcNombre());
-                            out.println("<input readonly hidden='true' value ='"+atr.getAcDescripcion()+ "' id=atrDesc'"+atr.getAcID()+"'/>");
+                            out.println("<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>");
                             out.println("</td>");
                         }
                         out.println("</tr>");
-                        
+
                     }
-                    
+
                     out.println("</div>");
                     out.println("</tbody>");
                     out.println("</table>");
@@ -137,32 +133,32 @@
                         </tr>
                     </tbody>
                 </table>
-                    <div class="col-lg-7 col-md-6 col-sm-12">
+                <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2 class="page-header">Rationale:</h2>
                     <textarea rows="5" cols="120" name="ratqaw4" class="form-control parrafo"><%
-                    ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
-                    if (ratq != null) {
-                        int indiceAtribs = 0;
-                        String ratio = ratq.getRatQawDescripcion();
-                        if (ratio != null || ratio != "") {
-                            indiceAtribs = ratio.indexOf("~|~|") + 4;
+                        ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
+                        if (ratq != null) {
+                            int indiceAtribs = 0;
+                            String ratio = ratq.getRatQawDescripcion();
+                            if (ratio != null || ratio != "") {
+                                indiceAtribs = ratio.indexOf("~|~|") + 4;
+                            }
+                            out.print(ratio.substring(indiceAtribs));
                         }
-                        out.print(ratio.substring(indiceAtribs));
-                    }
-                    %></textarea>
-                <br/>
-                <input type="submit" value="Guardar" name="btnQaw4Guardar" class="btn btn-primary"/>
-                
+                        %></textarea>
+                    <br/>
+                    <input type="submit" value="Guardar" name="btnQaw4Guardar" class="btn btn-primary"/>
+
                 </div>
             </form>
 
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <div>
                     <h2 class="page-header">Archivos:</h2>
-                    <form name="qaw-4" action="QAW4" method="post" enctype="multipart/form-data">
+                    <form name="qaw-4" action="QAW4" method="post"  enctype="multipart/form-data">
                         <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnQaw4subir" class="btn btn-primary"/></td></tr>
+                            <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
+                                <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
                         </table>
                     </form>
                 </div>
@@ -171,23 +167,23 @@
 
                         <table width="400" border="0" class="tblCentfull">
                             <tbody>
-                        <%
-                            GuardarArchivo arch = new GuardarArchivo();
-                            List<File> archivos = null;
-                            if (ratq != null) {
-                                archivos = arch.listarArchivos(ratq.getRatQawArchivo());
-                            }
-                            if (archivos != null) {
-                                for (File archivo : archivos) {
-                                    out.print("<tr>");
-                                    out.print("<td>" + archivo.getName() + "</td>");
-                                    out.print("<td class='alDer'>"+"<button type=\"submit\"  name=\"btnQawEliminar"+archivo.getName()+"\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                    out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar"+archivo.getName()+"\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>"+"</td>");
-                                    out.print("</tr>");
-                                }
-                            }
-                        %>
-                    </tbody>
+                                <%
+                                    GuardarArchivo arch = new GuardarArchivo();
+                                    List<File> archivos = null;
+                                    if (ratq != null) {
+                                        archivos = arch.listarArchivos(ratq.getRatQawArchivo());
+                                    }
+                                    if (archivos != null) {
+                                        for (File archivo : archivos) {
+                                            out.print("<tr>");
+                                            out.print("<td>" + archivo.getName() + "</td>");
+                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                            out.print("</tr>");
+                                        }
+                                    }
+                                %>
+                            </tbody>
                         </table>
                     </form>
                 </div>
@@ -196,7 +192,7 @@
                 <table border="0" class="tblCent">
                     <tbody>
                         <tr>
-                            <td class="alDer"><input type="submit" value="Regresar" name="btnQaw4anterior" class="btn btn-primary btn-lg"/></td>
+                            <td class="alDer"><input type="submit" value="Regresar" name="btnQaw4anterior" class="btn btn-primary btn-lg previous"/></td>
                             <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
                             <td class="alIzq"><input type="submit" value="Continuar" name="btnQaw4Continuar" class="btn btn-primary btn-lg"/></td>
                         </tr>

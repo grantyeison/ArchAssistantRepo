@@ -69,8 +69,8 @@
 
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <div>
-                    <h2 class="page-header">Archivos:</h2>
-                    <form name="qaw-1" action="QAW1" method="post" enctype="multipart/form-data">
+                    <form name="qaw-1" action="QAW1" method="post"  enctype="multipart/form-data">
+                        <h2 class="page-header">Archivos:</h2>
                         <table width="400" border="0" class="tblCent">
                             <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
                                 <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
@@ -85,7 +85,6 @@
                                 <%
                                     GuardarArchivo arch = new GuardarArchivo();
                                     List<File> archivos = null;
-                                    System.out.println("rationale: ******** " + ratq.getRatQawArchivo());
                                     if (ratq != null) {
                                         archivos = arch.listarArchivos(ratq.getRatQawArchivo());
                                     }
