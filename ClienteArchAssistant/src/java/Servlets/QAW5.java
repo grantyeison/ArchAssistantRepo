@@ -57,19 +57,14 @@ public class QAW5 extends HttpServlet {
         String seleccionado = request.getParameter("slcAtributo");
         HttpSession sesion = request.getSession();
         Atributocalidad actual = null;
-        sesion.setAttribute("AtributoActual", actual); 
-        ArchAssistantBean archB = new ArchAssistantBean();
-        GuardarArchivo arch = new GuardarArchivo();
-        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        String canc = request.getParameter("btnQawInicio");
-        if (canc != null)
-        {
-            response.sendRedirect("InicioUsuario.jsp");
-        }
         if (seleccionado != null)
         {
             actual = buscarAtributo(Integer.parseInt(seleccionado));
         } 
+        sesion.setAttribute("AtributoActual", actual); 
+        ArchAssistantBean archB = new ArchAssistantBean();
+        GuardarArchivo arch = new GuardarArchivo();
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
         
         if (Atributo != null)
         {
@@ -93,21 +88,22 @@ public class QAW5 extends HttpServlet {
         {
             Escenario esc = new Escenario();
             Atributocalidad atr = (Atributocalidad)request.getSession().getAttribute("AtributoActual");
-            if (atr == null)
+            
+            if (atr != null)
             {
-                
+                Modulo mod = buscarModulo(1);
+                esc.setEscPrioridad(0);
+                esc.setEscAmbiente(request.getParameter("txtqaw5Ambiente"));
+                esc.setEscEstimulo(request.getParameter("txtqaw5Estimulo"));
+                esc.setEscRespuesta(request.getParameter("txtqaw5Respuesta"));
+                esc.setEscNombre(request.getParameter("txtqaw5Nombre"));
+                esc.setTblAtributoCalidadacID(atr);
+                esc.setTblModuloModId(mod);
+                esc.setTblProyectoProID(proy);
+                crearEscenario(esc);
             }
-            Modulo mod = buscarModulo(1);
-            esc.setEscPrioridad(0);
-            esc.setEscAmbiente(request.getParameter("txtqaw5Ambiente"));
-            esc.setEscEstimulo(request.getParameter("txtqaw5Estimulo"));
-            esc.setEscRespuesta(request.getParameter("txtqaw5Respuesta"));
-            esc.setEscNombre(request.getParameter("txtqaw5Nombre"));
-            esc.setTblAtributoCalidadacID(atr);
-            esc.setTblModuloModId(mod);
-            esc.setTblProyectoProID(proy);
-            crearEscenario(esc);
             response.sendRedirect("qaw5.jsp");
+            
             
         }
         
@@ -154,13 +150,13 @@ public class QAW5 extends HttpServlet {
             for (File archivo : archivos)
             {
                 //String descargar = request.getParameter("btnQaw3Bajar"+archivo.getName());
-                if (request.getParameter("btnQawBajar"+archivo.getName())!= null)
+                if (request.getParameter("btnQaw5Bajar"+archivo.getName())!= null)
                 {
                     arch.descargar(archivo.getAbsolutePath(), archivo.getName());
                     response.sendRedirect("qaw5.jsp");
                 }
 
-                if (request.getParameter("btnQawEliminar"+archivo.getName())!= null)
+                if (request.getParameter("btnQaw5Eliminar"+archivo.getName())!= null)
                 {
                     arch.eliminarArchivo(archivo.getAbsolutePath());
                     response.sendRedirect("qaw5.jsp");
