@@ -25,42 +25,40 @@
         <script src="./js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1 align="center">ArchAssistant</h1>
-        <h2 align="center">QAW</h2>
-        <h2 align="center"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
-        <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
-        <table width="100%" border="0" align="center">
-            <tbody>
-              <tr>
-                <td><a href="QAW1.html"><h3>Paso 1</h3></a></td>
-                <td><a href="QAW2.html"><h3>Paso 2</h3></a></td>
-                <td><a href="QAW3.html"><h3>Paso 3</h3></a></td>
-                <td><a href="QAW4.html"><h3>Paso 4</h3></a></td>
-                <td><a href="QAW5.html"><h3>Paso 5</h3></a></td>
-                <td><h1>Paso 6</h1></td>
-                <td><h3>Paso 7</h3></td>
-                <td><h3>Paso 8</h3></td>
-              </tr>
-            </tbody>
-        </table>
-        <form name="qaw-6" action="QAW6">
-            <h2>Consolidación de escenarios:</h2>
-            <p align="justify">
-                Teniendo una lista de varios escenarios generados durante la lluvia de ideas, se hace una consolidación de los mismos buscando escenarios que sean muy similares o que se puedan mezclar en uno solo, para esto, se hace una votación por parte de los stakeholders siendo cuidadosos de no perder funcionalidades al hacer la fusión, para evitar que no se pierda el trabajo hecho en el paso anterior.
-            </p>
+        <div class="col-lg-12 col-md-12 col-md-12">
+            <form name="qaw-6" action="QAW6">
+                <h2 class="subtitle">QAW</h2>
+                <h2 class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
+                    <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
 
-            <h2>Escenarios:</h2>
+                <table border="0" class="tblCentfull">
+                    <tbody>
+                        <tr>
+                            <td><a href="QAW1.html"><h3 class="bienvenida">Paso 1</h3></a></td>
+                            <td><a href="QAW2.html"><h3 class="bienvenida">Paso 2</h3></a></td>
+                            <td><a href="QAW3.html"><h3 class="bienvenida">Paso 3</h3></a></td>
+                            <td><a href="QAW4.html"><h3 class="bienvenida">Paso 4</h3></a></td>
+                            <td><a href="QAW5.html"><h3>Paso 5</h3></a></td>
+                            <td><h1 class="bienvenida">Paso 6</h1></td>
+                            <td><h3 class="bienvenida">Paso 7</h3></td>
+                            <td><h3 class="bienvenida">Paso 8</h3></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 class="page-header">Consolidación de escenarios:</h2>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-3 col-md-2"></div>
+                    <div class="col-lg-6 col-md-8 col-sm-12">
+                        <p class="parrafo">
+                            Teniendo una lista de varios escenarios generados durante la lluvia de ideas, se hace una consolidación de los mismos buscando escenarios que sean muy similares o que se puedan mezclar en uno solo, para esto, se hace una votación por parte de los stakeholders siendo cuidadosos de no perder funcionalidades al hacer la fusión, para evitar que no se pierda el trabajo hecho en el paso anterior.
+                        </p>
+                    </div>
+                    <div class="col-lg-3 col-md-2"></div>
+                </div>
 
-            <h3>Lista de escenarios:</h3>
-            <table width="100%" border="3">
-              <tbody>
-                <tr>
-                  <th scope="col">Código</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Estímulo</th>
-                  <th scope="col">ambiente</th>
-                  <th scope="col">Respuesta</th>
-                </tr>
+                <h2 class="bienvenida page-header">Escenarios:</h2>
+
+
                 <%
                     List<Integer> atributosEscogidos = new LinkedList<Integer>();
                     int id = 0;
@@ -70,152 +68,163 @@
                     ArchAssistantBean p = new ArchAssistantBean();
                     listaAtributos = p.ListarAtr();
                     Rationaleqaw ratq4 = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
-                    Atributocalidad atrActual = (Atributocalidad)session.getAttribute("AtributoActual");
+                    Atributocalidad atrActual = (Atributocalidad) session.getAttribute("AtributoActual");
                     String ratio;
                     String[] listAc = null;
                     int indiceAtribs = 0;
-                    if (ratq4 != null)
-                    {
+                    if (ratq4 != null) {
                         ratio = ratq4.getRatQawDescripcion();
                         indiceAtribs = ratio.indexOf(",~|~|");
-                        if (indiceAtribs != 0)
-                        {
+                        if (indiceAtribs != 0) {
                             String ac = ratio.substring(0, indiceAtribs);
                             listAc = ac.split(",");
                         }
                     }
-                    for (String i : listAc)
-                    {
+                    for (String i : listAc) {
                         atributosEscogidos.add(Integer.parseInt(i));
                     }
                     atrActual = (Atributocalidad) session.getAttribute("AtributoActual");
-                    System.out.println("atractual: "+atrActual+" bandera "+ session.getAttribute("sigAtr"));
-                    if (atrActual != null)
-                    {
+                    if (atrActual != null) {
                         index = atributosEscogidos.indexOf(atrActual.getAcID());
                     }
-                    if (atributosEscogidos.size()> index+1)
-                    {
-                        if (bandera == 1)
-                        {
-                            id = atributosEscogidos.get(index+1);
-                        }
-                        else 
-                        {
-                            if (index == -1)
-                            {
+                    if (atributosEscogidos.size() > index + 1) {
+                        if (bandera == 1) {
+                            id = atributosEscogidos.get(index + 1);
+                        } else {
+                            if (index == -1) {
                                 index = 0;
                             }
                             id = atributosEscogidos.get(index);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         id = atributosEscogidos.get(index);
                     }
                     atrActual = p.buscarAtr(id);
-                    
+
                     session.setAttribute("AtributoActual", atrActual);
-                                        
-                    out.println("<h2> Escenarios de Atributo "+atrActual.getAcNombre()+"</h2>");
 
-                    ArchAssistantBean archB = new ArchAssistantBean();
-                    List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
-                    for (Escenario esce : listaEsc)
-                    {
-                        if (esce.getTblAtributoCalidadacID().getAcID() == id)
-                        {
-                              out.println("<tr>");
-                              out.println("<td>");
-                              out.println(esce.getEscID());
-                              out.println("</td>");
-                              out.println("<td>");
-                              out.println(esce.getEscNombre());
-                              out.println("</td>");
-                              out.println("<td>");
-                              out.println(esce.getEscEstimulo());
-                              out.println("</td>");
-                              out.println("<td>");
-                              out.println(esce.getEscAmbiente());
-                              out.println("</td>");
-                              out.println("<td>");
-                              out.println(esce.getEscRespuesta());
-                              out.println("</td>");
-                              out.println("</tr>");
+                    out.println("<h2> Escenarios de Atributo " + atrActual.getAcNombre() + "</h2>");
+                %>
+
+                <div class="col-lg-6 col-md-12 col-sm-12">
+
+                    <table width="100" border="0" class="tblCentContent">
+                        <tbody>
+                            <tr>
+                                <td>Código del Escenario: </td>
+                                <td><input type="text" name="txtQaw6CodigoSeleccionar"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Seleccionar o crear" name="btnQaw6SeleccionarEscenario"/></td>
+                                <td><input type="submit" value="Eliminar" name="btnQaw6EliminarEscenario"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <table width="100%" border="3" class="tblCentContent">
+                        <tbody>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Estímulo</th>
+                                <th scope="col">ambiente</th>
+                                <th scope="col">Respuesta</th>
+                            </tr>
+                            <%
+                                ArchAssistantBean archB = new ArchAssistantBean();
+                                List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
+                                for (Escenario esce : listaEsc) {
+                                    if (esce.getTblAtributoCalidadacID().getAcID() == id) {
+                                        out.println("<tr>");
+                                        out.println("<td>");
+                                        out.println(esce.getEscID());
+                                        out.println("</td>");
+                                        out.println("<td>");
+                                        out.println(esce.getEscNombre());
+                                        out.println("</td>");
+                                        out.println("<td>");
+                                        out.println(esce.getEscEstimulo());
+                                        out.println("</td>");
+                                        out.println("<td>");
+                                        out.println(esce.getEscAmbiente());
+                                        out.println("</td>");
+                                        out.println("<td>");
+                                        out.println(esce.getEscRespuesta());
+                                        out.println("</td>");
+                                        out.println("</tr>");
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
+                <input type="submit" value="Siguiente" name="btnQaw6SiguienteAtributo" class="btn btn-primary btn-lg"/>  
+
+                <div class="col-lg-7 col-md-6 col-sm-12">
+                    <h2 class="page-header">Rationale:</h2>
+                    <textarea rows="5" cols="120" name="ratqaw6" class="form-control parrafo"><%
+                        //ArchAssistantBean p = new ArchAssistantBean();
+                        Rationaleqaw ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw6");
+                        if (ratq != null) {
+                            out.print(ratq.getRatQawDescripcion());
                         }
-                    }
-              %>
-              </tbody>
-            </table>
+                        %></textarea>
+                    <br/>
+                    <input type="submit" value="Guardar" name="btnQaw6Guardar"  class="btn btn-primary"/>
 
-
-
-            <table width="100" border="0">
-              <tbody>
-                <tr>
-                    <td>Código del Escenario: </td>
-                    <td><input type="text" name="txtQaw6CodigoSeleccionar"/></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Seleccionar o crear" name="btnQaw6SeleccionarEscenario"/></td>
-                    <td><input type="submit" value="Eliminar" name="btnQaw6EliminarEscenario"/></td>
-                </tr>
-              </tbody>
-            </table>
-            
-            <input type="submit" value="Siguiente" name="btnQaw6SiguienteAtributo"/>  
-              
-            <h2>Rationale:</h2>
-            <textarea rows="5" cols="120" name="ratqaw6"><%
-                    //ArchAssistantBean p = new ArchAssistantBean();
-                    Rationaleqaw ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw6");
-                    if (ratq != null)
-                    {
-                        out.print(ratq.getRatQawDescripcion());
-                    }
-                %></textarea>
-                <br/>
-                <input type="submit" value="Guardar" name="btnQaw6Guardar"/>
-                <table width="400" border="0">
-                  <tbody>
-                    <%
-                        GuardarArchivo arch = new GuardarArchivo();
-                        List<File> archivos = null;
-                        if (ratq != null)
-                        {
-                            archivos = arch.listarArchivos(ratq.getRatQawArchivo());
-                        }
-                        if (archivos != null)
-                        {
-                            for(File archivo : archivos)
-                            {
-                                out.print("<tr>");
-                                out.print("<td>"+archivo.getName()+"</td>");
-                                out.print("<td>"+"<input type=\"submit\" value=\"Eliminar\" name=\"btnQawEliminar"+archivo.getName()+"\"/>"+"</td>");
-                                out.print("<td>"+"<input type=\"submit\" value=\"Descargar\" name=\"btnQawBajar"+archivo.getName()+"\"/>"+"</td>");
-                                out.print("</tr>");
-                            }
-                        }
-                     %>
-                  </tbody>
-                </table>
+                </div>
             </form>
 
-            <form name="qaw-6" action="QAW6" method="post" enctype="multipart/form-data">
-                <input type="file" name="archivo" id="myfile"/>
-                <input type="submit" value="subir archivo" name="btnQawsubir"/>
-            </form>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <div>
+                    <h2 class="page-header">Archivos:</h2>
 
-            <form name="qaw-6" action="QAW6">    
-                <table width="100" border="0">
-                  <tbody>
-                    <tr>
-                        <td><input type="submit" value="Regresar" name="btnQaw6anterior"/></td>
-                      <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
-                        <td><input type="submit" value="Continuar" name="btnQaw6Continuar" /></td>
-                    </tr>
-                  </tbody>
-                </table>
-            </form>
+                    <form name="qaw-6" action="QAW6" method="post" enctype="multipart/form-data">
+                        <table width="400" border="0" class="tblCent">
+                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
+                                <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td>
+                        </table>
+                    </form>
+                </div>
+                <div class="divScroll">
+                    <form name="qaw-6" action="QAW6"> 
+                        <table width="400" border="0" class="tblCentfull">
+                            <tbody>
+                                <%
+                                    GuardarArchivo arch = new GuardarArchivo();
+                                    List<File> archivos = null;
+                                    if (ratq != null) {
+                                        archivos = arch.listarArchivos(ratq.getRatQawArchivo());
+                                    }
+                                    if (archivos != null) {
+                                        for (File archivo : archivos) {
+                                            out.print("<tr>");
+                                            out.print("<td>" + archivo.getName() + "</td>");
+                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                            out.print("</tr>");
+                                        }
+                                    }
+                                %>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <form name="qaw-6" action="QAW6">    
+                    <table border="0" class="tblCent">
+                        <tbody>
+                            <tr>
+                                <td class="alDer"><input type="submit" value="Regresar" name="btnQaw6anterior" class="btn btn-primary btn-lg"/></td>
+                                <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                                <td class="alIzq"><input type="submit" value="Continuar" name="btnQaw6Continuar" class="btn btn-primary btn-lg"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

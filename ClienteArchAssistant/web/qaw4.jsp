@@ -31,14 +31,14 @@
                 <table border="0" class="tblCentfull">
                     <tbody>
                         <tr>
-                            <td><a href="QAW1.html"><h3>Paso 1</h3></a></td>
-                            <td><a href="QAW2.html"><h3>Paso 2</h3></a></td>
-                            <td><a href="QAW3.html"><h3>Paso 3</h3></a></td>
-                            <td><h1>Paso 4</h1></td>
-                            <td><h3>Paso 5</h3></td>
-                            <td><h3>Paso 6</h3></td>
-                            <td><h3>Paso 7</h3></td>
-                            <td><h3>Paso 8</h3></td>
+                            <td><a href="QAW1.html"><h3 class="bienvenida">Paso 1</h3></a></td>
+                            <td><a href="QAW2.html"><h3 class="bienvenida">Paso 2</h3></a></td>
+                            <td><a href="QAW3.html"><h3 class="bienvenida">Paso 3</h3></a></td>
+                            <td><h1 class="bienvenida">Paso 4</h1></td>
+                            <td><h3 class="bienvenida">Paso 5</h3></td>
+                            <td><h3 class="bienvenida">Paso 6</h3></td>
+                            <td><h3 class="bienvenida">Paso 7</h3></td>
+                            <td><h3 class="bienvenida">Paso 8</h3></td>
                         </tr>
                     </tbody>
                 </table>
@@ -199,5 +199,6 @@
                     </tbody>
                 </table>
             </form>
+        </div>
     </body>
 </html>
