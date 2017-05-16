@@ -48,37 +48,11 @@ public class GestionarProyectos extends HttpServlet {
         String crear, eliminar, seleccionar;
         crear = request.getParameter("btnCrearProyecto");
         eliminar = request.getParameter("btnEliminarProyecto");
-        seleccionar = request.getParameter("txtIdProyecto");
+        //seleccionar = request.getParameter("txtIdProyecto");
                 
         if (crear != null)
         {
             response.sendRedirect("crearProyecto.jsp");
-        }
-        
-        if (eliminar != null)
-        {
-            Proyecto pro = buscarProyecto(Integer.parseInt(request.getParameter("txtIdProyecto")));
-            Usuario usu = (Usuario)request.getSession().getAttribute("validUsuario");
-            if (usu.getIdUsuario() == pro.getTblUsuarioidUsuario().getIdUsuario())
-            {
-                boolean elim = eliminarProyecto(pro, usu.getIdUsuario());
-            }
-            response.sendRedirect("InicioUsuario.jsp");
-        }
-        
-        if (seleccionar != null)
-        {
-            int idpro = Integer.parseInt(request.getParameter("txtIdProyecto"));
-            Proyecto pro = buscarProyecto(idpro);
-            request.getSession().setAttribute("proyectoActual", pro);
-            if (pro.getProAvance().equals("qaw8"))
-            {
-                //response.sendRedirect("add0.jsp");
-            }
-            else
-            {
-                response.sendRedirect(pro.getProAvance()+".jsp");
-            }
         }
         
         List<Proyecto> lista;
@@ -87,6 +61,29 @@ public class GestionarProyectos extends HttpServlet {
         lista = p.Listar(usu.getUsuUsuario());
         for (Proyecto proy : lista)
         {
+            if (request.getParameter("btnSeleccionarProyecto"+proy.getProID()) != null)
+            {
+                request.getSession().setAttribute("proyectoActual", proy);
+                if (proy.getProAvance().equals("qaw8"))
+                {
+                    //response.sendRedirect("add0.jsp");
+                }
+                else
+                {
+                    response.sendRedirect(proy.getProAvance()+".jsp");
+                }
+            }
+            if (request.getParameter("btnEliminarProyecto"+proy.getProID()) != null)
+            {
+                //Proyecto pro = buscarProyecto(Integer.parseInt(request.getParameter("txtIdProyecto")));
+                
+                if (usu.getIdUsuario() == proy.getTblUsuarioidUsuario().getIdUsuario())
+                {
+                    boolean elim = eliminarProyecto(proy, usu.getIdUsuario());
+                    //si se elimina, que muestre un mensaje diciendo que la eliminación ha sido un éxito
+                }
+                response.sendRedirect("InicioUsuario.jsp");
+            }
             if (request.getParameter("btnGenerarReporte"+proy.getProID()) != null)
             {
                 try 
@@ -131,11 +128,9 @@ public class GestionarProyectos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String cerrar = request.getParameter("BtnCerrarSesion");
-        if(cerrar!=null){
-            request.getSession().invalidate();
-            response.sendRedirect("index.jsp");
-        }
+        
+        request.getSession().invalidate();
+        response.sendRedirect("index.jsp");
     }
 
     /**
