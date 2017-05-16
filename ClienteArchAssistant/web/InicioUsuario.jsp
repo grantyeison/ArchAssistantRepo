@@ -94,7 +94,7 @@
                         %>
                     </tbody>
                 </table>
-                <table border="0" class="tblCentContent table table-hover">
+                <table border="0" class="tblCentContent">
                     <tbody>
                         <!--
                         <tr>

@@ -105,24 +105,9 @@
 
                     out.println("<h2> Escenarios de Atributo " + atrActual.getAcNombre() + "</h2>");
                 %>
-
+                
                 <div class="col-lg-6 col-md-12 col-sm-12">
-
-                    <table width="100" border="0" class="tblCentContent">
-                        <tbody>
-                            <tr>
-                                <td>Código del Escenario: </td>
-                                <td><input type="text" name="txtQaw6CodigoSeleccionar"/></td>
-                            </tr>
-                            <tr>
-                                <td><input type="submit" value="Seleccionar o crear" name="btnQaw6SeleccionarEscenario"/></td>
-                                <td><input type="submit" value="Eliminar" name="btnQaw6EliminarEscenario"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-
-                    <table width="100%" border="3" class="tblCentContent">
+                    <table width="100%" border="3" class="tblCentfull">
                         <tbody>
                             <tr>
                                 <th scope="col">Código</th>
@@ -158,9 +143,29 @@
                             %>
                         </tbody>
                     </table>
+                        <table width="100%" border="0" class="tblCentfull">
+                            <tr>
+                                <td class="alDer"><input type="submit" value="Siguiente" name="btnQaw6SiguienteAtributo" class="btn btn-primary btn-lg"/></td>
+                            </tr>
+                        </table>
                 </div>
-                <input type="submit" value="Siguiente" name="btnQaw6SiguienteAtributo" class="btn btn-primary btn-lg"/>  
-
+                        
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <table width="100" border="0" class="tblCentContent">
+                        <tbody>
+                            <tr>
+                                <td>Código del Escenario: </td>
+                                <td><input type="text" name="txtQaw6CodigoSeleccionar"/></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Seleccionar o crear" name="btnQaw6SeleccionarEscenario" class="btn btn-primary"/></td>
+                                <td><input type="submit" value="Eliminar" name="btnQaw6EliminarEscenario"  class="btn btn-primary"/></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2 class="page-header">Rationale:</h2>
                     <textarea rows="5" cols="120" name="ratqaw6" class="form-control parrafo"><%

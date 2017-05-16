@@ -19,11 +19,15 @@
     </head>
     <body>
         <form name="modEsc" action="ActualizarEscenario">
-            <table width="100" border="0">
+            <h2 class="subtitle">QAW</h2>
+            <h2 class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
+                    <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
+            <h2 class="title">Escenario de calidad:</h2>    
+            <table width="100" border="0" class="tblCent">
              <tbody>
               <tr>
                 <td>Nombre:</td>
-                <td><input type="text" name="txtQawNombre"
+                <td><input type="text" name="txtQawNombre" class="form-control"
                     <%
                         int ref = Integer.parseInt(session.getAttribute("refinar").toString());
                         Escenario esc = (Escenario)session.getAttribute("escenarioActual");
@@ -34,7 +38,7 @@
               </tr>
               <tr>
                 <td>Estímulo:</td>
-                <td><input type="text" name="txtQawEstimulo"
+                <td><input type="text" name="txtQawEstimulo" class="form-control"
                     <%
                         out.println("value = \""+esc.getEscEstimulo()+"\"");
                     %>
@@ -46,13 +50,13 @@
                       {
                         out.println("<tr>");
                         out.println("<td>Fuente:</td>");
-                        out.println("<td><input type=\"text\" name=\"txtQawFuente\"");
+                        out.println("<td><input type=\"text\" name=\"txtQawFuente\" class=\"form-control\" ");
                         out.println("value = \""+esc.getEscFuente()+"\"/>");
                         out.println("</td>");
                         out.println("</tr>");
                         out.println("<tr>");
                         out.println("<td>Artefacto:</td>");
-                        out.println("<td><input type=\"text\" name=\"txtQawArtefacto\"");
+                        out.println("<td><input type=\"text\" name=\"txtQawArtefacto\" class=\"form-control\" ");
                         out.println("value = \""+esc.getEscArtefacto()+"\"/>");
                         out.println("</td>");
                         out.println("</tr>");
@@ -60,7 +64,7 @@
                   %>
               <tr>
                 <td>Ambiente:</td>
-                <td><input type="text" name="txtQawAmbiente"
+                <td><input type="text" name="txtQawAmbiente" class="form-control"
                     <%
                         out.println("value = \""+esc.getEscAmbiente()+"\"");
                     %>
@@ -69,7 +73,7 @@
               </tr>
               <tr>
                 <td>Respuesta:</td>
-                <td><input type="text" name="txtQawRespuesta"
+                <td><input type="text" name="txtQawRespuesta" class="form-control"
                     <%
                         out.println("value = \""+esc.getEscRespuesta()+"\"");
                     %>
@@ -81,14 +85,14 @@
                         out.println("<tr>");
                         out.println("<td>Medida de la Respuesta:</td>");
                         out.println("<td><input type=\"text\" name=\"txtQawMedida\"");
-                        out.println("value = \""+esc.getEscMedidaRespuesta()+"\"/>");
+                        out.println("value = \""+esc.getEscMedidaRespuesta()+"\"  class=\"form-control\"/>");
                         out.println("</td>");
                         out.println("</tr>");
                       }
                   %>
               <tr>
-                  <td><input type="submit" value="guardar" name="btnQawGuardarEscenario"/></td>
-                  <td><input type="reset" value="Cancelar"/></td>
+                  <td><input type="submit" value="guardar" name="btnQawGuardarEscenario" class="btn btn-primary"/></td>
+                  <td class="alDer"><input type="reset" value="Cancelar" class="btn btn-danger"/></td>
               </tr>
             </tbody>
           </table>
