@@ -48,44 +48,26 @@ public class QAW7 extends HttpServlet {
         String guardar = request.getParameter("btnQaw7Guardar");
         String continuar = request.getParameter("btnQaw7Continuar");
         String regresar = request.getParameter("btnQaw7anterior");
-        String prioridades = request.getParameter("btnQaw7Prioridad");
-        String code;
         String canc = request.getParameter("btnQawInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if (prioridades != null)
-        { 
-            code = request.getParameter("txtQaw7CodigoSeleccionar");
-            int codigoEscenario=-1;
-            if (code != null || code != "")
-            {
-                codigoEscenario = Integer.parseInt(code);
-            }
-            if (codigoEscenario != -1)
-            {
-            ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
-            
-            Escenario esc = archB.obtenerEscenario(codigoEscenario, proy);
-            
-            archB.aumentarVoto(esc);
-            
-            response.sendRedirect("qaw7.jsp");
-            }
-            else 
-            {
-                try (PrintWriter out = response.getWriter()) 
-                {
-                    out.print("debe ingresar un código valido que corresponda a un escenario concreto");
-                }
+        ArchAssistantBean archB = new ArchAssistantBean();
+        Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+        List<Escenario> listaEsc = archB.ListEscenarios(proy);
+        for (Escenario esce : listaEsc)
+        {
+            if (request.getParameter("btnQaw7Prioridad"+esce.getEscID()) != null)
+            { 
+                int codigoEscenario = esce.getEscID();
+                Escenario esc = archB.obtenerEscenario(codigoEscenario, proy);
+                archB.aumentarVoto(esc);
+                response.sendRedirect("qaw7.jsp");
             }
         }
         if (guardar != null)
         {
-            ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
             Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw7");
             if (ratq == null)
             {
@@ -116,10 +98,8 @@ public class QAW7 extends HttpServlet {
         {
             response.sendRedirect("qaw6.jsp");
         }
-        ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
-        Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        Rationaleqaw ratq = archB.RationaleQAW(pro.getProID(), "qaw7");
+        Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw7");
         if (ratq != null)
         {
             List<File> archivos = arch.listarArchivos(ratq.getRatQawArchivo());

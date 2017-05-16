@@ -54,6 +54,10 @@ public class GuardarProyecto extends HttpServlet {
             adicionarProyectoUsuario(pro, usu);
             response.sendRedirect("InicioUsuario.jsp");
         }
+        if (request.getParameter("btnCancelar") != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         
         
     }
