@@ -57,6 +57,11 @@ public class QAW5 extends HttpServlet {
         String seleccionado = request.getParameter("slcAtributo");
         HttpSession sesion = request.getSession();
         Atributocalidad actual = null;
+        String canc = request.getParameter("btnQawInicio");
+        if (canc != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         if (seleccionado != null)
         {
             actual = buscarAtributo(Integer.parseInt(seleccionado));
@@ -141,6 +146,7 @@ public class QAW5 extends HttpServlet {
             response.sendRedirect("qaw4.jsp");
         }
         
+        
         Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw5");
         
         if (ratq != null)
@@ -150,13 +156,13 @@ public class QAW5 extends HttpServlet {
             for (File archivo : archivos)
             {
                 //String descargar = request.getParameter("btnQaw3Bajar"+archivo.getName());
-                if (request.getParameter("btnQaw5Bajar"+archivo.getName())!= null)
+                if (request.getParameter("btnQawBajar"+archivo.getName())!= null)
                 {
                     arch.descargar(archivo.getAbsolutePath(), archivo.getName());
                     response.sendRedirect("qaw5.jsp");
                 }
 
-                if (request.getParameter("btnQaw5Eliminar"+archivo.getName())!= null)
+                if (request.getParameter("btnQawEliminar"+archivo.getName())!= null)
                 {
                     arch.eliminarArchivo(archivo.getAbsolutePath());
                     response.sendRedirect("qaw5.jsp");
