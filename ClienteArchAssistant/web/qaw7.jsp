@@ -52,7 +52,7 @@
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
 
-                <h2 class="page-header">Escenarios:</h2>
+                <h2 class="page-header">Escenarios de calidad:</h2>
 
                 <table width="100%" border="3" class="tblCentContent">
                     <tbody>
