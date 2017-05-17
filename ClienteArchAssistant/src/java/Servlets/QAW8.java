@@ -49,25 +49,26 @@ public class QAW8 extends HttpServlet {
         //String continuar = request.getParameter("btnQaw8Continuar");
         String inicio = request.getParameter("btnQaw8Inicio");
         String regresar = request.getParameter("btnQaw8anterior");
-        String Refinar = request.getParameter("btnQaw8Refinar");
-        String codigoEscenario = request.getParameter("txtQaw8CodigoSeleccionar");
         String canc = request.getParameter("btnQawInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
         }        
-        if (Refinar != null)
+        ArchAssistantBean archB = new ArchAssistantBean();
+        Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+        List<Escenario> listaEsc = archB.ListEscenarios(proy);
+        for (Escenario esce : listaEsc)
         {
-            Escenario esc = buscarEscenario(Integer.parseInt(codigoEscenario));
-            request.getSession().setAttribute("escenarioActual", esc);
-            request.getSession().setAttribute("refinar", 1);
-            response.sendRedirect("modificarEscenario.jsp");
+            if (request.getParameter("btnQaw8Refinar"+esce.getEscID()) != null)
+            { 
+                request.getSession().setAttribute("escenarioActual", esce);
+                request.getSession().setAttribute("refinar", 1);
+                response.sendRedirect("modificarEscenario.jsp");
+            }
         }
         
         if (guardar != null)
         {
-            ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
             Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw8");
             if (ratq == null)
             {
@@ -113,7 +114,6 @@ public class QAW8 extends HttpServlet {
         {
             response.sendRedirect("qaw7.jsp");
         }
-        ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
         Rationaleqaw ratq = archB.RationaleQAW(pro.getProID(), "qaw8");
