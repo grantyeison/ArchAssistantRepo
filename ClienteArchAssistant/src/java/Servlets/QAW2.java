@@ -52,6 +52,7 @@ public class QAW2 extends HttpServlet {
         {
             response.sendRedirect("InicioUsuario.jsp");
         }
+        /*
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();
@@ -83,11 +84,12 @@ public class QAW2 extends HttpServlet {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
-        }
+        }*/
         if (regresar != null)
         {
             response.sendRedirect("qaw1.jsp");
         }
+        /*
         ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
@@ -110,7 +112,7 @@ public class QAW2 extends HttpServlet {
                     response.sendRedirect("qaw2.jsp");
                 }
             }
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

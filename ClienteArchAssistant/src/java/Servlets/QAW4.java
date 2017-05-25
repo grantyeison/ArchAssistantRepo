@@ -83,12 +83,20 @@ public class QAW4 extends HttpServlet {
             {
                 ratq = new Rationaleqaw();
             }
-            descripcion = request.getParameter("ratqaw4");
+            descripcion = "";
+            if (ratq.getRatQawDescripcion() != null)
+            {
+                indAtri = ratq.getRatQawDescripcion().indexOf("~|~|") + 5;
+                descripcion = ratq.getRatQawDescripcion().substring(indAtri);
+            }
             ratq.setRatQawDescripcion(atris+"\n"+descripcion);
             ratq.setTblProyectoProID(proy);
             ratq.setRatQawPaso("qaw4");
             guardarRationaleQaw(ratq);
-            
+            if (seleccionados.size()>=1)
+            {
+                request.getSession().setAttribute("AtributoActual",seleccionados.get(0));
+            }
             response.sendRedirect("qaw4.jsp");
         }
         
@@ -116,7 +124,6 @@ public class QAW4 extends HttpServlet {
             
             descripcion = request.getParameter("ratqaw4");
             
-            
             if (!ratq.getRatQawDescripcion().isEmpty())
             {
                 ratio = ratq.getRatQawDescripcion();
@@ -126,7 +133,7 @@ public class QAW4 extends HttpServlet {
             {
                 indAtri = ratio.indexOf("~|~|");
             }
-            if (indAtri != 0)
+            if (indAtri > 0)
             {
                 atributos = ratio.substring(0,indAtri);
             }
@@ -146,11 +153,7 @@ public class QAW4 extends HttpServlet {
         {
             if (request.getParameter("ratqaw4")!= "")
             {
-                ArchAssistantBean p = new ArchAssistantBean();
-                Rationaleqaw ratq = p.RationaleQAW(proy.getProID(), "qaw4");
-                List<Atributocalidad> atrEscogidos = p.ObtenerAtributosEscogidos(ratq);
                 
-                request.getSession().setAttribute("AtributoActual",atrEscogidos.get(0));
                 response.sendRedirect("qaw5.jsp");
             }
             else

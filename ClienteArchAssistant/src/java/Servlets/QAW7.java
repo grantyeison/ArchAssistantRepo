@@ -66,6 +66,7 @@ public class QAW7 extends HttpServlet {
                 response.sendRedirect("qaw7.jsp");
             }
         }
+        /*
         if (guardar != null)
         {
             Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw7");
@@ -93,11 +94,12 @@ public class QAW7 extends HttpServlet {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
-        }
+        }*/
         if (regresar != null)
         {
             response.sendRedirect("qaw6.jsp");
         }
+        /*
         GuardarArchivo arch = new GuardarArchivo();
         Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw7");
         if (ratq != null)
@@ -118,7 +120,7 @@ public class QAW7 extends HttpServlet {
                     response.sendRedirect("qaw7.jsp");
                 }
             }
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -148,7 +150,7 @@ public class QAW7 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-             
+        /*     
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
         String DirectorioArchivo = "";
@@ -182,7 +184,7 @@ public class QAW7 extends HttpServlet {
         guardarRationaleQaw(ratq);
          
                 
-        response.sendRedirect("qaw7.jsp");
+        response.sendRedirect("qaw7.jsp");*/
     }
 
     /**

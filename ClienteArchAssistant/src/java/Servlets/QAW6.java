@@ -95,7 +95,7 @@ public class QAW6 extends HttpServlet {
                 response.getOutputStream().print("debe ingresar un codigo valido en el campo");
             }
         }
-        
+        /*
         if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();
@@ -126,12 +126,12 @@ public class QAW6 extends HttpServlet {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
-        }
+        }*/
         if (regresar != null)
         {
             response.sendRedirect("qaw5.jsp");
         }
-        
+        /*
         ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
@@ -157,7 +157,7 @@ public class QAW6 extends HttpServlet {
                     response.sendRedirect("qaw6.jsp");
                 }
             }
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -188,6 +188,7 @@ public class QAW6 extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
+        /*
              
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
@@ -224,7 +225,7 @@ public class QAW6 extends HttpServlet {
         guardarRationaleQaw(ratq);
          
                 
-        response.sendRedirect("qaw6.jsp");
+        response.sendRedirect("qaw6.jsp");/**/
         
     }
 
