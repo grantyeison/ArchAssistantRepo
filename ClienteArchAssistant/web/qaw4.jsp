@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
-                <h2 class="bienvenida">Controladores proyecto:</h2>
+                <h2 class="bienvenida">Atributos de Calidad del proyecto:</h2>
                 <%
 
                     ArchAssistantBean p = new ArchAssistantBean();
@@ -132,73 +132,106 @@
                             <td><input type="reset" value="Cancelar" class="btn btn-danger"/></td>
                         </tr>
                     </tbody>
-                </table>
-                <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2 class="page-header">Rationale:</h2>
-                    <textarea rows="5" cols="120" name="ratqaw4" class="form-control parrafo"><%
-                        ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
-                        if (ratq != null) {
-                            int indiceAtribs = 0;
-                            String ratio = ratq.getRatQawDescripcion();
-                            if (ratio != null || ratio != "") {
-                                indiceAtribs = ratio.indexOf("~|~|") + 4;
-                            }
-                            out.print(ratio.substring(indiceAtribs));
-                        }
-                        %></textarea>
-                    <br/>
-                    <input type="submit" value="Guardar" name="btnQaw4Guardar" class="btn btn-primary"/>
-
-                </div>
-            </form>
-
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <div>
-                    <h2 class="page-header">Archivos:</h2>
-                    <form name="qaw-4" action="QAW4" method="post"  enctype="multipart/form-data">
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="divScroll">
-                    <form name="qaw-4" action="QAW4"> 
-
-                        <table width="400" border="0" class="tblCentfull">
-                            <tbody>
-                                <%
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (ratq != null) {
-                                        archivos = arch.listarArchivos(ratq.getRatQawArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                            out.print("</tr>");
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-            </div>
-            <form name="qaw-4" action="QAW4">    
+                </table> 
                 <table border="0" class="tblCent">
                     <tbody>
                         <tr>
                             <td class="alDer"><input type="submit" value="Regresar" name="btnQaw4anterior" class="btn btn-primary btn-lg previous"/></td>
                             <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
-                            <td class="alIzq"><input type="submit" value="Continuar" name="btnQaw4Continuar" class="btn btn-primary btn-lg"/></td>
+                            <td class="alCen"><input id="btnCont" type="button" value="Continuar" name="btnQaw4Continuar" class="btn btn-primary btn-lg"/></td>
                         </tr>
                     </tbody>
                 </table>
             </form>
+        </div>    
+
+        <script>
+            $("#btnCont").click(function ()
+            {
+                $("#mostrarmodal").modal("show");
+            });
+        </script>
+        <!-- Modal -->
+        <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3>Justifica tus decisiones</h3>
+                    </div>
+                    <div class="modal-body">
+                       <form name="qaw4" action="QAW4"> 
+                        <h4>Razonamiento: </h4>
+                        <textarea rows="5" cols="120" name="ratqaw4" class="form-control parrafo"><%
+                            String paso = "qaw4";
+                            ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
+                            if (ratq != null) {
+                                int indiceAtribs = 0;
+                                String ratio = ratq.getRatQawDescripcion();
+                                System.out.println("ratio: "+ratq.getRatQawDescripcion());
+                                if (ratio != null || ratio != "") {
+                                    indiceAtribs = ratio.indexOf("~|~|") + 4;
+                                }
+                                out.print(ratio.substring(indiceAtribs));
+                            }
+                            %></textarea>
+                        <table class="tblCentfull" border="0" >
+                            <tr><td class="alDer"><input type="submit" value="Guardar" name="btnQaw4Guardar" class="btn btn-primary"/></td></tr>
+                        </table>
+
+                    </form>
+                    </div>
+
+                        <div>
+                            <h2>Archivos:</h2>
+                            <form name="qaw-4" action="QAW4" method="post"  enctype="multipart/form-data">
+                                <table width="400" border="0" class="tblCent">
+                                    <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
+                                        <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td></tr>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="divScroll tblCentfullP">
+                            <form name="qaw-4" action="QAW4"> 
+
+                                <table width="400" border="0" class="tblCentfull">
+                                    <tbody>
+                                        <%
+                                            GuardarArchivo arch = new GuardarArchivo();
+                                            List<File> archivos = null;
+                                            if (ratq != null) {
+                                                archivos = arch.listarArchivos(ratq.getRatQawArchivo());
+                                            }
+                                            if (archivos != null) {
+                                                for (File archivo : archivos) {
+                                                    out.print("<tr>");
+                                                    out.print("<td>" + archivo.getName() + "</td>");
+                                                    out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                                    out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                                    out.print("</tr>");
+                                                }
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                <div class="modal-footer">
+                    <form name="popupRatio" action="popupRationale"> 
+
+                        <a href="<%
+                            int este = Integer.parseInt("" + paso.charAt(3));
+                            String siguiente = paso.substring(0, 3) + String.valueOf(este + 1);
+                            out.print(siguiente + ".jsp");
+                           %>" class="btn btn-primary">Siguiente Paso</a>
+                        <a href="#" data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+                    </form>
+                </div>
+            </div>
+
         </div>
-    </body>
+    </div>
+</body>
 </html>

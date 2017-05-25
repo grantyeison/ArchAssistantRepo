@@ -65,9 +65,9 @@
                     int index = -1;
                     int bandera = Integer.parseInt(session.getAttribute("sigAtr").toString());
                     List<Atributocalidad> listaAtributos;
-                    ArchAssistantBean p = new ArchAssistantBean();
-                    listaAtributos = p.ListarAtr();
-                    Rationaleqaw ratq4 = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
+                    ArchAssistantBean p2 = new ArchAssistantBean();
+                    listaAtributos = p2.ListarAtr();
+                    Rationaleqaw ratq4 = p2.RationaleQAW(proyectoActual.getProID(), "qaw4");
                     Atributocalidad atrActual = (Atributocalidad) session.getAttribute("AtributoActual");
                     String ratio;
                     String[] listAc = null;
@@ -99,14 +99,15 @@
                     } else {
                         id = atributosEscogidos.get(index);
                     }
-                    atrActual = p.buscarAtr(id);
+                    atrActual = p2.buscarAtr(id);
 
                     session.setAttribute("AtributoActual", atrActual);
 
                     out.println("<h2> Escenarios de Atributo " + atrActual.getAcNombre() + "</h2>");
                 %>
-                
+
                 <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="divScrollG2 tblCentfullP">
                     <table width="100%" border="3" class="tblCentfull">
                         <tbody>
                             <tr>
@@ -143,14 +144,15 @@
                             %>
                         </tbody>
                     </table>
-                        <table width="100%" border="0" class="tblCentfull">
-                            <tr>
-                                <td class="alDer"><input type="submit" value="Siguiente" name="btnQaw6SiguienteAtributo" class="btn btn-primary btn-lg"/></td>
-                            </tr>
-                        </table>
                 </div>
-                        
+                    <table width="100%" border="0" class="tblCentfull">
+                        <tr>
+                            <td class="alDer"><input type="submit" value="Siguiente" name="btnQaw6SiguienteAtributo" class="btn btn-primary btn-lg"/></td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="divG tblCentfullP">
                     <table width="100" border="0" class="tblCentContent">
                         <tbody>
                             <tr>
@@ -161,75 +163,84 @@
                                 <td><input type="submit" value="Seleccionar o crear" name="btnQaw6SeleccionarEscenario" class="btn btn-primary"/></td>
                                 <td><input type="submit" value="Eliminar" name="btnQaw6EliminarEscenario"  class="btn btn-primary"/></td>
                             </tr>
-                            
+
                         </tbody>
                     </table>
+                    </div>
                 </div>
-                
+                <!--
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2 class="page-header">Rationale:</h2>
                     <textarea rows="5" cols="120" name="ratqaw6" class="form-control parrafo"><%
                         //ArchAssistantBean p = new ArchAssistantBean();
-                        Rationaleqaw ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw6");
+                        session.setAttribute("pasoActual", "qaw6");
+                        /*Rationaleqaw ratq = p2.RationaleQAW(proyectoActual.getProID(), "qaw6");
                         if (ratq != null) {
                             out.print(ratq.getRatQawDescripcion());
-                        }
-                        %></textarea>
-                    <br/>
-                    <input type="submit" value="Guardar" name="btnQaw6Guardar"  class="btn btn-primary"/>
+                        }*/
+                %></textarea>
+            <br/>
+            <input type="submit" value="Guardar" name="btnQaw6Guardar"  class="btn btn-primary"/>
 
-                </div>
-            </form>
-
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <div>
-                    <h2 class="page-header">Archivos:</h2>
-
-                    <form name="qaw-6" action="QAW6" method="post" enctype="multipart/form-data">
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td>
-                        </table>
-                    </form>
-                </div>
-                <div class="divScroll">
-                    <form name="qaw-6" action="QAW6"> 
-                        <table width="400" border="0" class="tblCentfull">
-                            <tbody>
-                                <%
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (ratq != null) {
-                                        archivos = arch.listarArchivos(ratq.getRatQawArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                            out.print("</tr>");
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <form name="qaw-6" action="QAW6">    
-                    <table border="0" class="tblCent">
-                        <tbody>
-                            <tr>
-                                <td class="alDer"><input type="submit" value="Regresar" name="btnQaw6anterior" class="btn btn-primary btn-lg"/></td>
-                                <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
-                                <td class="alIzq"><input type="submit" value="Continuar" name="btnQaw6Continuar" class="btn btn-primary btn-lg"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
         </div>
+    </form>
+
+    <div class="col-lg-5 col-md-6 col-sm-12">
+        <div>
+            <h2 class="page-header">Archivos:</h2>
+
+            <form name="qaw-6" action="QAW6" method="post" enctype="multipart/form-data">
+                <table width="400" border="0" class="tblCent">
+                    <tr><td><input type="file" name="archivo" id="myfile"/></td>
+                        <td><input type="submit" value="subir archivo" name="btnQawsubir" class="btn btn-primary"/></td>
+                </table>
+            </form>
+        </div>
+        <div class="divScroll">
+            <form name="qaw-6" action="QAW6"> 
+                <table width="400" border="0" class="tblCentfull">
+                    <tbody>
+                <%/*
+                    GuardarArchivo arch = new GuardarArchivo();
+                    List<File> archivos = null;
+                    if (ratq != null) {
+                        archivos = arch.listarArchivos(ratq.getRatQawArchivo());
+                    }
+                    if (archivos != null) {
+                        for (File archivo : archivos) {
+                            out.print("<tr>");
+                            out.print("<td>" + archivo.getName() + "</td>");
+                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnQawEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                            out.print("</tr>");
+                        }
+                    }*/
+                %>
+            </tbody>
+        </table>
+    </form>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12">
+<form name="qaw-6" action="QAW6">   --> 
+                <table border="0" class="tblCent">
+                    <tbody>
+                        <tr>
+                            <td class="alDer"><input type="submit" value="Regresar" name="btnQaw6anterior" class="btn btn-primary btn-lg"/></td>
+                            <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
+                            <td class="alCen"><input id="btnCont" type="button" value="Continuar" name="btnQaw6Continuar" class="btn btn-primary btn-lg"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            <!-- </div>-->
+        </div>
+        <%@include file='popupRationale.jsp'%>      
+        <script>
+            $("#btnCont").click(function ()
+            {
+                $("#mostrarmodal").modal("show");
+            });
+        </script>
     </body>
 </html>

@@ -126,15 +126,16 @@
                     </table>
                 </div>
                 <div class="col-lg-1"></div>
-
+<!--
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2 class="page-header">Rationale:</h2>
                     <textarea rows="5" cols="120" name="ratqaw8" class="form-control parrafo"><%
-                        ArchAssistantBean p = new ArchAssistantBean();
+                        session.setAttribute("pasoActual", "qaw8");
+                       /* ArchAssistantBean p = new ArchAssistantBean();
                         Rationaleqaw ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw8");
                         if (ratq != null) {
                             out.print(ratq.getRatQawDescripcion());
-                        }
+                        }*/
                         %></textarea>
                     <br/>
                     <input type="submit" value="Guardar" name="btnQaw8Guardar"  class="btn btn-primary"/>
@@ -156,7 +157,7 @@
 
                         <table width="400" border="0" class="tblCentfull">
                             <tbody>
-                                <%
+                                <%/*
                                     GuardarArchivo arch = new GuardarArchivo();
                                     List<File> archivos = null;
                                     if (ratq != null) {
@@ -170,25 +171,30 @@
                                             out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
                                             out.print("</tr>");
                                         }
-                                    }
+                                    }*/
                                 %>
                             </tbody>
                         </table>
                     </form>
                 </div>
             </div>
-            <form name="qaw-8" action="QAW8">    
+            <form name="qaw-8" action="QAW8"> -->   
                 <table border="0" class="tblCent">
                     <tbody>
                         <tr>
                             <td class="alDer"><input type="submit" value="Regresar" name="btnQaw8anterior" class="btn btn-primary btn-lg"/></td>
-                            <td class="alIzq"><input type="submit" value="Inicio" name="btnQaw8Inicio" class="btn btn-primary btn-lg"/></td>
-                            <!--<td><input type="submit" value="Continuar" name="btnQaw8Continuar"/></td>-->
+                            <td class="alCen"><input id="btnCont" value="Inicio" name="btnQaw8Inicio" class="btn btn-primary btn-lg"/></td>
                         </tr>
                     </tbody>
                 </table>
-
             </form>
         </div>
+        <%@include file='popupRationale.jsp'%>      
+        <script>
+             $("#btnCont").click(function()
+             {
+                 $("#mostrarmodal").modal("show");
+             });
+         </script>
     </body>
 </html>

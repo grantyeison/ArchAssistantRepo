@@ -21,7 +21,7 @@
         <script src="./js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="col-lg-12 col-md-12 col-md-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <form name="qaw-1" action="QAW1">
                 <h2 class="subtitle">QAW</h2>
                 <h2 class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
@@ -53,14 +53,15 @@
 
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
-                <div class="col-lg-7 col-md-6 col-sm-12">
+<!--                <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2 class="page-header">Rationale:</h2>
                     <textarea rows="5" cols="120" name="ratqaw1" class="form-control parrafo"><%
-                        ArchAssistantBean p = new ArchAssistantBean();
+                        session.setAttribute("pasoActual", "qaw1");
+                        /*ArchAssistantBean p = new ArchAssistantBean();
                         Rationaleqaw ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw1");
                         if (ratq != null) {
                             out.print(ratq.getRatQawDescripcion());
-                        }
+                        }*/
                         %></textarea>
                     <br/>
                     <input type="submit" value="Guardar" name="btnQaw1Guardar" class="btn btn-primary"/>
@@ -83,7 +84,7 @@
                         <table width="400" border="0" class="tblCentfull">
                             <tbody>
                                 <%
-                                    GuardarArchivo arch = new GuardarArchivo();
+                                  /*  GuardarArchivo arch = new GuardarArchivo();
                                     List<File> archivos = null;
                                     if (ratq != null) {
                                         archivos = arch.listarArchivos(ratq.getRatQawArchivo());
@@ -101,23 +102,32 @@
                                                     + "</span></button>" + "</td>");
                                             out.print("</tr>");
                                         }
-                                    }
+                                    }*/
                                 %>
                             </tbody>
                         </table>
                     </form>
                 </div>
             </div>
-            <form name="qaw-1" action="QAW1"> 
+            <form name="qaw-1" action="QAW1"> -->
                 <table width="100" border="0" class="tblCent">
                     <tbody>
                         <tr>
                             <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
-                            <td class="alCen"><input type="submit" value="Continuar" name="btnQaw1Continuar" class="btn btn-primary btn-lg"/></td>
+                            <td class="alCen"><input id="btnCont" type="button" value="Continuar" name="btnQaw1Continuar" class="btn btn-primary btn-lg"/></td>
                         </tr>
                     </tbody>
                 </table>
             </form>
         </div>
+                            
+        <%@include file='popupRationale.jsp'%>      
+        <script>
+             $("#btnCont").click(function()
+             {
+                 $("#mostrarmodal").modal("show");
+             });
+         </script>
+         
     </body>
 </html>
