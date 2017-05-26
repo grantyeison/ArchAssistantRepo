@@ -126,6 +126,7 @@
              $("#btnCont").click(function()
              {
                  $("#mostrarmodal").modal("show");
+                 $("#abrir").value = 1;
              });
          </script>
          
