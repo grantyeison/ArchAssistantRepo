@@ -64,10 +64,20 @@ public class popupRationale extends HttpServlet {
                 guardarRationaleQaw(ratq);
                 proy.setProAvance(paso);
                 modificarProyecto(proy);
-                //System.out.println("guardar activao"+" "+proy.getProNombre()+" "+ratq.getRatQawDescripcion());
-                //response.sendRedirect(paso+".jsp");
+                System.out.println("guardar activao"+" "+proy.getProNombre()+" "+ratq.getRatQawDescripcion());
+                int este = Integer.parseInt("" + paso.charAt(3));
+                String siguiente = paso.substring(0, 3) + String.valueOf(este + 1);
+                if (paso.equals("qaw5")) {
+                    request.getSession().removeAttribute("AtributoActual");
+                }
+                if (paso.equals("qaw8")) {
+                    response.sendRedirect("InicioUsuario.jsp");
+                } else {
+                    response.sendRedirect(siguiente + ".jsp");
+                }
+               // response.sendRedirect(paso+".jsp");
                 //response.sendRedirect("");
-            request.getRequestDispatcher(paso+".jsp").forward(request,response);
+            //request.getRequestDispatcher(paso+".jsp").forward(request,response);
         }
         if (ratq != null)
         {
