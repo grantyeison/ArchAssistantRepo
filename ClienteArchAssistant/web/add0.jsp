@@ -10,9 +10,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ArchAssistant - ADD</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
+        <link rel="stylesheet" href="./css/estilos.css" /><!---->
+        <script src="./js/jquery-3.2.1.js"></script>
+        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
+        <script src="./js/bootstrap.min.js"></script>
+        
     </head>
     <body>
-        <h1 align="center">ArchAssistant</h1>
+        <h1 align="center" class="title">ArchAssistant</h1>
         <h2 align="center">ADD</h2>
         <h2 align="center"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
         <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
@@ -31,9 +37,23 @@
                 </tr>
               </tbody>
             </table>
-            <p>Que es ADD?</p>
-            <input type="submit" value="Continuar" name="btnAdd0Continuar"/>
-            <input type="submit" value="Cancelar" name="btnAdd0Cancelar"/>
+            <h2 class="page-header">Que es ADD?</h2>
+            <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
+                
+            </p>
+            
+            <img src="img/add.png" class="img-rounded"/>
+            
+            <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
+                
+            </p>
+            
+            <table class="tblCentfull">
+                <tr>
+                    <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnAddInicio" class="btn btn-primary btn-lg"/></td>
+                    <td class="alIzq"><input type="submit" value="Continuar" name="btnAddContinuar" class="btn btn-primary btn-lg"/></td>
+                </tr>
+            </table>
         </form>
     </body>
 </html>
