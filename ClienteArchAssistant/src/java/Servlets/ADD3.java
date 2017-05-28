@@ -6,9 +6,12 @@
 package Servlets;
 
 import Beans.ArchAssistantBean;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +23,7 @@ import servicios.Atributocalidad;
 import servicios.Escenario;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
+import servicios.Tactica;
 
 /**
  *
@@ -44,18 +48,20 @@ public class ADD3 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnAdd3Guardar");
-        String continuar = request.getParameter("btnAdd3Continuar");
+        String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd3anterior");
-        String canc = request.getParameter("btnQawInicio");
+        String canc = request.getParameter("btnInicio");
+        String pasoAct = "add3";
+        
+        ArchAssistantBean archB = new ArchAssistantBean();
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        Rationaleadd rata = archB.RationaleADD(proy.getProID(), pasoAct);
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
         }
         if (guardar != null)
-        {            
-            ArchAssistantBean archB = new ArchAssistantBean();
-            
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+        {   
             for(Escenario es: archB.ListEscenarios(proy)){
                 String impactoOpc = (String)request.getParameter("impacto_"+es.getEscID());
                 if(impactoOpc!=null){
@@ -70,24 +76,22 @@ public class ADD3 extends HttpServlet {
                     }else{
                         es.setEscEstado(";"+impactoOpc);
                     }
-                    modificarEscenario(es);  
-                    //archB.crear
+                    modificarEscenario(es);
                 }
+                Tactica t = archB.ObtenerTactica(4);
+                //t.setPatronList(archB.ListarPatronesT());
             }
-            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add3");
             if (rata == null)
             {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd3"));
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add3");
+            rata.setRatAddPaso(pasoAct);
             guardarRationaleAdd(rata);
-            proy.setProAvance("add3");
+            proy.setProAvance(pasoAct);
             modificarProyecto(proy);
             response.sendRedirect("add3.jsp");
-        
-            
         }
         if (continuar != null)
         {
@@ -105,6 +109,27 @@ public class ADD3 extends HttpServlet {
         if (regresar != null)
         {
             response.sendRedirect("add2.jsp");
+        }
+        
+        GuardarArchivo arch = new GuardarArchivo();
+        if (rata != null)
+        {
+            List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
+
+            for (File archivo : archivos)
+            {
+                if (request.getParameter("btnAddBajar"+archivo.getName())!= null)
+                {
+                    arch.descargar(archivo.getPath(), archivo.getName());
+                    response.sendRedirect("add3.jsp");
+                }
+
+                if (request.getParameter("btnAddEliminar"+archivo.getName())!= null)
+                {
+                    arch.eliminarArchivo(archivo.getAbsolutePath());
+                    response.sendRedirect("add3.jsp");
+                }
+            }
         }
     }
 
@@ -135,6 +160,39 @@ public class ADD3 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        String pasoAc="add3";
+        GuardarArchivo arch = new GuardarArchivo();
+        Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        String DirectorioArchivo = "";
+        ArchAssistantBean archB = new ArchAssistantBean();
+        Rationaleadd rata = archB.RationaleADD(pro.getProID(), pasoAc);                
+        try 
+        {
+            DirectorioArchivo = arch.guardarArchivo(request,pro.getProID().toString() , "ADD3");
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(ADD3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+        
+        if (rata == null)
+        {
+            rata = new Rationaleadd();
+            rata.setTblProyectoProID(pro);
+            rata.setRatAddPaso(pasoAc);        
+        }
+        
+        if (rata.getRatAddDescripcion()== null)
+        {
+            rata.setRatAddDescripcion("debes registrar el rationale en este espacio!!");
+        }
+
+        rata.setRatAddArchivo(DirectorioArchivo);
+        guardarRationaleAdd(rata);
+         
+                
+        response.sendRedirect("add3.jsp");
     }
 
     /**

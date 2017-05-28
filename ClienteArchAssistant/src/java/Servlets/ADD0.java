@@ -32,15 +32,15 @@ public class ADD0 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String canc = request.getParameter("btnAdd0Cancelar");
-        String cont = request.getParameter("btnAdd0Continuar");
-        if (cont != null)
-        {
-            response.sendRedirect("add1.jsp");
-        }
+        String cont = request.getParameter("btnAddContinuar");
+        String canc = request.getParameter("btnAddInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
+        }
+        if (cont != null)
+        {
+            response.sendRedirect("add1.jsp");
         }
     }
 

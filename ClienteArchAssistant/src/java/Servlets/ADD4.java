@@ -42,10 +42,10 @@ public class ADD4 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnAdd4Guardar");
-        String continuar = request.getParameter("btnAdd4Continuar");
+        String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd4anterior");
         String crearModulo = request.getParameter("btnCrearModulo");
-        String canc = request.getParameter("btnQawInicio");
+        String canc = request.getParameter("btnInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
@@ -88,18 +88,17 @@ public class ADD4 extends HttpServlet {
 
             Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
             if (padreActual == null) {
-                Modulo padre = archB.buscarModDescomposicion(proy);
-                request.getSession().setAttribute("padreActual", padre);
-                padreActual = padre;
+                padreActual = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", padreActual);                
             }
-
+            
             nmod.setModNombre(nomMod);
             nmod.setModDescripcion(descMod);
             nmod.setModFinal("no");
             nmod.setTblModuloModId(padreActual);
             nmod.setTblProyectoProID(proy);
             archB.crearMod(nmod);
-            response.sendRedirect("add2.jsp");
+            response.sendRedirect("add4.jsp");
         }
     }
 

@@ -31,8 +31,10 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import servicios.ArcAssistantService_Service;
+import servicios.Escenario;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
+import servicios.Rationaleqaw;
 
 /**
  *
@@ -57,102 +59,38 @@ public class ADD1 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileUploadException {
         response.setContentType("text/html;charset=UTF-8");
+        String guardar = request.getParameter("btnAdd1Guardar");
+        String continuar = request.getParameter("btnAddContinuar");
+        String canc = request.getParameter("btnAddInicio");
         
-        
-        String guardar = null;// = request.getParameter("btnAdd1Guardar");
-        String continuar = null;// = request.getParameter("btnAdd1Continuar");
-        
-        String nomArch = null;
-        String ratAdd = "";
-        File fichero = null;
-        String canc = request.getParameter("btnQawInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
-        }        
-        /*FileItemFactory es una interfaz para crear FileItem*/
-        FileItemFactory factory = new DiskFileItemFactory();
-        /*ServletFileUpload esta clase convierte los input file a FileItem*/
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        /*sacando los FileItem del ServletFileUpload en una lista */
-        // req es la HttpServletRequest que recibimos del formulario.
-        // Los items obtenidos serán cada uno de los campos del formulario,
-        // tanto campos normales como ficheros subidos.
-        List items = upload.parseRequest(request);
-
-        // Se recorren todos los items, que son de tipo FileItem
-        for (Object item : items) {
-            /*FileItem representa un archivo en memoria que puede ser pasado al disco duro*/
-            FileItem uploaded = (FileItem) item;
-            /*item.isFormField() false=input file; true=text field*/
-            // Hay que comprobar si es un campo de formulario. Si no lo es, se guarda el fichero
-            // subido donde nos interese
-            if (!uploaded.isFormField()) {
-                /*cual sera la ruta al archivo en el servidor*/
-                // No es campo de formulario, guardamos el fichero en algún sitio
-                fichero = new File("C:\\Users\\GOMEZ\\Desktop\\ClienteArchAssistant\\archivosSubidos\\", uploaded.getName());
-                try {
-                    /*y lo escribimos en el servido*/
-                    uploaded.write(fichero);
-                } catch (Exception ex) {
-                    Logger.getLogger(ADD1.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                // es un campo de formulario, podemos obtener clave y valor
-                String key = uploaded.getFieldName();
-                String valor = uploaded.getString();
-                
-                if(key.equals("btnAdd1Guardar")){
-                    guardar = valor;
-                }
-                if(key.equals("btnAdd1Continuar")){
-                    continuar = valor;
-                }
-                if(key.equals("nomarchivo")){
-                    nomArch = valor;
-                }  
-                if(key.equals("ratadd1")){
-                    ratAdd = valor;
-                }  
+        }      
+        ArchAssistantBean archB = new ArchAssistantBean();
+        Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+        List<Escenario> listaEsc = archB.ListEscenarios(proy);
+        for (Escenario esce : listaEsc)
+        {
+            if (request.getParameter("btnQaw8Refinar"+esce.getEscID()) != null)
+            { 
+                request.getSession().setAttribute("escenarioActual", esce);
+                request.getSession().setAttribute("refinar", 1);
+                response.sendRedirect("modificarEscenario.jsp");
             }
         }
-        
         if (guardar != null)
         {
-            ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
             Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1");
             //String nomArch = request.getParameter("nomarchivo");
             if (rata == null)
             { 
                 rata = new Rationaleadd();
-            }            
-            if(nomArch!=null){
-                rata.setRatAddDescripcion(ratAdd+"@"+nomArch);
-                
-                PrintWriter out = response.getWriter();
-                /*
-                Part arch = request.getPart("archivo");
-                
-                URL url= this.getClass().getResource("add.jsp"); 
-                try (InputStream is = arch.getInputStream()) {
-                    File f = new File("D:\\ArchivosSubidos\\" + nomArch);
-                    FileOutputStream ous = new FileOutputStream(f);                    
-                    int dato = is.read();                    
-                    while (dato != -1) {
-                        ous.write(dato);
-                        dato = is.read();
-                    }
-                    
-                    ous.close();
-                
-                }*/
-            }else{
-                rata.setRatAddDescripcion(ratAdd);
             }
+            
+            rata.setRatAddDescripcion(request.getParameter(("ratadd1")));            
             rata.setTblProyectoProID(proy);
             rata.setRatAddPaso("add1");
-            rata.setRatAddArchivo(fichero.getAbsolutePath().toString());
             guardarRationaleAdd(rata);
             proy.setProAvance("add1");
             modificarProyecto(proy);
@@ -160,14 +98,36 @@ public class ADD1 extends HttpServlet {
         }
         if (continuar != null)
         {
-            if (ratAdd!= "")
+            if (request.getParameter("ratadd1")!= "")
             {
                 response.sendRedirect("add2.jsp");
             }
             else
             {
                 try (PrintWriter out = response.getWriter()) {
-                    out.println("debe llenar e campo Rationale antes de contunuar");
+                    out.println("debe justificar sus acciones en el campo Rationale antes de continuar");
+                }
+            }
+        }
+        
+        GuardarArchivo arch = new GuardarArchivo();       
+        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1");
+        if (rata != null)
+        {
+            List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
+
+            for (File archivo : archivos)
+            {
+                if (request.getParameter("btnAddBajar"+archivo.getName())!= null)
+                {
+                    arch.descargar(archivo.getAbsolutePath(), archivo.getName());
+                    response.sendRedirect("add1.jsp");
+                }
+
+                if (request.getParameter("btnAddEliminar"+archivo.getName())!= null)
+                {
+                    arch.eliminarArchivo(archivo.getAbsolutePath());
+                    response.sendRedirect("add1.jsp");
                 }
             }
         }
@@ -203,11 +163,51 @@ public class ADD1 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (FileUploadException ex) {
+        
+        GuardarArchivo arch = new GuardarArchivo();
+        Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        String DirectorioArchivo = "";
+        ArchAssistantBean archB = new ArchAssistantBean();
+        Rationaleadd rata = archB.RationaleADD(pro.getProID(), "add1");
+                
+        try 
+        {
+            DirectorioArchivo = arch.guardarArchivo(request,pro.getProID().toString() , "ADD1");
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(ADD1.class.getName()).log(Level.SEVERE, null, ex);
         }
+         
+        
+        if (rata == null)
+        {
+            rata = new Rationaleadd();
+            rata.setTblProyectoProID(pro);
+            rata.setRatAddPaso("add1");
+        
+        }
+        
+        if (rata.getRatAddDescripcion()== null)
+        {
+            if(request.getParameter("ratadd1") == null){
+                rata.setRatAddDescripcion("debes registrar la justificacion de sus decisiones en este espacio!!");
+            }else{
+                rata.setRatAddDescripcion(request.getParameter("ratadd1"));
+            }
+            
+        }else{
+            String  descrip ="";
+            descrip = request.getParameter("ratadd1");
+            if( descrip != null){
+                rata.setRatAddDescripcion(rata.getRatAddDescripcion()+descrip);
+            }
+            
+        }
+
+        rata.setRatAddArchivo(DirectorioArchivo);
+        guardarRationaleAdd(rata);  
+        response.sendRedirect("add1.jsp");
     }
 
     /**
