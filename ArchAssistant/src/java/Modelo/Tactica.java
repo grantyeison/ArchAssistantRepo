@@ -56,9 +56,9 @@ public class Tactica implements Serializable {
     private String tacDescripcion;
     @ManyToMany(mappedBy = "tacticaList")
     private List<Patron> patronList;
-    @JoinColumn(name = "Tbl_Preocupacion_preID", referencedColumnName = "preID")
+    @JoinColumn(name = "Tbl_Atributocalidad_acID", referencedColumnName = "acID")
     @ManyToOne(optional = false)
-    private Preocupacion tblPreocupacionpreID;
+    private Atributocalidad tblAtributocalidadID;
 
     public Tactica() {
     }
@@ -106,12 +106,12 @@ public class Tactica implements Serializable {
         this.patronList = patronList;
     }
 
-    public Preocupacion getTblPreocupacionpreID() {
-        return tblPreocupacionpreID;
+    public Atributocalidad getTblAtributocalidadID() {
+        return tblAtributocalidadID;
     }
 
-    public void setTblPreocupacionpreID(Preocupacion tblPreocupacionpreID) {
-        this.tblPreocupacionpreID = tblPreocupacionpreID;
+    public void setTblAtributocalidadID(Atributocalidad tblAtributocalidadID) {
+        this.tblAtributocalidadID = tblAtributocalidadID;
     }
 
     @Override

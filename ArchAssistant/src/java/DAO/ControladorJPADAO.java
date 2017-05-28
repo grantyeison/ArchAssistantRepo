@@ -22,52 +22,11 @@ public class ControladorJPADAO implements ControladorDAO
 
     EntityManager em;
     EntityManagerFactory emf;
-
-
+    
     public ControladorJPADAO() 
     {
         emf = Persistence.createEntityManagerFactory("ArchAssistantPU");
         em = emf.createEntityManager();
-    }
-   
-    
-    @Override
-    public Controlador BuscarControlador(int id) 
-    {
-        /*Query q = em.createNamedQuery("SELECT m FROM Modulo m WHERE m.modId = ?1");
-        q.setParameter(1, id);
-        return (Modulo) q.getResultList().get(0);*/
-        Controlador con = new Controlador();
-        con = em.find(con.getClass(), id);
-        return con;
-    }
-
-    @Override
-    public void EliminarControlador(Controlador con) 
-    {
-        em.getTransaction().begin();
-        em.remove(con);
-        em.getTransaction().commit();
-    }
-/*
-    @Override
-    public Controlador BuscarModuloDescomposicion(Proyecto Proy) {
-        Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.tblProyectoProID = ?1 AND m.modFinal=?2");
-        q.setParameter(1, Proy);
-        q.setParameter(2, "Descomposicion");
-        return (Controlador)q.getResultList().get(0);
-        //Modulo mod = new Modulo();
-        //mod = em.find(mod.getClass(), id);
-        
-        //return mod;
-    }
-*/
-
-    @Override
-    public List<Controlador> ListarControlador(Proyecto proy) {
-        Query q = em.createQuery("SELECT m FROM Controlador");
-        q.setParameter(1, proy);
-        return q.getResultList();
     }
 
     @Override
@@ -78,9 +37,33 @@ public class ControladorJPADAO implements ControladorDAO
     }
 
     @Override
+    public List<Controlador> ListarControladores(Proyecto proy) {
+        List<Controlador> lst = null;
+        Query q = em.createQuery("SELECT c FROM Controlador c");
+        lst = q.getResultList();
+        return lst;
+    }
+
+    @Override
+    public Controlador BuscarControlador(int id) {
+        Controlador con = new Controlador();        
+        con = em.find(con.getClass(), id);
+        return con;
+    }
+
+    @Override
     public void ModificarControlador(Controlador con) {
+        if(BuscarControlador(con.getContID()) != null){
+            EliminarControlador(con);
+            CrearControlador(con);
+        }
+    }
+
+    @Override
+    public void EliminarControlador(Controlador con) {
         em.getTransaction().begin();
-        em.merge(con);
+        em.remove(con);
         em.getTransaction().commit();
-    }    
+    }
+
 }

@@ -8,6 +8,7 @@ import DAO.ControladorDAO;
 import DAO.ControladorJPADAO;
 import Modelo.Controlador;
 import Modelo.Modulo;
+import Modelo.Patron;
 import Modelo.Proyecto;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,19 +24,26 @@ public class ControladorBean
 
     public ControladorBean() 
     {
-            dao = new ControladorJPADAO();
+        dao = new ControladorJPADAO();
+        System.out.println("***Controlador DAO ha sido creado***");
     }
     
-    public List<Controlador> Listar(Proyecto proy)
-    {
-        return dao.ListarControlador(proy);
-    }
     
     public void Crear(Controlador con)
     {
         dao.CrearControlador(con);
     }
     
+    public void Modificar(Controlador con)
+    {
+        dao.ModificarControlador(con);
+    }
+    
+    public List<Controlador> Listar(Proyecto proy)
+    {
+        return dao.ListarControladores(proy);
+    }
+        
     public Controlador Buscar(int id)
     {
         return dao.BuscarControlador(id);
@@ -45,17 +53,11 @@ public class ControladorBean
     {
         dao.EliminarControlador(con);
     }
-    
-    public void Modificar(Controlador con)
+        
+    public List<Controlador> ListarControladoresPorPatron(Patron pt)
     {
-        dao.ModificarControlador(con);
+        //return dao.ListarControladoresPorPatron(pt);
+        return null;
     }
-    
-    /*
-    public Modulo BuscarModDescomposicion(Proyecto id)
-    {
-        return dao.BuscarModuloDescomposicion(id);
-    }
-*/
     
 }

@@ -9,6 +9,7 @@ import DAO.PatronDAO;
 import DAO.PatronJPADAO;
 import javax.ejb.EJB;
 import Modelo.Patron;
+import Modelo.Tactica;
 import java.util.List;
 
 /**
@@ -52,5 +53,15 @@ public class PatronBean
     public void Modificar(Patron atr)
     {
         dao.ModificarPatron(atr);
+    }
+    
+    public List<Patron> ListarPatronesPorTactica(Tactica tac)
+    {
+        return dao.ListarPatronesPorTactica(tac);
+    }
+    
+    public List<Tactica> ListarTacticasDePatron(int id) {
+        return dao.ListarTacticasDePatron(id);
+        
     }
 }

@@ -6,6 +6,7 @@
 package DAO;
 
 import Modelo.Patron;
+import Modelo.Tactica;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -50,9 +51,9 @@ public class PatronJPADAO implements PatronDAO
     @Override
     public Patron BuscarPatron(int id)  
     {
-        Query q = em.createNamedQuery("SELECT p FROM Patron p WHERE p.patID = ?1");
-        q.setParameter(1, id);
-        return (Patron) q.getResultList().get(0);
+        Patron pat = new Patron();
+        pat = em.find(pat.getClass(), id);
+        return pat;
     }
 
     @Override
@@ -70,5 +71,21 @@ public class PatronJPADAO implements PatronDAO
         em.remove(pat);
         em.getTransaction().commit();
     }
+
+    @Override
+    public List<Patron> ListarPatronesPorTactica(Tactica tac) {
+        Query q = em.createNamedQuery("SELECT p FROM Patron p WHERE p.Tbl_Tactica_tacID = ?1");
+        q.setParameter(1, tac);
+        return q.getResultList();        
+    }    
     
+    @Override
+    public List<Tactica> ListarTacticasDePatron(int id) {
+        System.out.println("patron para consultar ID= " + id);
+        Patron patron = this.BuscarPatron(id);
+        if (patron != null) {
+            System.out.println("el patron elegido es ()+ " + patron + " y sus tacticas asociadas son" + patron.getTacticaList());
+            return patron.getTacticaList();
+        }else   return null;
+    }
 }

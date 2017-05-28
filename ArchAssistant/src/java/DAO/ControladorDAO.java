@@ -15,13 +15,11 @@ import java.util.List;
  */
 public interface ControladorDAO {
     
-    List<Controlador> ListarControlador(Proyecto proy);
+    List<Controlador> ListarControladores(Proyecto proy);    
     
     void CrearControlador(Controlador con);
     
     Controlador BuscarControlador(int id);
-    
-//    Modulo BuscarModuloDescomposicion(Proyecto idProy);
     
     void ModificarControlador (Controlador con);
     

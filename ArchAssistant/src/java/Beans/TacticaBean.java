@@ -7,7 +7,8 @@ package Beans;
 
 import DAO.TacticaDAO;
 import DAO.TacticaJPADAO;
-import Modelo.Preocupacion;
+import Modelo.Atributocalidad;
+import Modelo.Patron;
 import java.util.List;
 import javax.ejb.EJB;
 import Modelo.Tactica;
@@ -55,8 +56,18 @@ public class TacticaBean
         dao.ModificarTactica(atr);
     }
     
-    public List<Tactica> BuscarPorPreocupacion(Preocupacion pre)
+    public List<Tactica> BuscarPorAtributoDeCalidad(Atributocalidad atr)
     {
-        return dao.BuscarTacticaPorPreocupacion(pre);
+        return dao.BuscarTacticaPorAtributoDeCalidad(atr);
     }
+
+    public List<Patron> ListadoPatronesDeTactica(int tac) {
+        return dao.ListadoPatronesDeTactica(tac);
+        
+    }
+    
+    public List<Tactica> ListarTacticasPorPatron(Patron pat) {
+        return dao.ListarTacticasPorPatron(pat);
+        
+    }    
 }

@@ -12,7 +12,6 @@ import Modelo.Escenario;
 import Modelo.Interface;
 import Modelo.Modulo;
 import Modelo.Patron;
-import Modelo.Preocupacion;
 import Modelo.Proyecto;
 import Modelo.Rationaleadd;
 import Modelo.Rationaleqaw;
@@ -31,7 +30,7 @@ import javax.jws.WebParam;
  */
 @WebService(serviceName = "ArcAssistantService")
 public class ArcAssistantService {
-    
+
     AtributoCalidadBean atrB;
     EscenarioBean escB;
     InterfaceBean intB;
@@ -41,10 +40,8 @@ public class ArcAssistantService {
     RationaleAddBean rataB;
     RationaleQawBean ratqB;
     TacticaBean tacB;
-    PreocupacionBean preB;
-    ControladorBean conB;
-    
     UsuarioBean usuB;
+    ControladorBean conB;
 
     /**
      * This is a sample web service operation
@@ -68,8 +65,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "CrearAtributo")
     @Oneway
-    public void CrearAtributo(@WebParam(name = "parameter") Atributocalidad parameter) 
-    {
+    public void CrearAtributo(@WebParam(name = "parameter") Atributocalidad parameter) {
         atrB = new AtributoCalidadBean();
         atrB.Crear(parameter);
     }
@@ -78,8 +74,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "BuscarAtributo")
-    public Atributocalidad BuscarAtributo(@WebParam(name = "parameter") int parameter) 
-    {
+    public Atributocalidad BuscarAtributo(@WebParam(name = "parameter") int parameter) {
         atrB = new AtributoCalidadBean();
         return atrB.Buscar(parameter);
     }
@@ -89,8 +84,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "EliminarAtributo")
     @Oneway
-    public void EliminarAtributo(@WebParam(name = "parameter") Atributocalidad parameter) 
-    {
+    public void EliminarAtributo(@WebParam(name = "parameter") Atributocalidad parameter) {
         atrB = new AtributoCalidadBean();
         atrB.Eliminar(parameter);
     }
@@ -100,20 +94,17 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarAtributo")
     @Oneway
-    public void ModificarAtributo(@WebParam(name = "parameter") Atributocalidad parameter) 
-    {
+    public void ModificarAtributo(@WebParam(name = "parameter") Atributocalidad parameter) {
         atrB = new AtributoCalidadBean();
         atrB.Modificar(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "CrearEscenario")
     @Oneway
-    public void CrearEscenario(@WebParam(name = "parameter") Escenario parameter) 
-    {
+    public void CrearEscenario(@WebParam(name = "parameter") Escenario parameter) {
         escB = new EscenarioBean();
         escB.Crear(parameter);
     }
@@ -122,8 +113,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "BuscarEscenario")
-    public Escenario BuscarEscenario(@WebParam(name = "parameter") int parameter) 
-    {
+    public Escenario BuscarEscenario(@WebParam(name = "parameter") int parameter) {
         escB = new EscenarioBean();
         return escB.Buscar(parameter);
     }
@@ -133,8 +123,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "EliminarEscenario")
     @Oneway
-    public void EliminarEscenario(@WebParam(name = "parameter") Escenario parameter) 
-    {
+    public void EliminarEscenario(@WebParam(name = "parameter") Escenario parameter) {
         escB = new EscenarioBean();
         escB.Eliminar(parameter);
     }
@@ -144,8 +133,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarEscenario")
     @Oneway
-    public void ModificarEscenario(@WebParam(name = "parameter") Escenario parameter) 
-    {
+    public void ModificarEscenario(@WebParam(name = "parameter") Escenario parameter) {
         escB = new EscenarioBean();
         escB.Modificar(parameter);
     }
@@ -154,9 +142,8 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "ListarInterfaces")
-    public List<Interface> ListarInterfaces() 
-    {
-        
+    public List<Interface> ListarInterfaces() {
+
         System.out.println("******************************---------------------------------****************");
         intB = new InterfaceBean();
         return intB.Listar();
@@ -167,8 +154,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "CrearInterface")
     @Oneway
-    public void CrearInterface(@WebParam(name = "parameter") Interface parameter) 
-    {
+    public void CrearInterface(@WebParam(name = "parameter") Interface parameter) {
         intB = new InterfaceBean();
         intB.Crear(parameter);
     }
@@ -177,8 +163,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "BuscarInterface")
-    public Interface BuscarInterface(@WebParam(name = "parameter") int parameter) 
-    {
+    public Interface BuscarInterface(@WebParam(name = "parameter") int parameter) {
         intB = new InterfaceBean();
         return intB.Buscar(parameter);
     }
@@ -188,8 +173,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "EliminarInterface")
     @Oneway
-    public void EliminarInterface(@WebParam(name = "parameter") Interface parameter) 
-    {
+    public void EliminarInterface(@WebParam(name = "parameter") Interface parameter) {
         intB = new InterfaceBean();
         intB.Eliminar(parameter);
     }
@@ -199,20 +183,17 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarInterface")
     @Oneway
-    public void ModificarInterface(@WebParam(name = "parameter") Interface parameter) 
-    {
+    public void ModificarInterface(@WebParam(name = "parameter") Interface parameter) {
         intB = new InterfaceBean();
         intB.Modificar(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "CrearModulo")
     @Oneway
-    public void CrearModulo(@WebParam(name = "parameter") Modulo parameter) 
-    {
+    public void CrearModulo(@WebParam(name = "parameter") Modulo parameter) {
         modB = new ModuloBean();
         modB.Crear(parameter);
     }
@@ -221,8 +202,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "BuscarModulo")
-    public Modulo BuscarModulo(@WebParam(name = "parameter") int parameter) 
-    {
+    public Modulo BuscarModulo(@WebParam(name = "parameter") int parameter) {
         modB = new ModuloBean();
         return modB.Buscar(parameter);
     }
@@ -232,8 +212,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "EliminarModulo")
     @Oneway
-    public void EliminarModulo(@WebParam(name = "parameter") Modulo parameter) 
-    {
+    public void EliminarModulo(@WebParam(name = "parameter") Modulo parameter) {
         modB = new ModuloBean();
         modB.Eliminar(parameter);
     }
@@ -243,8 +222,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarModulo")
     @Oneway
-    public void ModificarModulo(@WebParam(name = "parameter") Modulo parameter) 
-    {
+    public void ModificarModulo(@WebParam(name = "parameter") Modulo parameter) {
         modB = new ModuloBean();
         modB.Modificar(parameter);
     }
@@ -253,8 +231,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "ListarPatrones")
-    public List<Patron> ListarPatrones() 
-    {
+    public List<Patron> ListarPatrones() {
         patB = new PatronBean();
         return patB.Listar();
     }
@@ -264,8 +241,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "CrearPatron")
     @Oneway
-    public void CrearPatron(@WebParam(name = "parameter") Patron parameter) 
-    {
+    public void CrearPatron(@WebParam(name = "parameter") Patron parameter) {
         patB = new PatronBean();
         patB.Crear(parameter);
     }
@@ -274,8 +250,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "buscarPatron")
-    public Patron buscarPatron(@WebParam(name = "parameter") int parameter) 
-    {
+    public Patron buscarPatron(@WebParam(name = "parameter") int parameter) {
         patB = new PatronBean();
         return patB.Buscar(parameter);
     }
@@ -285,8 +260,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "EliminarPatron")
     @Oneway
-    public void EliminarPatron(@WebParam(name = "parameter") Patron parameter) 
-    {
+    public void EliminarPatron(@WebParam(name = "parameter") Patron parameter) {
         patB = new PatronBean();
         patB.Eliminar(parameter);
     }
@@ -296,32 +270,27 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarPatron")
     @Oneway
-    public void ModificarPatron(@WebParam(name = "parameter") Patron parameter) 
-    {
+    public void ModificarPatron(@WebParam(name = "parameter") Patron parameter) {
         patB = new PatronBean();
         patB.Modificar(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "CrearProyecto")
     @Oneway
-    public void CrearProyecto(@WebParam(name = "parameter") Proyecto parameter) 
-    {
+    public void CrearProyecto(@WebParam(name = "parameter") Proyecto parameter) {
         proB = new ProyectoBean();
         proB.Crear(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "ModificarProyecto")
     @Oneway
-    public void ModificarProyecto(@WebParam(name = "parameter") Proyecto parameter) 
-    {
+    public void ModificarProyecto(@WebParam(name = "parameter") Proyecto parameter) {
         proB = new ProyectoBean();
         proB.Modificar(parameter);
     }
@@ -331,31 +300,26 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "GuardarRationaleAdd")
     @Oneway
-    public void GuardarRationaleAdd(@WebParam(name = "parameter") Rationaleadd parameter) 
-    {
+    public void GuardarRationaleAdd(@WebParam(name = "parameter") Rationaleadd parameter) {
         rataB = new RationaleAddBean();
         rataB.Guardar(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "GuardarRationaleQaw")
     @Oneway
-    public void GuardarRationaleQaw(@WebParam(name = "parameter") Rationaleqaw parameter)   
-    {
+    public void GuardarRationaleQaw(@WebParam(name = "parameter") Rationaleqaw parameter) {
         ratqB = new RationaleQawBean();
         ratqB.Guardar(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "ListarTactica")
-    public List<Tactica> ListarTactica() 
-    {
+    public List<Tactica> ListarTactica() {
         tacB = new TacticaBean();
         return tacB.Listar();
     }
@@ -365,8 +329,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "CrearTactica")
     @Oneway
-    public void CrearTactica(@WebParam(name = "parameter") Tactica parameter)  
-    {
+    public void CrearTactica(@WebParam(name = "parameter") Tactica parameter) {
         tacB = new TacticaBean();
         tacB.Crear(parameter);
     }
@@ -375,8 +338,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "BuscarTactica")
-    public Tactica BuscarTactica(@WebParam(name = "parameter") int parameter)  
-    {
+    public Tactica BuscarTactica(@WebParam(name = "parameter") int parameter) {
         tacB = new TacticaBean();
         return tacB.Buscar(parameter);
     }
@@ -386,8 +348,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "EliminarTactica")
     @Oneway
-    public void EliminarTactica(@WebParam(name = "parameter") Tactica parameter)  
-    {
+    public void EliminarTactica(@WebParam(name = "parameter") Tactica parameter) {
         tacB = new TacticaBean();
         tacB.Eliminar(parameter);
     }
@@ -397,8 +358,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarTactica")
     @Oneway
-    public void ModificarTactica(@WebParam(name = "parameter") Tactica parameter)  
-    {
+    public void ModificarTactica(@WebParam(name = "parameter") Tactica parameter) {
         tacB = new TacticaBean();
         tacB.Modificar(parameter);
     }
@@ -407,8 +367,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "ListarUsuarios")
-    public List<Usuario> ListarUsuarios() 
-    {
+    public List<Usuario> ListarUsuarios() {
         usuB = new UsuarioBean();
         return usuB.Listar();
     }
@@ -418,20 +377,17 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "CrearUsuarios")
     @Oneway
-    public void CrearUsuarios(@WebParam(name = "parameter") Usuario parameter) 
-    {
+    public void CrearUsuarios(@WebParam(name = "parameter") Usuario parameter) {
         usuB = new UsuarioBean();
         usuB.Crear(parameter);
     }
-
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "EliminarUsuario")
     @Oneway
-    public void EliminarUsuario(@WebParam(name = "parameter") Usuario parameter) 
-    {
+    public void EliminarUsuario(@WebParam(name = "parameter") Usuario parameter) {
         usuB = new UsuarioBean();
         usuB.Eliminar(parameter);
     }
@@ -441,8 +397,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "ModificarUsuario")
     @Oneway
-    public void ModificarUsuario(@WebParam(name = "parameter") Usuario parameter) 
-    {
+    public void ModificarUsuario(@WebParam(name = "parameter") Usuario parameter) {
         usuB = new UsuarioBean();
         usuB.Modificar(parameter);
     }
@@ -475,7 +430,7 @@ public class ArcAssistantService {
         ratqB = new RationaleQawBean();
         proB = new ProyectoBean();
         Proyecto pro = proB.Buscar(idpro);
-        return ratqB.Obtener(pro,paso);
+        return ratqB.Obtener(pro, paso);
     }
 
     /**
@@ -486,7 +441,7 @@ public class ArcAssistantService {
         rataB = new RationaleAddBean();
         proB = new ProyectoBean();
         Proyecto pro = proB.Buscar(idpro);
-        return rataB.Obtener(pro,paso);
+        return rataB.Obtener(pro, paso);
     }
 
     /**
@@ -531,8 +486,7 @@ public class ArcAssistantService {
      */
     @WebMethod(operationName = "adicionarProyectoUsuario")
     @Oneway
-    public void adicionarProyectoUsuario(@WebParam(name = "proyecto") Proyecto proyecto, @WebParam(name = "usuario") Usuario usuario) 
-    {
+    public void adicionarProyectoUsuario(@WebParam(name = "proyecto") Proyecto proyecto, @WebParam(name = "usuario") Usuario usuario) {
         usuB = new UsuarioBean();
         usuB.adicionarProyecto(proyecto, usuario);
     }
@@ -541,8 +495,7 @@ public class ArcAssistantService {
      * Web service operation
      */
     @WebMethod(operationName = "ListarModulo")
-    public List<Modulo> ListarModulo(@WebParam(name = "parameter") Proyecto parameter) 
-    {
+    public List<Modulo> ListarModulo(@WebParam(name = "parameter") Proyecto parameter) {
         modB = new ModuloBean();
         return modB.Listar(parameter);
     }
@@ -550,8 +503,8 @@ public class ArcAssistantService {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "BuscarModuloDescomposicion")
-    public Modulo BuscarModuloDescomposicion(@WebParam(name = "idProy") Proyecto idProy) {
+    @WebMethod(operationName = "BuscarModuloEnDescomposicion")
+    public Modulo BuscarModuloEnDescomposicion(@WebParam(name = "idProy") Proyecto idProy) {
         //TODO write your implementation code here:
         modB = new ModuloBean();
         return modB.BuscarModDescomposicion(idProy);
@@ -569,48 +522,53 @@ public class ArcAssistantService {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "ListarPreocupacionPorAtributo")
-    public List<Preocupacion> ListarPreocupacionPorAtributo(@WebParam(name = "parameter") Atributocalidad parameter) {
-        preB = new PreocupacionBean();
-        return preB.ListarPorAtributo(parameter);
-    }
-
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "ListarTacticaPorPreocupacion")
-    public List<Tactica> ListarTacticaPorPreocupacion(@WebParam(name = "parameter") Preocupacion parameter) {
+    @WebMethod(operationName = "ListarTacticaPorAtributoDeCalidad")
+    public List<Tactica> ListarTacticaPorAtributoDeCalidad(@WebParam(name = "parameter") Atributocalidad parameter) {
         //TODO write your implementation code here:
-        tacB = new TacticaBean();        
-        return tacB.BuscarPorPreocupacion(parameter);
+        tacB = new TacticaBean();
+        return tacB.BuscarPorAtributoDeCalidad(parameter);
+    } 
+    
+    @WebMethod(operationName = "ListarPatronPorTactica")
+    public List<Patron> ListarPatronPorTactica(@WebParam(name = "parameter") Tactica parameter) {
+        //TODO write your implementation code here:
+        patB = new PatronBean();
+        return patB.ListarPatronesPorTactica(parameter);
+    } 
+        
+    @WebMethod(operationName = "ListarTacticasDePatron")
+    public List<Tactica> ListarTacticasDePatron(@WebParam(name = "parameter") int parameter) {
+        //TODO write your implementation code here:
+        patB = new PatronBean();
+        return patB.ListarTacticasDePatron(parameter);
     }
+    
+    @WebMethod(operationName = "ListadoPatronesDeTactica")
+    public List<Patron> ListadoPatronesDeTactica(@WebParam(name = "parameter") int parameter) {
+        //TODO write your implementation code here:
+        tacB = new TacticaBean();
+        return tacB.ListadoPatronesDeTactica(parameter);
+    }
+    
+    @WebMethod(operationName = "ListarTacticasPorPatron")
+    public List<Tactica> ListarTacticasPorPatron(@WebParam(name = "parameter") Patron parameter) {
+        //TODO write your implementation code here:
+        tacB = new TacticaBean();
+        return tacB.ListarTacticasPorPatron(parameter);
+    } 
 
+    /*
+    @WebMethod(operationName = "CrearControlador")
+    @Oneway
+    public void CrearControlador(@WebParam(name = "parameter") Controlador parameter) {
+        conB = new ControladorBean();
+        conB.Crear(parameter);
+    }
+    
     /**
      * Web service operation
      */
     /*
-    @WebMethod(operationName = "CrearControlador")
-    public Void CrearControlador(@WebParam(name = "parameter") Controlador parameter) {
-        //TODO write your implementation code here:
-        conB = new ControladorBean();
-        conB.Crear(parameter);
-        return null;
-    }
-
-    /**
-     * Web service operation
-     
-    @WebMethod(operationName = "ModificarControlador")
-    public Void ModificarControlador(@WebParam(name = "parameter") Controlador parameter) {
-        //TODO write your implementation code here:
-        conB = new ControladorBean();
-        conB.Modificar(parameter);
-        return null;
-    }
-
-    /**
-     * Web service operation
-     
     @WebMethod(operationName = "BuscarControlador")
     public Controlador BuscarControlador(@WebParam(name = "parameter") int parameter) {
         //TODO write your implementation code here:
@@ -620,28 +578,23 @@ public class ArcAssistantService {
 
     /**
      * Web service operation
-     
+     */
+    /*
     @WebMethod(operationName = "ListarControlador")
     public List<Controlador> ListarControlador(@WebParam(name = "parameter") Proyecto parameter) {
         //TODO write your implementation code here:
         conB = new ControladorBean();        
         return conB.Listar(parameter);
     }
-
     /**
      * Web service operation
-     
+     */
+    /*
     @WebMethod(operationName = "EliminarControlador")
     public Void EliminarControlador(@WebParam(name = "parameter") Controlador parameter) {
         //TODO write your implementation code here:
         conB = new ControladorBean();
         conB.Eliminar(parameter);
         return null;
-    }
-
-*/
-
-
-
+    }*/
 }
-

@@ -55,8 +55,6 @@ public class Controlador implements Serializable {
     @Size(min = 1, max = 250)
     @Column(name = "contDescripcion")
     private String contDescripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblControladorcontID")
-    private List<Preocupacion> preocupacionList;
     @JoinColumn(name = "Tbl_AtributoCalidad_acID", referencedColumnName = "acID")
     @ManyToOne(optional = false)
     private Atributocalidad tblAtributoCalidadacID;
@@ -96,15 +94,6 @@ public class Controlador implements Serializable {
 
     public void setContDescripcion(String contDescripcion) {
         this.contDescripcion = contDescripcion;
-    }
-
-    @XmlTransient
-    public List<Preocupacion> getPreocupacionList() {
-        return preocupacionList;
-    }
-
-    public void setPreocupacionList(List<Preocupacion> preocupacionList) {
-        this.preocupacionList = preocupacionList;
     }
 
     public Atributocalidad getTblAtributoCalidadacID() {

@@ -7,6 +7,7 @@ package DAO;
 
 import java.util.List;
 import Modelo.Patron;
+import Modelo.Tactica;
 
 /**
  *
@@ -23,4 +24,8 @@ public interface PatronDAO
     void ModificarPatron(Patron pat);
     
     void EliminarPatron(Patron pat);
+
+    List<Patron> ListarPatronesPorTactica(Tactica tac);
+        
+    List<Tactica> ListarTacticasDePatron(int id);
 }
