@@ -27,7 +27,6 @@ import servicios.Atributocalidad;
 import servicios.Escenario;
 import servicios.Modulo;
 import servicios.Patron;
-import servicios.Preocupacion;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 import servicios.Rationaleqaw;
@@ -421,12 +420,16 @@ public class ArchAssistantBean {
         return obtenerDriverArquitectonicos(py);
     }
     
-    public List<Preocupacion> ListarPreocupacionPorAtri(Atributocalidad atr){
-        return listarPreocupacionPorAtributo(atr);
+    public Tactica ObtenerTactica(int id){
+        return this.buscarTactica(id);
     }
     
-    public List<Tactica> ListarTacticaPorPreo(Preocupacion pre){
-        return listarTacticaPorPreocupacion(pre);
+    public List<Patron> ListarPatronesDeTactica(int id){
+        return this.listadoPatronesDeTactica(id);
+    }
+    public List<Tactica> ListarTacticasDeAtributo(Atributocalidad atr)
+    {
+        return this.listarTacticaPorAtributoDeCalidad(atr);
     }
             
     private static java.util.List<servicios.Proyecto> listarProyectos(java.lang.String parameter) {
@@ -498,7 +501,7 @@ public class ArchAssistantBean {
     private static Modulo buscarModuloDescomposicion(servicios.Proyecto idProy) {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
-        return port.buscarModuloDescomposicion(idProy);
+        return port.buscarModuloEnDescomposicion(idProy);
     }
 
     private static java.util.List<servicios.Tactica> listarTactica() {
@@ -519,16 +522,42 @@ public class ArchAssistantBean {
         return port.obtenerDriverArquitectonicos(parameter);
     }
 
-    private static java.util.List<servicios.Preocupacion> listarPreocupacionPorAtributo(servicios.Atributocalidad parameter) {
+    
+
+    private static Tactica buscarTactica(int parameter) {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
-        return port.listarPreocupacionPorAtributo(parameter);
+        return port.buscarTactica(parameter);
     }
 
-    private static java.util.List<servicios.Tactica> listarTacticaPorPreocupacion(servicios.Preocupacion parameter) {
+    private static java.util.List<servicios.Tactica> listarTacticaPorAtributoDeCalidad(servicios.Atributocalidad parameter) {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
-        return port.listarTacticaPorPreocupacion(parameter);
+        return port.listarTacticaPorAtributoDeCalidad(parameter);
+    }
+
+    private static java.util.List<servicios.Tactica> listarTacticasDePatron(int parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarTacticasDePatron(parameter);
+    }
+
+    private static java.util.List<servicios.Patron> listarPatronPorTactica(servicios.Tactica parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarPatronPorTactica(parameter);
+    }
+
+    private static java.util.List<servicios.Tactica> listarTacticasPorPatron(servicios.Patron parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarTacticasPorPatron(parameter);
+    }
+
+    private static java.util.List<servicios.Patron> listadoPatronesDeTactica(int parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listadoPatronesDeTactica(parameter);
     }
 
     
