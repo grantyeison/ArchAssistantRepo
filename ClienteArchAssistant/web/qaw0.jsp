@@ -18,6 +18,22 @@
     </head>
     <body>
         <div class="col-lg-12 col-md-12 col-md-12">
+            <form name="gestionarProyectos" action="GestionarProyectos" method="POST">
+                <table class="tblCentfull">
+                    <tr>
+                        <td>
+                            <h1 class="bienvenida"> Bienvenido 
+                                <jsp:useBean id="validUsuario" scope="session" class="servicios.Usuario" />
+                                <jsp:getProperty name="validUsuario" property="usuNombre" />
+                            </h1>
+                        </td>
+                        <td>
+                            <input type="submit" name="BtnCerrarSesion" value="Cerrar Sesión" class="btn btn-primary alDer"/>
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
             <h1 align="center" class="title">ArchAssistant</h1>
             <h2 align="center" class="bienvenida">QAW</h2>
             <h2 align="center" class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
@@ -50,14 +66,14 @@
                     del software. El método QAW es usado para generar, priorizar y refinar los requerimientos de 
                     atributos de calidad de software en forma de escenarios. Los resultados de QAW están sujetos 
                     a un proceso de análisis y planificación para determinar medidas adicionales, tales como la 
-                    aplicación del método ADD[14].
-                    En [15] se puede apreciar que el propósito principal de QAW es que los arquitectos, desarrolladores, 
+                    aplicación del método ADD.
+                    En  se puede apreciar que el propósito principal de QAW es que los arquitectos, desarrolladores, 
                     usuarios, sponsors, y demás interesados, alcancen una apreciación común de lo que será el producto 
                     final mediante los escenarios; éstos serán la herramienta usada para consolidar todo lo que se 
                     espera que haga el producto final en términos claros y sencillos para todos los stakeholders.
                     En la Figura 1. Se presenta las entradas, salidas, y participantes de QAW. Este gráfico se basa 
-                    en una notación funcional [IEEE 98] donde los insumos fluyen por la izquierda, salidas fluyen 
-                    hacia la derecha, y los participantes del método se indican desde abajo[14][15]. </p>
+                    en una notación funcional  donde los insumos fluyen por la izquierda, salidas fluyen 
+                    hacia la derecha, y los participantes del método se indican desde abajo. </p>
                 
                 <img src="img/qaw.png" class="img-rounded"/>
                 
@@ -70,7 +86,7 @@
                     forma más clara posible, el o los facilitadores pueden interrumpir las discusiones en cualquier 
                     momento que consideren apropiado si éstas no están aportando al taller ya que en ocasiones se suele 
                     divagar cuando se realizan este tipo de actividades, todo con el propósito de aprovechar el tiempo 
-                    al máximo ya que el QAW es un proceso demandante[15].
+                    al máximo ya que el QAW es un proceso demandante.
 
                 </p>
 

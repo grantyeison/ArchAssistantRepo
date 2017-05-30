@@ -10,9 +10,19 @@
 <%@page import="servicios.Proyecto"%>
 <%@page import="servicios.Rationaleqaw"%>
 <%@page import="Beans.ArchAssistantBean"%>
-
-
-
+<!--
+<script type="text/javascript">
+   /* $(document).ready(function() {
+        $('#btnSubirA').click(function(event){
+            $.processRequest('popupRationale',{},function(responseText) {
+                alert(responseText);
+                $('#tblArchivos').html(responseText);
+            });
+        });
+    });
+/**/
+</script>
+-->
 <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -25,15 +35,15 @@
                     <h4>Archivos:</h4>
                     <table width="400" border="0" class="tblCent">
                         <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                            <td><input type="submit" value="subir archivo" name="btnSubir" class="btn btn-primary"/></td></tr>
+                            <td><input id="btnSubirA" type="submit" value="subir archivo" name="btnSubir" class="btn btn-primary"/></td></tr>
                     </table>
                 </form>
             </div>
             <form name="popupRatio" action="popupRationale">
                 <div class="modal-body">
-                    <div class="divScroll tblCentfullP">
+                    <div class="divScroll tblCentfullP" id="tblArchivos">
 
-                        <table width="400" border="0" class="tblCentfull">
+                        <table width="400" border="0" class="tblCentfull" >
                             <tbody>
                                 <%
                                     Proyecto proyecto = (Proyecto) session.getAttribute("proyectoActual");
@@ -59,10 +69,10 @@
                                                     + "</span></button>" + "</td>");
                                             out.print("</tr>");
                                         }
-                                    }
+                                    }/**/
                                 %>
                             </tbody>
-                        </table>
+                        </table>    
                     </div>
                     <h3>Razonamiento: </h3>
                     <textarea rows="5" cols="120" name="rationale" class="form-control parrafo"><%
@@ -96,3 +106,7 @@
         </div>
     </div>
 </div>
+
+                    
+                    
+                    

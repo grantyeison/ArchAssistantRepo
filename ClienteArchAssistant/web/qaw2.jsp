@@ -22,6 +22,22 @@
     </head>
     <body>
         <div class="col-lg-12 col-md-12 col-md-12">
+            <form name="gestionarProyectos" action="GestionarProyectos" method="POST">
+                <table class="tblCentfull">
+                    <tr>
+                        <td>
+                            <h1 class="bienvenida"> Bienvenido 
+                                <jsp:useBean id="validUsuario" scope="session" class="servicios.Usuario" />
+                                <jsp:getProperty name="validUsuario" property="usuNombre" />
+                            </h1>
+                        </td>
+                        <td>
+                            <input type="submit" name="BtnCerrarSesion" value="Cerrar Sesión" class="btn btn-primary alDer"/>
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
             <form name="qaw-2" action="QAW2">
                 <h2 class="subtitle">QAW</h2>
                 <h2 class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
@@ -29,7 +45,7 @@
                 <table border="0" class="tblCentfull">
                   <tbody>
                     <tr>
-                      <td><a href="QAW1.html"><h3 class="bienvenida">Paso 1</h3></a></td>
+                      <td><a href="qaw1.jsp"><h3 class="bienvenida">Paso 1</h3></a></td>
                       <td><h1 class="bienvenida">Paso 2</h1></td>
                       <td><h3 class="bienvenida">Paso 3</h3></td>
                       <td><h3 class="bienvenida">Paso 4</h3></td>
