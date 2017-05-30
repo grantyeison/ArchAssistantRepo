@@ -45,12 +45,12 @@ public class Atributocalidad implements Serializable {
     private Integer acID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "acNombre")
     private String acNombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 2000)
     @Column(name = "acDescripcion")
     private String acDescripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblAtributoCalidadacID")

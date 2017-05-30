@@ -47,12 +47,12 @@ public class Controlador implements Serializable {
     private Integer contID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "contNombre")
     private String contNombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 2000)
     @Column(name = "contDescripcion")
     private String contDescripcion;
     @JoinColumn(name = "Tbl_AtributoCalidad_acID", referencedColumnName = "acID")

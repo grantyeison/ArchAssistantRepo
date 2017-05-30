@@ -46,13 +46,13 @@ public class Modulo implements Serializable {
     @Basic(optional = false)
     @Column(name = "ModId")
     private Integer modId;
-    @Size(max = 45)
+    @Size(max = 500)
     @Column(name = "ModNombre")
     private String modNombre;
-    @Size(max = 1000)
+    @Size(max = 2000)
     @Column(name = "ModDescripcion")
     private String modDescripcion;
-    @Size(max = 45)
+    @Size(max = 500)
     @Column(name = "ModFinal")
     private String modFinal;
     @OneToMany(mappedBy = "tblModuloModId")

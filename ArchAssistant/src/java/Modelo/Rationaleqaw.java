@@ -44,7 +44,7 @@ public class Rationaleqaw implements Serializable {
     private Integer ratQawID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "RatQawPaso")
     private String ratQawPaso;
     @Basic(optional = false)
@@ -52,7 +52,7 @@ public class Rationaleqaw implements Serializable {
     @Size(min = 1, max = 2000)
     @Column(name = "RatQawDescripcion")
     private String ratQawDescripcion;
-    @Size(max = 1000)
+    @Size(max = 2000)
     @Column(name = "RatQawArchivo")
     private String ratQawArchivo;
     @JoinColumn(name = "Tbl_Proyecto_ProID", referencedColumnName = "ProID")

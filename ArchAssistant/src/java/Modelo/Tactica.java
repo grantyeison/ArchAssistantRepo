@@ -46,12 +46,12 @@ public class Tactica implements Serializable {
     private Integer tacID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "tacNombre")
     private String tacNombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 2000)
     @Column(name = "tacDescripcion")
     private String tacDescripcion;
     @ManyToMany(mappedBy = "tacticaList")

@@ -48,7 +48,7 @@ public class Proyecto implements Serializable {
     private Integer proID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "ProNombre")
     private String proNombre;
     @Size(max = 2000)
@@ -56,7 +56,7 @@ public class Proyecto implements Serializable {
     private String proDescripcion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "ProAvance")
     private String proAvance;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblProyectoProID")

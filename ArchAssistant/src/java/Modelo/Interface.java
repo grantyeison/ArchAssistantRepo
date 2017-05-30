@@ -41,13 +41,13 @@ public class Interface implements Serializable {
     @Basic(optional = false)
     @Column(name = "IntId")
     private Integer intId;
-    @Size(max = 45)
+    @Size(max = 500)
     @Column(name = "IntNombre")
     private String intNombre;
-    @Size(max = 1000)
+    @Size(max = 2000)
     @Column(name = "IntDescripcion")
     private String intDescripcion;
-    @Size(max = 45)
+    @Size(max = 500)
     @Column(name = "IntTipo")
     private String intTipo;
     @JoinColumn(name = "Tbl_Modulo_ModId", referencedColumnName = "ModId")

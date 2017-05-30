@@ -50,34 +50,34 @@ public class Escenario implements Serializable {
     private Integer escID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "escNombre")
     private String escNombre;
-    @Size(max = 1000)
+    @Size(max = 2000)
     @Column(name = "escFuente")
     private String escFuente;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 1, max = 2000)
     @Column(name = "escEstimulo")
     private String escEstimulo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 1, max = 2000)
     @Column(name = "escRespuesta")
     private String escRespuesta;
-    @Size(max = 250)
+    @Size(max = 2000)
     @Column(name = "escMedidaRespuesta")
     private String escMedidaRespuesta;
-    @Size(max = 45)
+    @Size(max = 500)
     @Column(name = "escEstado")
     private String escEstado;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 1, max = 2000)
     @Column(name = "escAmbiente")
     private String escAmbiente;
-    @Size(max = 250)
+    @Size(max = 2000)
     @Column(name = "escArtefacto")
     private String escArtefacto;
     @Column(name = "escPrioridad")

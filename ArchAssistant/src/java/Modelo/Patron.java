@@ -46,12 +46,12 @@ public class Patron implements Serializable {
     private Integer patID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 500)
     @Column(name = "patNombre")
     private String patNombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 2000)
     @Column(name = "patDescripcion")
     private String patDescripcion;
     @JoinTable(name = "tbl_tacticapatron", joinColumns = {
