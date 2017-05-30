@@ -113,6 +113,37 @@ public class popupRationale extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        /*
+        response.setContentType( "text/html; charset=iso-8859-1" );
+        
+        Proyecto proyecto = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        ArchAssistantBean p = new ArchAssistantBean();
+        String paso = (String) request.getSession().getAttribute("pasoActual");
+        Rationaleqaw ratq = p.RationaleQAW(proyecto.getProID(), paso);
+
+        PrintWriter out = response.getWriter();
+        GuardarArchivo arch = new GuardarArchivo();
+        List<File> archivos = null;
+        if (ratq != null) {
+            archivos = arch.listarArchivos(ratq.getRatQawArchivo());
+        }
+        if (archivos != null) {
+            String cadena = "";
+            out.println("table width=\"400\" border=\"0\" class=\"tblCentfull\" ><tbody>");
+            for (File archivo : archivos) {
+                cadena = cadena + "<tr><td>" + archivo.getName() + "</td>"
+                        + "<td class='alIzq'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnQawEliminar"
+                        + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
+                        + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        "
+                        + "<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar"
+                        + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
+                        + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
+                        + "</span></button></td></tr>";
+            }
+            out.println(cadena);
+            out.println("</tbody></table>");
+            
+        }/**/
     }
 
     /**

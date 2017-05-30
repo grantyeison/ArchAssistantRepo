@@ -67,7 +67,7 @@ public class ArchAssistantBean {
                 
         documento.open();
         documento.addHeader("ArchAssistant", "ArchAssistant");
-        documento.setMargins(2, 2, 4, 4);
+        //documento.setMargins(2, 2, 4, 4);
         parrafo = new Paragraph("INFORME QAW ",chapterFont);
         parrafo.setAlignment(1);
         documento.add(parrafo);
