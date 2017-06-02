@@ -108,7 +108,7 @@
                 </tbody>
             </table>
         </form>
-        <form name="add-4" action="ADD4">    
+        <form name="add-7" action="ADD7">    
             <table border="0" class="tblCent">
                 <tbody>
                     <tr>

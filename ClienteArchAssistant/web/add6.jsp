@@ -27,14 +27,14 @@
             <table width="100%" border="0" align="center">
                 <tbody>
                     <tr>
-                        <td><a href="ADD1.html"><h3>Paso 1</h3></a></td>
-                        <td><a href="ADD2.html"><h3>Paso 2</h3></a></td>
-                        <td><a href="ADD3.html"><h3>Paso 3</h3></a></td>
-                        <td><a href="ADD4.html"><h3>Paso 4</h3></a></td>
-                        <td><a href="ADD5.html"><h3>Paso 5</h3></a></td>
-                        <td><h1>Paso 6</h1></td>
-                        <td><h3>Paso 7</h3></td>
-                        <td><h3>Paso 8</h3></td>
+                        <td><a href="add1.jsp"><h3 class="bienvenida">Paso 1</h3></a></td>
+                        <td><a href="add2.jsp"><h3 class="bienvenida">Paso 2</h3></a></td>
+                        <td><a href="add3.jsp"><h3 class="bienvenida">Paso 3</h3></a></td>
+                        <td><a href="add4.jsp"><h3 class="bienvenida">Paso 4</h3></a></td>
+                        <td><a href="add5.jsp"><h3 class="bienvenida">Paso 5</h3></a></td>
+                        <td><h1 class="bienvenida">Paso 6</h1></td>
+                        <td><h3 class="bienvenida">Paso 7</h3></td>
+                        <td><h3 class="bienvenida">Paso 8</h3></td>
                     </tr>
                 </tbody>
             </table>
@@ -190,7 +190,7 @@
                 </tbody>
             </table>
         </form>
-        <form name="add-4" action="ADD4">    
+        <form name="add-6" action="ADD6">    
             <table border="0" class="tblCent">
                 <tbody>
                     <tr>

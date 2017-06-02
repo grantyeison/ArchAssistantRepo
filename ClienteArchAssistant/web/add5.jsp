@@ -4,6 +4,7 @@
     Author     : Prometheus
 --%>
 
+<%@page import="servicios.Responsabilidad"%>
 <%@page import="java.io.File"%>
 <%@page import="Servlets.GuardarArchivo"%>
 <%@page import="servicios.Usuario"%>
@@ -129,11 +130,7 @@
                                                 out.println(0);
                                             }
                                             out.println("</td>");
-                                            out.println("<td>");
-                                            out.println("<div class='uk-form-select' data-uk-form-select>");
-
-                                            out.println("<select name='impacto_" + esce.getEscID() + "' id='impacto_" + esce.getEscID() + "'>");
-
+                                            out.println("<td>");                                            
                                             String estado = esce.getEscEstado();
                                             if (estado != null) {
                                                 String vec[] = estado.split(";");
@@ -143,26 +140,8 @@
                                                 } else {
                                                     impacto = vec[0];
                                                 }
-                                                if (impacto.equals("Alto")) {
-                                                    out.println("<option value='null'>Eliga impacto </option> <option value='Alto' selected='selected'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo </option>");
-                                                } else {
-                                                    if (impacto.equals("Medio")) {
-                                                        out.println("<option value='null'>Eliga impacto</option> <option value='Alto'>Alto</option> <option value='Medio' selected='selected' >Medio</option> <option value='Bajo'>Bajo</option>");
-                                                    } else {
-                                                        if (impacto.equals("Bajo")) {
-                                                            out.println("<option value='null'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo' selected='selected'>Bajo </option>");
-                                                        } else {
-                                                            out.println("<option value='null' selected='selected'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo</option>");
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                out.println("<option value='null' selected='selected'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo</option>");
+                                                    out.println(impacto);
                                             }
-
-                                            //out.println("<option value='null' selected='selected'>Eliga impacto<option value='Alto'>Alto<option value='Medio'>Medio<option value='Bajo'>Bajo");
-                                            out.println("</select>");
-                                            out.println("</div>");
                                             out.println("</td>");
                                             out.println("</tr>");
                                         }
@@ -214,138 +193,132 @@
                     </div>
                     <div class="col-lg-1"> </div>
                 </div>
-                <div class="col-lg-5 col-md-8 col-sm-12" >
-                    <from namr="add-5" action="ADD5" method="POST">
-                        <h2 class="page-header">Crear y asignar responsabilidades a los modulos hijos</h2>
-                        <table class="tblCentContent">
-                            <tbody>
-                                <tr><td>
-                                        <input type="text" id="txtNomResp" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <textarea name="descMod" id="txtDesResp" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="button" id="btnCrearResp" name="btnCrearResp" value="Crear" class="btn btn-primary"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><%
-                                        Responsabilidad resp = new Responsabilidad();
-                                        out.println("<select name='RespMod_" + resp.getID() + "' id='impacto_" + esce.getEscID() + "'>");
-                                        for (Modulo m : listaMod) {
-                                            Modulo padreM = m.getTblModuloModId();
-                                            if (padreM != null) {
-                                                if (padreM.getModId() == padreActual.getModId()) {
-                                                    out.println("<tr>");
-                                                    String estado = esce.getEscEstado();
-                                                    if (estado != null) {
-                                                        String vec[] = estado.split(";");
-                                                        String impacto = "";
-                                                        if (vec.length > 1) {
-                                                            impacto = vec[1];
-                                                        } else {
-                                                            impacto = vec[0];
+                <div class="col-lg-12 col-md-8 col-sm-12">
+                    <div class="col-lg-1 " ></div>
+                    <div class="col-lg-5 col-md-6 col-sm-12" >
+                        <from namr="add-5" action="ADD5" method="POST">
+                            <h2 class="page-header">Crear y asignar responsabilidades a los modulos hijos</h2>
+                            <table class="tblCentContent">
+                                <tbody>
+                                    <tr><td>
+                                            <input type="text" id="txtNomResp" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <textarea name="descMod" id="txtDesResp" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
+                                        </td>
+                                    </tr>                                
+                                    <tr>
+                                        <td>
+                                            <%
+                                                Responsabilidad resp = new Responsabilidad();
+                                                out.println("<select name='selModelo' id='selModelo'  class='form-control'>");
+                                                out.println("<option value='null'>Eliga un modulo </option>");
+                                                if (padreActual == null) {
+                                                    padreActual = archB.buscarModDescomposicion(proyectoActual);
+                                                }
+                                                for (Modulo m : listaMod) {
+                                                    Modulo padreM = m.getTblModuloModId();
+                                                    if (padreM != null) {
+                                                        if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
+                                                            out.println("<option value='" + m.getModId() + "'>" + m.getModNombre() + " </option>");
                                                         }
-                                                        if (impacto.equals("Alto")) {
-                                                            out.println("<option value='null'>Eliga impacto </option> <option value='Alto' selected='selected'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo </option>");
-                                                        } else {
-                                                            if (impacto.equals("Medio")) {
-                                                                out.println("<option value='null'>Eliga impacto</option> <option value='Alto'>Alto</option> <option value='Medio' selected='selected' >Medio</option> <option value='Bajo'>Bajo</option>");
-                                                            } else {
-                                                                if (impacto.equals("Bajo")) {
-                                                                    out.println("<option value='null'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo' selected='selected'>Bajo </option>");
-                                                                } else {
-                                                                    out.println("<option value='null' selected='selected'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo</option>");
-                                                                }
-                                                            }
-                                                        }
-                                                    } else {
-                                                        out.println("<option value='null' selected='selected'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo</option>");
                                                     }
                                                 }
-                                            }
-                                        }
-                                        %>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </from>
-                </div>
-                <!-- se debe hacer una validación para comprobar que todos los escenarios han sido asignados a los nuevos módulos hijos  -->
+                                                out.println("</select>");
 
-                <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2 class="page-header">Rationale:</h2>
-                    <textarea rows="5" cols="120" name="ratadd5" class="form-control parrafo"><%
-                        ArchAssistantBean p = new ArchAssistantBean();
-                        Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add5");
-                        if (rata != null) {
-                            out.print(rata.getRatAddDescripcion());
-                        }
-                        %>
-                    </textarea>
-                    <table width="100" border="0">
-                        <tbody>
-                            <tr>
-                                <td><input type="submit" value="Guardar" name="btnAdd5Guardar"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                            %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="alIzq">
+                                            <input type="button" id="btnCrearResp" name="btnCrearResp" value="Crear" class="btn btn-primary"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </from>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12" id="tblResponsabilidades">   
+                    </div>
+                    <div class="col-lg-1"></div>
                 </div>
-            </form>
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <div>
-                    <h2 class="page-header">Archivos:</h2>
-                    <form name="add-3" action="ADD3" method="post" enctype="multipart/form-data">
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="divScroll">
-                    <form name="add-5" action="ADD5">
-                        <table width="400" border="0" class="tblCentfull">
-                            <tbody>
-                                <%
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (rata != null) {
-                                        archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                            out.print("</tr>");
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-            </div>
         </div>
-        <form name="add-5" action="ADD5">    
-            <table border="0" class="tblCent">
+    </form>
+
+    <!-- se debe hacer una validación para comprobar que todos los escenarios han sido asignados a los nuevos módulos hijos  -->
+    <div class="col-lg-12 col-md-8 col-sm-12">
+        <div class="col-lg-1 " ></div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <table width="100" border="0" class="tblCentfull">
                 <tbody>
                     <tr>
-                        <td class="alDer"><input type="submit" value="Regresar" name="btnAdd5anterior" class="btn btn-primary btn-lg"/></td>
-                        <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
-                        <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
+                        <td>
+                            <h2 class="page-header">Rationale:</h2>
+                            <textarea rows="5" cols="120" name="ratadd5" class="form-control parrafo"><%                    ArchAssistantBean p = new ArchAssistantBean();
+                                Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add5");
+                                if (rata != null) {
+                                    out.print(rata.getRatAddDescripcion());
+                                }
+                                %></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="alIzq"><input type="submit" value="Guardar" name="btnAdd5Guardar" class="btn btn-primary"/></td>
                     </tr>
                 </tbody>
             </table>
-        </form>
-    </div>            
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <div>
+                <h2 class="page-header">Archivos:</h2>
+                <form name="add-3" action="ADD3" method="post" enctype="multipart/form-data">
+                    <table width="400" border="0" class="tblCent">
+                        <tr><td><input type="file" name="archivo" id="myfile" /></td>
+                            <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
+                    </table>
+                </form>
+            </div>
+            <div class="divScroll">
+                <form name="add-5" action="ADD5">
+                    <table width="400" border="0" class="tblCentfull">
+                        <tbody>
+                            <%
+                                GuardarArchivo arch = new GuardarArchivo();
+                                List<File> archivos = null;
+                                if (rata != null) {
+                                    archivos = arch.listarArchivos(rata.getRatAddArchivo());
+                                }
+                                if (archivos != null) {
+                                    for (File archivo : archivos) {
+                                        out.print("<tr>");
+                                        out.print("<td>" + archivo.getName() + "</td>");
+                                        out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                        out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                        out.print("</tr>");
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+    <form name="add-5" action="ADD5" method="get">    
+        <table border="0" class="tblCent">
+            <tbody>
+                <tr>
+                    <td class="alDer"><input type="submit" value="Regresar" name="btnAdd5anterior" class="btn btn-primary btn-lg"/></td>
+                    <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
+                    <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>            
 </div>
 </body>
 </html>
