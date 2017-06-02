@@ -96,6 +96,27 @@ $(document).ready(function () {
             $('#tabla').html(responseText);
         });
     });
+<<<<<<< .mine
+    
+    $('#btnAddsubir').click(function (event) {
+        event.preventDefault();
+        var formData = new FormData(document.getElementById("frmArchivos"));
+        //alert("Click en guardar seleccionados");
+        $.ajax({
+            url: "ADD1",
+            type: "post",
+            dataType: "html",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (res){
+             $('#divArchivos').html(res);
+        });
+        
+    });
+||||||| .r65
+=======
 
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();
@@ -140,6 +161,7 @@ $(document).ready(function () {
             });
         }
     });
+>>>>>>> .r80
 });
 
 
