@@ -40,7 +40,7 @@ function Seleccionados(sel) {
     return lista
 }
 
-function SeleccionarPatrones(){
+function SeleccionarPatrones() {
     var selp = Seleccionados("patronSel");
     var selt = Seleccionados("tacticaSel");
     $("#txtTacticas").val(selt);
@@ -57,7 +57,7 @@ function SeleccionarPatrones(){
         //edad: edadVar
         listadot: selt,
         ratadd4: rationale,
-        peticion:msj,
+        peticion: msj,
         listadop: selp
     }, function (responseText) {
         $('#tabla').html(responseText);
@@ -95,6 +95,24 @@ $(document).ready(function () {
         }, function (responseText) {
             $('#tabla').html(responseText);
         });
+    });
+
+    $('#btnCrearModulo').click(function (event) {
+        var nom = $("#txtNomMod").val();
+        var desc = $("#txtDesMod").val();
+        if (nom != null && desc != null) {
+            alert(nom + "  "+desc)
+            $.post('ADD4', {
+                //nombre: nombreVar,
+                //apellido: apellidoVar,
+                //edad: edadVar
+                mensaje : "crearModulo",
+                nombreModulo: nom,
+                descripcionModulo: desc
+            }, function (responseText) {
+                $('#tblModulos').html(responseText);
+            });
+        }
     });
 });
 
