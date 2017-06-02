@@ -18,8 +18,10 @@
         <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
         <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
+         <!--<script src="./js/funciones.js"></script>
+       <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/bootstrap.min.js"></script>
+        
     </head>
     <body>
         <div class="col-lg-12 col-md-12 col-md-12">
@@ -142,7 +144,7 @@
                 
                 <div class="col-lg-7 col-md-6 col-sm-12">
                     <h2 class="page-header">Rationale:</h2>
-                    <textarea rows="5" cols="120" name="ratadd1" class="form-control parrafo"><%
+                    <textarea id="ratadd1" rows="5" cols="120" name="ratadd1" class="form-control parrafo"><%
                         ArchAssistantBean p = new ArchAssistantBean();
                         Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add1");
                         if (rata != null) {
@@ -154,18 +156,19 @@
             </form>
             <div class="col-lg-5 col-md-6 col-sm-12">                
                 <div>
-                    <form name="add-1" action="ADD1" method="post"  enctype="multipart/form-data">
+                    <form name="add-1" action="ADD1" method="post"  enctype="multipart/form-data" id="frmArchivos">
                         <h2 class="page-header">Archivos:</h2>
                         <table width="400" border="0" class="tblCent">
                             <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
+                                <td><input id="btnAddsubir" type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
                         </table>
                     </form>           
                 </div>
-                <div class="divScroll">
-                    <form name="add-1" action="ADD1">
+                <div class="divScroll" id="divArchivos">
+                    
                         <table width="400" border="0" class="tblCentfull">
                             <tbody>
+                                
                                 <%
                                     GuardarArchivo arch = new GuardarArchivo();
                                     List<File> archivos = null;
@@ -185,11 +188,10 @@
                                                     + "</span></button>" + "</td>");
                                             out.print("</tr>");
                                         }
-                                    }
+                                    }/**/
                                 %>
                             </tbody>
-                        </table>
-                    </form>
+                        </table> 
                 </div>                
             </div>
             <form name="add-1" action="ADD1"> 
