@@ -41,9 +41,9 @@ public class ADD7 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnAdd7Guardar");
-        String continuar = request.getParameter("btnAdd7Continuar");
+        String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd7anterior");
-        String canc = request.getParameter("btnQawInicio");
+        String canc = request.getParameter("btnInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");

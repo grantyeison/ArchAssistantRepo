@@ -8,6 +8,7 @@ package Servlets;
 import Beans.ArchAssistantBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
+import servicios.Modulo;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
+import servicios.Responsabilidad;
 
 /**
  *
@@ -39,22 +42,18 @@ public class ADD5 extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnAdd5Guardar");
         String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd5anterior");
         String canc = request.getParameter("btnInicio");
-        if (canc != null)
-        {
+        if (canc != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if (guardar != null)
-        {
+        if (guardar != null) {
             ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
             Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add5");
-            if (rata == null)
-            {
+            if (rata == null) {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd5"));
@@ -64,24 +63,20 @@ public class ADD5 extends HttpServlet {
             proy.setProAvance("add5");
             modificarProyecto(proy);
             response.sendRedirect("add5.jsp");
-        
-            
+
         }
-        if (continuar != null)
-        {
-            if (request.getParameter("ratadd5")!= "")
-            {
+        if (continuar != null) {
+            System.out.println("btnContinuar "+ continuar);
+            if (request.getParameter("ratadd5") != "") {
+                System.out.println("Continuar a add6 ");
                 response.sendRedirect("add6.jsp");
-            }
-            else
-            {
+            } else {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
         }
-        if (regresar != null)
-        {
+        if (regresar != null) {
             response.sendRedirect("add4.jsp");
         }
     }
@@ -113,6 +108,63 @@ public class ADD5 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        ArchAssistantBean archB = new ArchAssistantBean();
+        String msj = request.getParameter("mensaje");
+        if (msj.equals("crear")) {
+
+            Responsabilidad nResp = new Responsabilidad();
+            String nom = request.getParameter("nombre");
+            String desc = request.getParameter("descripcion");
+            String modSel = request.getParameter("seleccion");
+
+            nResp.setRespNombre(nom);
+            nResp.setRespDescripcion(desc);
+            nResp.setTblmoduloModId(archB.buscarMod(Integer.parseInt(modSel)));
+
+            archB.CrearResponsabilidad(nResp);
+        }
+        out.println("<h2 class='page-header' > Listado Responsabilidades </h2>");
+        out.println("<table width='100%' border='3' class='tblCentfull'>");
+        out.println("<tbody>");
+        out.println("<tr>");
+        out.println("<th scope='col'>Nombre</th>");
+        out.println("<th scope='col'>Descripción</th>");
+        out.println("<th scope='col'>Modulo</th>");
+        out.println("</tr>");
+        List<Modulo> listaMod = archB.ListarModulos(proy);
+
+        Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
+        if (padreActual == null) {
+            padreActual = archB.buscarModDescomposicion(proy);
+        }
+        for (Modulo m : listaMod) {
+            Modulo padreM = m.getTblModuloModId();
+            if (padreM != null) {
+                if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
+                    List<Responsabilidad> lRespModulo = archB.ListarResponsabilidadesDeModulo(m);
+                    if (lRespModulo != null) {
+                        for (Responsabilidad respon : lRespModulo) {
+                            out.println("<tr>");
+                            out.println("<td>");
+                            out.println(respon.getRespNombre());
+                            out.println("</td>");
+                            out.println("<td>");
+                            out.println(respon.getRespDescripcion());
+                            out.println("</td>");
+                            out.println("<td>");
+                            out.println(respon.getTblmoduloModId().getModNombre());
+                            out.println("</td>");
+                        }
+                        out.println("</tr>");
+                    }
+                }
+            }
+        }
+        out.println("</tbody>");
+        out.println("</table>");
     }
 
     /**

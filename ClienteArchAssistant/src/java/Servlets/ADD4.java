@@ -111,7 +111,7 @@ public class ADD4 extends HttpServlet {
         String mensaje = request.getParameter("peticion");
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.println("<h2 class='page-header'>Patrones relacionados</h2>");
+        
         out.println("<table style= cellspacing='1' bgcolor='#0099cc' class='tblCentfull' border='1' >");
         out.println("<tr>");
         out.println("<th style= rowspan='7' align='center' bgcolor='#f8f8f8'> TACTICA</th>");
@@ -267,7 +267,7 @@ public class ADD4 extends HttpServlet {
         processRequest(request, response);
 
         String msj = request.getParameter("mensaje");
-        if (msj.equals("crearModulo")) {
+        if (msj.equals("crear")) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
@@ -283,10 +283,11 @@ public class ADD4 extends HttpServlet {
             }
             nmod.setModNombre(nomMod);
             nmod.setModDescripcion(descMod);
-            nmod.setModFinal("no");
+            nmod.setModFinal("SubModulo");
             nmod.setTblModuloModId(padreActual);
             nmod.setTblProyectoProID(proy);
             archB.crearMod(nmod);
+            out.println("<h2 class='page-header'>Patrones relacionados</h2>");
             out.println("<table width='100%' border='3' class='tblCentfull'>");
             out.println("<tbody>");
             out.println("<tr>");

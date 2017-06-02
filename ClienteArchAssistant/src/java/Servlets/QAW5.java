@@ -26,6 +26,7 @@ import servicios.Escenario;
 import servicios.Modulo;
 import servicios.Proyecto;
 import servicios.Rationaleqaw;
+import servicios.Responsabilidad;
 
 /**
  *
@@ -58,44 +59,38 @@ public class QAW5 extends HttpServlet {
         HttpSession sesion = request.getSession();
         Atributocalidad actual = null;
         String canc = request.getParameter("btnQawInicio");
-        if (canc != null)
-        {
+        if (canc != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if (seleccionado != null)
-        {
+        if (seleccionado != null) {
             actual = buscarAtributo(Integer.parseInt(seleccionado));
-        } 
-        sesion.setAttribute("AtributoActual", actual); 
+        }
+        sesion.setAttribute("AtributoActual", actual);
         ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        
-        if (Atributo != null)
-        {
-            System.out.println("atributo seleccionado"+seleccionado);
+
+        if (Atributo != null) {
+            System.out.println("atributo seleccionado" + seleccionado);
             //List<Atributocalidad> listaAtributos;
             //ArchAssistantBean p = new ArchAssistantBean();
             //listaAtributos = p.ListarAtr();
-            actual = buscarAtributo(Integer.parseInt(seleccionado)); 
+            actual = buscarAtributo(Integer.parseInt(seleccionado));
             /*for (Atributocalidad atr : listaAtributos)
             {
                 if (atr.getAcID() == Integer.parseInt(seleccionado))
                     actual = atr;
             }*/
             sesion.setAttribute("AtributoActual", actual);
-            
+
             response.sendRedirect("qaw5.jsp");
         }
-        
-        
-        if (guardarEsc != null)
-        {
+
+        if (guardarEsc != null) {
             Escenario esc = new Escenario();
-            Atributocalidad atr = (Atributocalidad)request.getSession().getAttribute("AtributoActual");
-            
-            if (atr != null)
-            {
+            Atributocalidad atr = (Atributocalidad) request.getSession().getAttribute("AtributoActual");
+
+            if (atr != null) {
                 Modulo mod = buscarModulo(1);
                 esc.setEscPrioridad(0);
                 esc.setEscAmbiente(request.getParameter("txtqaw5Ambiente"));
@@ -108,8 +103,7 @@ public class QAW5 extends HttpServlet {
                 crearEscenario(esc);
             }
             response.sendRedirect("qaw5.jsp");
-            
-            
+
         }
         /*
         if (guardar != null)
@@ -141,11 +135,10 @@ public class QAW5 extends HttpServlet {
                 }
             }
         }*/
-        if (regresar != null)
-        {
+        if (regresar != null) {
             response.sendRedirect("qaw4.jsp");
         }
-        
+
         /*
         Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw5");
         
@@ -198,6 +191,65 @@ public class QAW5 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        String msj = request.getParameter("mensaje");
+        if (msj.equals("crear")) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            ArchAssistantBean archB = new ArchAssistantBean();
+            Responsabilidad nResp = new Responsabilidad();
+            String nom = request.getParameter("nombre");
+            String desc = request.getParameter("descripcion");
+            String modSel = request.getParameter("seleccion");
+
+            nResp.setRespNombre(nom);
+            nResp.setRespDescripcion(desc);
+            nResp.setTblmoduloModId(archB.buscarMod(Integer.parseInt(modSel)));
+
+            archB.CrearResponsabilidad(nResp);
+            out.println("<h2 class='page-header' > Listado Responsabilidades </h2>");
+            out.println("<table width='100%' border='3' class='tblCentfull'>");
+            out.println("<tbody>");
+            out.println("<tr>");
+            out.println("<th scope='col'>Nombre</th>");
+            out.println("<th scope='col'>Descripción</th>");
+            out.println("<th scope='col'>Modulo</th>");
+            out.println("</tr>");
+            List<Modulo> listaMod = archB.ListarModulos(proy);
+
+            Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
+            if (padreActual == null) {
+                padreActual = archB.buscarModDescomposicion(proy);
+            }
+            for (Modulo m : listaMod) {
+                Modulo padreM = m.getTblModuloModId();
+                if (padreM != null) {
+                    if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
+                        List<Responsabilidad> lRespModulo = archB.ListarResponsabilidadesDeModulo(m);
+                        if (lRespModulo != null) {
+                            for (Responsabilidad respon : lRespModulo) {
+                                out.println("<tr>");
+                                out.println("<td>");
+                                out.println(respon.getRespNombre());
+                                out.println("</td>");
+                                out.println("<td>");
+                                out.println(respon.getRespDescripcion());
+                                out.println("</td>");
+                                out.println("<td>");
+                                out.println(respon.getTblmoduloModId().getModNombre());
+                                out.println("</td>");
+                            }
+                            //out.println("<td>");
+                            //out.println(mod.getModFinal());
+                            //out.println("</td>");                                        
+                            out.println("</tr>");
+                        }
+                    }
+                }
+            }
+            out.println("</tbody>");
+            out.println("</table>");
+        }
         /*
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
