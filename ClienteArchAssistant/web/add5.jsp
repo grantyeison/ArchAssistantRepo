@@ -57,53 +57,11 @@
                             Cada uno de los elementos que surgieron del paso anterior es instanciado y le son asignadas responsabilidades dependiendo de su tipo, éstas responsabilidades surgen de los requerimientos funcionales asociados a los candidatos a drivers y al elemento padre, al finalizar este paso se tiene una secuencia de responsabilidades dentro de los elementos hijos.
                         </p></div>
                     <div class="col-lg-3 col-md-2"></div>                        
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="col-lg-1"> </div>
-                    <div class="col-lg-10 col-md-6 col-sm-12" name="listaModulos" id="listaModulos">                        
-                        <h2 class="page-header">Submódulos del sistema:</h2>
-
-                        <table width="100%" border="3" class="tblCentfull">
-                            <tbody>
-                                <tr>                        
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Descripción</th>
-
-                                </tr>
-                                <%
-                                    ArchAssistantBean archB = new ArchAssistantBean();
-                                    List<Modulo> listaMod = archB.ListarModulos(proyectoActual);
-                                    Modulo padreActual = (Modulo) session.getAttribute("padreActual");
-                                    if (padreActual == null) {
-                                        padreActual = archB.buscarModDescomposicion(proyectoActual);
-                                    }
-                                    for (Modulo m : listaMod) {
-                                        Modulo padreM = m.getTblModuloModId();
-                                        if (padreM != null) {
-                                            if (padreM.getModId() == padreActual.getModId()) {
-                                                out.println("<tr>");
-                                                out.println("<td>");
-                                                out.println(m.getModNombre());
-                                                out.println("</td>");
-                                                out.println("<td>");
-                                                out.println(m.getModDescripcion());
-                                                out.println("</td>");
-                                                //out.println("<td>");
-                                                //out.println(mod.getModFinal());
-                                                //out.println("</td>");                                        
-                                                out.println("</tr>");
-                                            }
-                                        }
-                                    }%>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-lg-1"> </div>
-                </div>
+                </div>                
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-1"> </div>
                     <div class="col-lg-10 col-md-6 col-sm-12" name="listaEscenarios" id="listaEscenarios">                        
-                        <h2 class="page-header">Escenarios</h2>
+                        <h2 class="page-header">Escenarios candidatos a drivers</h2>
                         <table width="100%" border="3" class="tblCentfull">
                             <tbody>
                                 <tr>
@@ -119,6 +77,7 @@
                                     <th scope="col">Impacto</th>
                                 </tr>
                                 <%
+                                    ArchAssistantBean archB = new ArchAssistantBean();
                                     List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
                                     for (Escenario esce : listaEsc) {
                                         if (esce.getEscPrioridad() != null && esce.getEscPrioridad() > 0) {
@@ -213,6 +172,110 @@
                         </table>
                     </div>
                     <div class="col-lg-1"> </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-1"> </div>
+                    <div class="col-lg-10 col-md-6 col-sm-12" name="listaModulos" id="listaModulos">                        
+                        <h2 class="page-header">Submódulos del sistema:</h2>
+
+                        <table width="100%" border="3" class="tblCentfull">
+                            <tbody>
+                                <tr>                        
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripción</th>
+
+                                </tr>
+                                <%
+                                    List<Modulo> listaMod = archB.ListarModulos(proyectoActual);
+                                    Modulo padreActual = (Modulo) session.getAttribute("padreActual");
+                                    if (padreActual == null) {
+                                        padreActual = archB.buscarModDescomposicion(proyectoActual);
+                                    }
+                                    for (Modulo m : listaMod) {
+                                        Modulo padreM = m.getTblModuloModId();
+                                        if (padreM != null) {
+                                            if (padreM.getModId() == padreActual.getModId()) {
+                                                out.println("<tr>");
+                                                out.println("<td>");
+                                                out.println(m.getModNombre());
+                                                out.println("</td>");
+                                                out.println("<td>");
+                                                out.println(m.getModDescripcion());
+                                                out.println("</td>");
+                                                //out.println("<td>");
+                                                //out.println(mod.getModFinal());
+                                                //out.println("</td>");                                        
+                                                out.println("</tr>");
+                                            }
+                                        }
+                                    }%>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-1"> </div>
+                </div>
+                <div class="col-lg-5 col-md-8 col-sm-12" >
+                    <from namr="add-5" action="ADD5" method="POST">
+                        <h2 class="page-header">Crear y asignar responsabilidades a los modulos hijos</h2>
+                        <table class="tblCentContent">
+                            <tbody>
+                                <tr><td>
+                                        <input type="text" id="txtNomResp" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <textarea name="descMod" id="txtDesResp" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="button" id="btnCrearResp" name="btnCrearResp" value="Crear" class="btn btn-primary"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><%
+                                        Responsabilidad resp = new Responsabilidad();
+                                        out.println("<select name='RespMod_" + resp.getID() + "' id='impacto_" + esce.getEscID() + "'>");
+                                        for (Modulo m : listaMod) {
+                                            Modulo padreM = m.getTblModuloModId();
+                                            if (padreM != null) {
+                                                if (padreM.getModId() == padreActual.getModId()) {
+                                                    out.println("<tr>");
+                                                    String estado = esce.getEscEstado();
+                                                    if (estado != null) {
+                                                        String vec[] = estado.split(";");
+                                                        String impacto = "";
+                                                        if (vec.length > 1) {
+                                                            impacto = vec[1];
+                                                        } else {
+                                                            impacto = vec[0];
+                                                        }
+                                                        if (impacto.equals("Alto")) {
+                                                            out.println("<option value='null'>Eliga impacto </option> <option value='Alto' selected='selected'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo </option>");
+                                                        } else {
+                                                            if (impacto.equals("Medio")) {
+                                                                out.println("<option value='null'>Eliga impacto</option> <option value='Alto'>Alto</option> <option value='Medio' selected='selected' >Medio</option> <option value='Bajo'>Bajo</option>");
+                                                            } else {
+                                                                if (impacto.equals("Bajo")) {
+                                                                    out.println("<option value='null'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo' selected='selected'>Bajo </option>");
+                                                                } else {
+                                                                    out.println("<option value='null' selected='selected'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo</option>");
+                                                                }
+                                                            }
+                                                        }
+                                                    } else {
+                                                        out.println("<option value='null' selected='selected'>Eliga impacto </option> <option value='Alto'>Alto </option> <option value='Medio'>Medio </option> <option value='Bajo'>Bajo</option>");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </from>
                 </div>
                 <!-- se debe hacer una validación para comprobar que todos los escenarios han sido asignados a los nuevos módulos hijos  -->
 
