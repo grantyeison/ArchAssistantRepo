@@ -40,6 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Modulo.findByModFinal", query = "SELECT m FROM Modulo m WHERE m.modFinal = :modFinal")})
 public class Modulo implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tblmoduloModId")
+    private List<Responsabilidad> responsabilidadList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -173,6 +176,15 @@ public class Modulo implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Modulo[ modId=" + modId + " ]";
+    }
+
+    @XmlTransient
+    public List<Responsabilidad> getResponsabilidadList() {
+        return responsabilidadList;
+    }
+
+    public void setResponsabilidadList(List<Responsabilidad> responsabilidadList) {
+        this.responsabilidadList = responsabilidadList;
     }
     
 }
