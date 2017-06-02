@@ -191,22 +191,22 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">                    
                         <div class="col-lg-1"></div>
                         <div class="col-lg-4 col-md-8 col-sm-12" >
-                            <from namr="add-4" action="ADD4">
+                            <from namr="add-4" action="ADD4" method="POST">
                                 <h2 class="page-header">Datos del nuevo modulo</h2>
                                 <table class="tblCentContent">
                                     <tbody>
                                         <tr><td>
-                                                <input type="text" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
+                                                <input type="text" id="txtNomMod" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <textarea name="descMod" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
+                                                <textarea name="descMod" id="txtDesMod" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="submit" name="btnCrearModulo" value="Crear" class="btn btn-primary"/>
+                                                <input type="button" id="btnCrearModulo" name="btnCrearModulo" value="Crear" class="btn btn-primary"/>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -217,39 +217,7 @@
                             <h2 class="page-header">Submódulos del sistema:</h2>
                             <p>En este momento se debe aplicar los patrones seleccionados, tras ésto, el módulo seleccionado anteriormente se 
                                 dividirá en submódulos, por favor lístelos en la siguiente tabla:</p>
-                            <table width="100%" border="3">
-                                <tbody>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Descripción</th>
-                                    </tr>
-                                    <%
-                                        List<Modulo> listaMod = archB.ListarModulos(proyectoActual);
-                                        Modulo padreActual = (Modulo) session.getAttribute("padreActual");
-                                        if (padreActual
-                                                == null) {
-                                            padreActual = archB.buscarModDescomposicion(proyectoActual);
-                                        }
-                                        for (Modulo m : listaMod) {
-                                            Modulo padreM = m.getTblModuloModId();
-                                            if (padreM != null) {
-                                                if (padreM.getModId() == padreActual.getModId()) {
-                                                    out.println("<tr>");
-                                                    out.println("<td>");
-                                                    out.println(m.getModNombre());
-                                                    out.println("</td>");
-                                                    out.println("<td>");
-                                                    out.println(m.getModDescripcion());
-                                                    out.println("</td>");
-                                                    //out.println("<td>");
-                                                    //out.println(mod.getModFinal());
-                                                    //out.println("</td>");                                        
-                                                    out.println("</tr>");
-                                                }
-                                            }
-                                        }%>
-                                </tbody>
-                            </table>                                                
+                            <div id="tblModulos"></div>                                                
                         </div>                        
                         <div class="col-lg-1"></div>
                     </div>
