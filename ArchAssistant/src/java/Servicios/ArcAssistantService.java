@@ -15,6 +15,7 @@ import Modelo.Patron;
 import Modelo.Proyecto;
 import Modelo.Rationaleadd;
 import Modelo.Rationaleqaw;
+import Modelo.Responsabilidad;
 import Modelo.Tactica;
 import Modelo.Usuario;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class ArcAssistantService {
     TacticaBean tacB;
     UsuarioBean usuB;
     ControladorBean conB;
+    ResponsabilidadBean respB;
 
     /**
      * This is a sample web service operation
@@ -555,7 +557,55 @@ public class ArcAssistantService {
         //TODO write your implementation code here:
         tacB = new TacticaBean();
         return tacB.ListarTacticasPorPatron(parameter);
-    } 
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ListarResponsabilidades")
+    public List<Responsabilidad> ListarResponsabilidades() {
+        respB = new ResponsabilidadBean();
+        return respB.Listar();
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ListarResponsabilidad")
+    public List<Responsabilidad> ListarResponsabilidad(@WebParam(name = "parameter") Modulo parameter) {
+        respB = new ResponsabilidadBean();
+        return respB.Listar(parameter);
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "CrearResponsabilidad")
+    @Oneway
+    public void CrearResponsabilidad(@WebParam(name = "parameter") Responsabilidad parameter) {
+        respB = new ResponsabilidadBean();
+        respB.Crear(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "EliminarResponsabilidad")
+    @Oneway
+    public void EliminarResponsabilidad(@WebParam(name = "parameter") Responsabilidad parameter) {
+        respB = new ResponsabilidadBean();
+        respB.Eliminar(parameter);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ModificarResponsabilidad")
+    @Oneway
+    public void ModificarResponsabilidad(@WebParam(name = "parameter") Responsabilidad parameter) {
+        respB = new ResponsabilidadBean();
+        respB.Modificar(parameter);
+    }
 
     /*
     @WebMethod(operationName = "CrearControlador")
