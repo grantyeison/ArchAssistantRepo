@@ -101,16 +101,42 @@ $(document).ready(function () {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
         if (nom != null && desc != null) {
-            alert(nom + "  "+desc)
+            alert(nom + "  " + desc)
             $.post('ADD4', {
                 //nombre: nombreVar,
                 //apellido: apellidoVar,
                 //edad: edadVar
-                mensaje : "crearModulo",
+                mensaje: "crearModulo",
                 nombreModulo: nom,
                 descripcionModulo: desc
             }, function (responseText) {
                 $('#tblModulos').html(responseText);
+            });
+        }
+    });
+
+    $('#btnCrearResp').click(function (event) {
+
+        var nom = $("#txtNomResp").val();
+        var desc = $("#txtDesResp").val();
+        var sel = $("#selModelo").val();
+        alert("click" + nom + desc + sel);
+        if (nom != null && desc != null && sel != null) {
+            alert(nom + "  " + desc)
+            $.post('ADD5', {
+                //nombre: nombreVar,
+                //apellido: apellidoVar,
+                //edad: edadVar
+                mensaje: "crear",
+                seleccion: sel,
+                nombre: nom,
+                descripcion: desc
+            }, function (responseText) {
+                //alert(responseText);
+                $("#txtNomResp").val("");
+                $("#txtDesResp").val("");
+                $("#selModelo").val(null);                
+                $('#tblResponsabilidades').html(responseText);
             });
         }
     });
