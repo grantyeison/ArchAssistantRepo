@@ -70,7 +70,7 @@ public class ADD4 extends HttpServlet {
                 } else {
                     rata.setRatAddDescripcion(rationale[0] + "/@/" + request.getParameter("ratadd4"));
                 }
-            }else{
+            } else {
                 rata.setRatAddDescripcion(request.getParameter("ratadd4"));
             }
             rata.setTblProyectoProID(proy);
@@ -92,28 +92,6 @@ public class ADD4 extends HttpServlet {
         }
         if (regresar != null) {
             response.sendRedirect("add3.jsp");
-        }
-        if (crearModulo != null) {
-            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-            ArchAssistantBean archB = new ArchAssistantBean();
-
-            Modulo nmod = new Modulo();
-            String nomMod = request.getParameter("nombreMod");
-            String descMod = request.getParameter("descMod");
-
-            Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
-            if (padreActual == null) {
-                padreActual = archB.buscarModDescomposicion(proy);
-                request.getSession().setAttribute("padreActual", padreActual);
-            }
-
-            nmod.setModNombre(nomMod);
-            nmod.setModDescripcion(descMod);
-            nmod.setModFinal("no");
-            nmod.setTblModuloModId(padreActual);
-            nmod.setTblProyectoProID(proy);
-            archB.crearMod(nmod);
-            response.sendRedirect("add4.jsp");
         }
     }
 
@@ -176,17 +154,16 @@ public class ADD4 extends HttpServlet {
                                 out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatNombre() + "</td>");
                                 out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatDescripcion() + "</td>");
                                 out.println("<td>");
-                                boolean band=false;
+                                boolean band = false;
                                 for (String ptn : patSeleccionados) {
                                     String[] ptp = ptn.split("_");
                                     if (p.getPatID() == Integer.parseInt(ptp[2])) {
-                                        band=true;
+                                        band = true;
                                     }
                                 }
-                                if(band){
+                                if (band) {
                                     out.println("<input  type = 'checkbox' checked name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
-                                }
-                                else {
+                                } else {
                                     out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
                                 }
                                 out.println("</td>");
@@ -244,17 +221,20 @@ public class ADD4 extends HttpServlet {
                             out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatNombre() + "</td>");
                             out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatDescripcion() + "</td>");
                             out.println("<td>");
-                            
+
                             if (patSeleccionados != null) {
-                                boolean band=false;
+                                boolean band = false;
                                 for (String ptn : patSeleccionados) {
                                     String[] ptp = ptn.split("_");
                                     if (p.getPatID() == Integer.parseInt(ptp[2])) {
-                                        band=true;
-                                    }                                        
+                                        band = true;
+                                    }
                                 }
-                                if(band) out.println("<input checked type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
-                                else out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                if (band) {
+                                    out.println("<input checked type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                } else {
+                                    out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                }
                             } else {
                                 out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
                             }
@@ -285,6 +265,59 @@ public class ADD4 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String msj = request.getParameter("mensaje");
+        if (msj.equals("crearModulo")) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            ArchAssistantBean archB = new ArchAssistantBean();
+            Modulo nmod = new Modulo();
+            String nomMod = request.getParameter("nombreModulo");
+            String descMod = request.getParameter("descripcionModulo");
+
+            Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
+            if (padreActual == null) {
+                padreActual = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", padreActual);
+            }
+            nmod.setModNombre(nomMod);
+            nmod.setModDescripcion(descMod);
+            nmod.setModFinal("no");
+            nmod.setTblModuloModId(padreActual);
+            nmod.setTblProyectoProID(proy);
+            archB.crearMod(nmod);
+            out.println("<table width='100%' border='3' class='tblCentfull'>");
+            out.println("<tbody>");
+            out.println("<tr>");
+            out.println("<th scope='col'>Nombre</th>");
+            out.println("<th scope='col'>Descripción</th>");
+            out.println("</tr>");
+            List<Modulo> listaMod = archB.ListarModulos(proy);
+            if (padreActual == null) {
+                padreActual = archB.buscarModDescomposicion(proy);
+            }
+            for (Modulo m : listaMod) {
+                Modulo padreM = m.getTblModuloModId();
+                if (padreM != null) {
+                    if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
+                        out.println("<tr>");
+                        out.println("<td>");
+                        out.println(m.getModNombre());
+                        out.println("</td>");
+                        out.println("<td>");
+                        out.println(m.getModDescripcion());
+                        out.println("</td>");
+                        //out.println("<td>");
+                        //out.println(mod.getModFinal());
+                        //out.println("</td>");                                        
+                        out.println("</tr>");
+                    }
+                }
+            }
+            out.println("</tbody>");
+            out.println("</table>");
+        }
 
         // Obtengo los datos de la peticion
         /*String nombre = request.getParameter("nombre");
