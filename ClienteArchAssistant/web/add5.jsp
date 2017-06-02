@@ -173,7 +173,7 @@
                                     for (Modulo m : listaMod) {
                                         Modulo padreM = m.getTblModuloModId();
                                         if (padreM != null) {
-                                            if (padreM.getModId() == padreActual.getModId()) {
+                                            if (padreM.getModId() == padreActual.getModId() && m.getModFinal().equals("SubModulo")) {
                                                 out.println("<tr>");
                                                 out.println("<td>");
                                                 out.println(m.getModNombre());
@@ -317,8 +317,6 @@
                 </tr>
             </tbody>
         </table>
-    </form>
-</div>            
-</div>
+    </form>  
 </body>
 </html>
