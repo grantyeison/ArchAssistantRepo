@@ -194,7 +194,7 @@
             <table border="0" class="tblCent">
                 <tbody>
                     <tr>
-                        <td class="alDer"><input type="submit" value="Regresar" name="btnAdd3anterior" class="btn btn-primary btn-lg"/></td>
+                        <td class="alDer"><input type="submit" value="Regresar" name="btnAdd6anterior" class="btn btn-primary btn-lg"/></td>
                         <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
                         <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
                     </tr>

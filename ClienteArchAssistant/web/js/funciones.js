@@ -27,28 +27,48 @@ function Seleccionados(sel) {
     var resultado = "ninguno";
     var porNombre = document.getElementsByName(sel);
 
-    var lista = new Array();
+    var lista = "";
     // Recorremos todos los valores del radio button para encontrar el
     // seleccionado
     for (var i = 0; i < porNombre.length; i++)
     {
         if (porNombre[i].checked) {
             resultado = porNombre[i].value;
-            $("#listadoTac").val($("#listadoTac").val() + resultado + ";");
-            lista.push(resultado);
+            lista += resultado + ",";
         }
     }
-    alert("La lista " + lista);
-    /*if(lista.length>0){
-     $("#listaTacticas").hide();
-     $("#listaPatrones").show();
-     
-     }*/
+    return lista
+}
+
+function SeleccionarPatrones(){
+    var selp = Seleccionados("patronSel");
+    var selt = Seleccionados("tacticaSel");
+    $("#txtTacticas").val(selt);
+    $("#txtPatrones").val(selp);
+    //var listaTacticas = $("#txtTacticas").val();
+    var rationale = $("#txtRationale").val();
+    //var listaPatrones = $("#txtPatrones").val();
+    alert("Tacticas seleccionados___" + selt);
+    alert("Patrones seleccionados___" + selp);
+    var msj = "guardarPatrones";
+    $.get('ADD4', {
+        //nombre: nombreVar,
+        //apellido: apellidoVar,
+        //edad: edadVar
+        listadot: selt,
+        ratadd4: rationale,
+        peticion:msj,
+        listadop: selp
+    }, function (responseText) {
+        $('#tabla').html(responseText);
+    });
 }
 
 $(document).ready(function () {
     $('#submit').click(function (event) {
         var porNombre = document.getElementsByName("tacticaSel");
+        var rationale = $("#txtRationale").val();
+        var resultado = "ninguno";
         alert("Click en guardar seleccionados")
         var lista = "";
         // Recorremos todos los valores del radio button para encontrar el
@@ -57,7 +77,7 @@ $(document).ready(function () {
         {
             if (porNombre[i].checked) {
                 resultado = porNombre[i].value;
-                lista += resultado + ";";
+                lista += resultado + ",";
 
             }
         }
@@ -70,7 +90,8 @@ $(document).ready(function () {
             //nombre: nombreVar,
             //apellido: apellidoVar,
             //edad: edadVar
-            listado: lista
+            ratadd4: rationale,
+            listadot: lista
         }, function (responseText) {
             $('#tabla').html(responseText);
         });

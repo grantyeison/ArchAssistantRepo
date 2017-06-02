@@ -124,3 +124,9 @@ body{
     display: block;   
     /*outline: none;*/
 }
+
+.descripcion{
+    margin: 0px;
+    height: 169px;
+    width: 352px;
+}
