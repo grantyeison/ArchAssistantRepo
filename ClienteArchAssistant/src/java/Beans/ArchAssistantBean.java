@@ -30,6 +30,7 @@ import servicios.Patron;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 import servicios.Rationaleqaw;
+import servicios.Responsabilidad;
 import servicios.Tactica;
 
 /**
@@ -431,6 +432,31 @@ public class ArchAssistantBean {
     {
         return this.listarTacticaPorAtributoDeCalidad(atr);
     }
+    
+    public List<Responsabilidad> ListarResponsabilidadesDeModulo(Modulo m)
+    {
+        return this.listarResponsabilidad(m);
+    }
+    
+    public List<Responsabilidad> ListarResponsabilidadesDeModulo()
+    {
+        return this.listarResponsabilidades();
+    }
+    
+    public void CrearResponsabilidad(Responsabilidad resp)
+    {
+        crearResponsabilidad(resp);
+    }
+    
+    public void ModificarResponsabilidad(Responsabilidad resp)
+    {
+        modificarResponsabilidad(resp);
+    }
+    
+    public void EliminarResponsabilidad(Responsabilidad resp)
+    {
+        eliminarResponsabilidad(resp);
+    }
             
     private static java.util.List<servicios.Proyecto> listarProyectos(java.lang.String parameter) {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
@@ -559,6 +585,38 @@ public class ArchAssistantBean {
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         return port.listadoPatronesDeTactica(parameter);
     }
+
+    private static void crearResponsabilidad(servicios.Responsabilidad parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.crearResponsabilidad(parameter);
+    }
+
+    private static void eliminarResponsabilidad(servicios.Responsabilidad parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.eliminarResponsabilidad(parameter);
+    }
+
+    private static java.util.List<servicios.Responsabilidad> listarResponsabilidad(servicios.Modulo parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarResponsabilidad(parameter);
+    }
+
+    private static java.util.List<servicios.Responsabilidad> listarResponsabilidades() {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarResponsabilidades();
+    }
+
+    private static void modificarResponsabilidad(servicios.Responsabilidad parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.modificarResponsabilidad(parameter);
+    }
+    
+    
 
     
 }
