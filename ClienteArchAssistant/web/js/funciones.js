@@ -19,7 +19,7 @@ function SeleccionPadre() {
         padre.value = resultado;
     }
     session.setAttribute("moduloActual", resultado);
-    alert("Se ha seleccionado el modulo #" + resultado + " Como el modulo padre");
+    //alert("Se ha seleccionado el modulo #" + resultado + " Como el modulo padre");
 }
 
 function Seleccionados(sel) {
@@ -134,7 +134,7 @@ $(document).ready(function () {
         var nom = $("#txtNomResp").val();
         var desc = $("#txtDesResp").val();
         var sel = $("#selModulo").val();
-        alert("click" + nom + desc + sel);
+        //alert("click" + nom + desc + sel);
         if (nom != null && desc != null && sel != null) {
             //alert(nom + "  " + desc)
             $.post('ADD5', {
