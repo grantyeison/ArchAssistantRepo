@@ -110,7 +110,7 @@
                     <div class="col-lg-1"></div>   
                     <div class="col-lg-5 col-md-6 col-sm-12" >
                         <from namr="add-6" action="ADD6" method="POST">
-                            <h2 class="page-header">Crear y asignar responsabilidades a los modulos hijos</h2>
+                            <h2 class="page-header">Crear interfaces de submodulos</h2>
                             <table width="100%" border="0" align="center" class="tblCentfull">
                                 <tbody>
                                     <tr>
