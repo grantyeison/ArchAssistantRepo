@@ -176,8 +176,8 @@ $(document).ready(function () {
                 //alert(responseText);
                 $("#txtNom").val("");
                 $("#txtDesc").val("");
-                $("#txtTipo").val(null); 
-                $("#selModelo").val(null); 
+                $("#txtTipo").val(" Sintaxis de operaciones"); 
+                $("#selModulo").val(null); 
                 $("#tblAux").hide();
                 $('#tblResponsabilidades').html(responseText);
             });
