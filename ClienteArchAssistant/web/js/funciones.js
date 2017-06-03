@@ -93,7 +93,6 @@ $(document).ready(function () {
             $('#tblPatrones').html(responseText);
         });
     });
-<<<<<<< .mine
     
     $('#btnAddsubir').click(function (event) {
         event.preventDefault();
@@ -112,9 +111,7 @@ $(document).ready(function () {
         });
         
     });
-||||||| .r65
-=======
-
+    
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
@@ -157,7 +154,6 @@ $(document).ready(function () {
             });
         }
     });
-<<<<<<< .mine
     
     $('#btnCrearInter').click(function (event) {
         var nom = $("#txtNom").val();
@@ -186,11 +182,7 @@ $(document).ready(function () {
                 $('#tblResponsabilidades').html(responseText);
             });
         }
-    });    
-||||||| .r78
-=======
->>>>>>> .r80
->>>>>>> .r83
+    });
 });
 
 
