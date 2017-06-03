@@ -46,7 +46,7 @@ public class QAW8 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnQaw8Guardar");
-        //String continuar = request.getParameter("btnQaw8Continuar");
+        String continuar = request.getParameter("btnQaw8continuar");
         String inicio = request.getParameter("btnQaw8Inicio");
         String regresar = request.getParameter("btnQaw8anterior");
         String canc = request.getParameter("btnQawInicio");
@@ -64,6 +64,19 @@ public class QAW8 extends HttpServlet {
                 request.getSession().setAttribute("escenarioActual", esce);
                 request.getSession().setAttribute("refinar", 1);
                 response.sendRedirect("modificarEscenario.jsp");
+            }
+        }
+        if (continuar != null)
+        {
+            if (request.getParameter("ratqaw8")!= "")
+            {
+                response.sendRedirect("add0.jsp");
+            }
+            else
+            {
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("debe llenar e campo Rationale antes de contunuar");
+                }
             }
         }
         /*
@@ -95,21 +108,6 @@ public class QAW8 extends HttpServlet {
                 }
             }
         }
-        /*
-        if (continuar != null)
-        {
-            if (request.getParameter("ratqaw8")!= "")
-            {
-                response.sendRedirect("add0.jsp");
-            }
-            else
-            {
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("debe llenar e campo Rationale antes de contunuar");
-                }
-            }
-        }
-        */
         if (regresar != null)
         {
             response.sendRedirect("qaw7.jsp");

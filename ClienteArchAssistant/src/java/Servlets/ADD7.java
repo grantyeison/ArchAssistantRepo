@@ -62,6 +62,7 @@ public class ADD7 extends HttpServlet {
             for (Modulo m : listaMod) {
                 String Opc = (String) request.getParameter("selModulo_" + m.getModId());
                 if (Opc != null) {
+                    
                     m.setModFinal(Opc);
                     modificarModulo(m);
                 }
