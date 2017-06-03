@@ -231,7 +231,7 @@
                         </from>
                     </div>
                     <div class="col-lg-5 col-md-6 col-sm-12" id="tblResponsabilidades">
-                        <h2 class="page-header"> Asignacion a submodulos</h2>
+                        <h2 class="page-header"> Responsabilidades de submodulos</h2>
                     </div>
                     <div class="col-lg-1"></div>
                 </div>

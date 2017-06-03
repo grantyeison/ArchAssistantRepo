@@ -26,8 +26,8 @@
         <title>ArchAssistant - ADD</title>
     </head>
     <body>
-        <div class="col-lg-12 col-md-12 col-md-12">
-            <form name="add-7" action="ADD7">
+        <form name="add-7" action="ADD7">
+            <div class="col-lg-12 col-md-12 col-md-12">
                 <h2 class="subtitle">ADD</h2>
                 <%Usuario u = (Usuario) session.getAttribute("validUsuario");
                     if (u == null) {
@@ -58,6 +58,7 @@
                     </div>
                     <div class="col-lg-3 col-md-2"></div>                        
                 </div>
+                
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-1"> </div>
                     <div class="col-lg-10 col-md-6 col-sm-12" name="listaModulos" id="listaModulos">                        
@@ -89,9 +90,15 @@
                                                 out.println(m.getModDescripcion());
                                                 out.println("</td>");
                                                 out.println("<td>");
-                                                out.println("<select name='selModulo' id='selModulo_'"+m.getModId()+"  class='form-control'>");
-                                                out.println("<option value='Modulo'>Modulo</option>");
-                                                out.println("<option value='Submodulo'>SubModulo</option>");
+                                                out.println("<select name='selModulo_" + m.getModId() + "' id='selModulo_" + m.getModId() + "'  class='form-control'>");
+                                                if (m.getModFinal().equals("Modulo")) {
+                                                    out.println("<option value='Modulo' selected >Modulo</option>");
+                                                    out.println("<option value='SubModulo' >Submodulo</option>");
+                                                } else {
+                                                    out.println("<option value='Modulo'>Modulo</option>");
+                                                    out.println("<option value='Submodulo' selected >Submodulo</option>");
+                                                }
+
                                                 out.println("</select>");
                                                 //out.println(m.getModFinal());
                                                 out.println("</td>");
@@ -105,14 +112,12 @@
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
-            </form>
-            <!-- las responsabilidades que luego se convierten en restricciones vienen dadas por los escenarios asociados a cada módulo -->
+                <!-- las responsabilidades que luego se convierten en restricciones vienen dadas por los escenarios asociados a cada módulo -->
 
 
-            <div class="col-lg-12 col-md-8 col-sm-12">
-                <div class="col-lg-1 " ></div>
-                <div class="col-lg-5 col-md-6 col-sm-12">
-                    <form id="add-7" name="add-7" action="ADD7">
+                <div class="col-lg-12 col-md-8 col-sm-12">
+                    <div class="col-lg-1 " ></div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
                         <table width="100" border="0" class="tblCentfull">
                             <tbody>
                                 <tr>
@@ -136,56 +141,56 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </form>
-                </div>
-                <div class="col-lg-5 col-md-6 col-sm-12">
-                    <div>
-                        <h2 class="page-header">Archivos:</h2>
-                        <form name="add-7" action="ADD7" method="post" enctype="multipart/form-data">
-                            <table width="400" border="0" class="tblCent">
-                                <tr><td><input type="file" name="archivo" id="myfile" /></td>
-                                    <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
-                            </table>
-                        </form>
-                    </div>
-                    <div class="divScroll">
-                        <form name="add-7" action="ADD7">
-                            <table width="400" border="0" class="tblCentfull">
-                                <tbody>
-                                    <%
-                                        GuardarArchivo arch = new GuardarArchivo();
-                                        List<File> archivos = null;
-                                        if (rata != null) {
-                                            archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                        }
-                                        if (archivos != null) {
-                                            for (File archivo : archivos) {
-                                                out.print("<tr>");
-                                                out.print("<td>" + archivo.getName() + "</td>");
-                                                out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                                out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                                out.print("</tr>");
+                    </div>                
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <div>
+                            <h2 class="page-header">Archivos:</h2>
+                            <form name="add-7" action="ADD7" method="post" enctype="multipart/form-data">
+                                <table width="400" border="0" class="tblCent">
+                                    <tr><td><input type="file" name="archivo" id="myfile" /></td>
+                                        <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="divScroll">
+                            <form name="add-7" action="ADD7">
+                                <table width="400" border="0" class="tblCentfull">
+                                    <tbody>
+                                        <%
+                                            GuardarArchivo arch = new GuardarArchivo();
+                                            List<File> archivos = null;
+                                            if (rata != null) {
+                                                archivos = arch.listarArchivos(rata.getRatAddArchivo());
                                             }
-                                        }
-                                    %>
-                                </tbody>
-                            </table>
-                        </form>
+                                            if (archivos != null) {
+                                                for (File archivo : archivos) {
+                                                    out.print("<tr>");
+                                                    out.print("<td>" + archivo.getName() + "</td>");
+                                                    out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                                    out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                                    out.print("</tr>");
+                                                }
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-1"></div>
-            </div> 
-            <form name="add-7" action="ADD7">    
-                <table border="0" class="tblCent">
-                    <tbody>
-                        <tr>
-                            <td class="alDer"><input type="submit" value="Regresar" name="btnAdd7anterior" class="btn btn-primary btn-lg"/></td>
-                            <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
-                            <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
+                    <div class="col-lg-1"></div>
+                </div> 
+                <form name="add-7" action="ADD7">    
+                    <table border="0" class="tblCent">
+                        <tbody>
+                            <tr>
+                                <td class="alDer"><input type="submit" value="Regresar" name="btnAdd7anterior" class="btn btn-primary btn-lg"/></td>
+                                <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
+                                <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </form>
     </body>
 </html>
