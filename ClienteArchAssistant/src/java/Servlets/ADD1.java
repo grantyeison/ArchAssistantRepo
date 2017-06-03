@@ -104,7 +104,7 @@ public class ADD1 extends HttpServlet {
         }
 
         GuardarArchivo arch = new GuardarArchivo();
-        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1");
+        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1_");
         if (rata != null) {
             List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
 
