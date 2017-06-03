@@ -23,10 +23,9 @@
         <title>ArchAssistant - ADD</title>
     </head>
     <body>
-        <div class="col-lg-12 col-md-12 col-md-12">
-            <form name="add-3" action="ADD3">
+        <form name="add-3" action="ADD3">
+            <div class="col-lg-12 col-md-12 col-md-12">            
                 <h2 class="subtitle">ADD</h2>
-
                 <h2 class="bienvenida">                    
                     <% if (session.getAttribute("validUsuario") == null) {
                             response.sendRedirect("InicioUsuario.jsp");
@@ -47,10 +46,7 @@
                             <td><h3 class="bienvenida">Paso 8</h3></td>
                         </tr>
                     </tbody>
-                </table>
-
-
-                <% Modulo m = (Modulo) session.getAttribute("padreActual");
+                </table><% Modulo m = (Modulo) session.getAttribute("padreActual");
                     if (m == null) {
                         ArchAssistantBean archB = new ArchAssistantBean();
                         Modulo padre = archB.buscarModDescomposicion(proyectoActual);
@@ -101,6 +97,7 @@
                             <%List<Atributocalidad> listaAtributos;
                                 ArchAssistantBean p = new ArchAssistantBean();
                                 listaAtributos = p.ListarAtr();
+
                                 Rationaleqaw ratq4 = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
                                 String ratio;
                                 String[] listAc = null;
@@ -164,7 +161,8 @@
                                         <th scope="col">Prioridad</th>
                                         <th scope="col">Impacto</th>
                                     </tr>
-                                    <%ArchAssistantBean archB = new ArchAssistantBean();
+                                    <%
+                                        ArchAssistantBean archB = new ArchAssistantBean();
                                         List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
                                         for (Escenario esce : listaEsc) {
                                             if (esce.getEscPrioridad() != null && esce.getEscPrioridad() > 0) {
@@ -261,69 +259,67 @@
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
-                <!-- combobox
-               <select>
-                   <option value="Alto">Alto</option>
-                   <option value="Medio">Medio</option>
-                   <option value="Bajo">Bajo</option>
-              </select>-->
-                <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2 class="page-header">Rationale:</h2>
-                    <textarea rows="9" cols="120" class="form-control parrafo" name="ratadd3"><%Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add3");
-                        if (rata != null) {
-                            out.print(rata.getRatAddDescripcion());
-                        }
-                        %></textarea>
-                    <br/>
-                    <input type="submit" value="Guardar" name="btnAdd3Guardar" class="btn btn-primary"/>
-                </div>
-            </form>
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <div>
-                    <h2 class="page-header">Archivos:</h2>
-                    <form name="add-3" action="ADD3" method="post" enctype="multipart/form-data">
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="divScroll">
-                    <form name="add-3" action="ADD3">
-                        <table width="400" border="0" class="tblCentfull">
-                            <tbody>
-                                <%
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (rata != null) {
-                                        archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                            out.print("</tr>");
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <h2 class="page-header">Rationale:</h2>
+                        <textarea rows="9" cols="120" class="form-control parrafo" name="ratadd3"><%
+                            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add3_" + m.getModId());
+                            if (rata != null) {
+                                out.print(rata.getRatAddDescripcion());
+                            }
+                            %></textarea>
+                        <br/>
+                        <input type="submit" value="Guardar" name="btnAdd3Guardar" class="btn btn-primary"/>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <div>
+                            <h2 class="page-header">Archivos:</h2>
+                            <form name="add-3" action="ADD3" method="post" enctype="multipart/form-data">
+                                <table width="400" border="0" class="tblCent">
+                                    <tr><td><input type="file" name="archivo" id="myfile"/></td>
+                                        <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="divScroll">
+                            <table width="400" border="0" class="tblCentfull">
+                                <tbody>
+                                    <%
+                                        GuardarArchivo arch = new GuardarArchivo();
+                                        List<File> archivos = null;
+                                        if (rata != null) {
+                                            archivos = arch.listarArchivos(rata.getRatAddArchivo());
                                         }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
+                                        if (archivos != null) {
+                                            for (File archivo : archivos) {
+                                                out.print("<tr>");
+                                                out.print("<td>" + archivo.getName() + "</td>");
+                                                out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                                out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                                out.print("</tr>");
+                                            }
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>                               
+
             </div>
-            <form name="add-3" action="ADD3">    
-                <table border="0" class="tblCent">
-                    <tbody>
-                        <tr>
-                            <td class="alDer"><input type="submit" value="Regresar" name="btnAdd3anterior" class="btn btn-primary btn-lg"/></td>
-                            <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
-                            <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
+        </form>
+        <form name="add-3" action="ADD3">    
+            <table border="0" class="tblCent">
+                <tbody>
+                    <tr>
+                        <td class="alDer"><input type="submit" value="Regresar" name="btnAdd3anterior" class="btn btn-primary btn-lg"/></td>
+                        <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
+                        <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </body>
 </html>

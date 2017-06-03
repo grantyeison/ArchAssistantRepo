@@ -34,8 +34,8 @@
         <title>ArchAssistant - ADD</title>
     </head>
     <body>
-        <div class="col-lg-12 col-md-12 col-md-12">
-            <form name="add-4" action="ADD4">
+        <form name="add-4" action="ADD4">
+            <div class="col-lg-12 col-md-12 col-md-12">
                 <h2 class="subtitle">ADD</h2>
                 <%Usuario u = (Usuario) session.getAttribute("validUsuario");
                     if (u == null) {
@@ -83,218 +83,193 @@
                                 </tr>
                             <label value="TacticasSeleccionadas" id="lblTactSel"></label>
                             <label value="TacticasSeleccionadas" id="lblPatSel"></label>
-                                <%ArchAssistantBean archB = new ArchAssistantBean();
-                                    List<Escenario> listaEsc = archB.ListarCandidatosDriver(proyectoActual);
-                                    List<Tactica> listaTacSel = new LinkedList<Tactica>();
-                                    List<Tactica> listaTac = archB.ListarTacticas();
-                                    Rationaleadd rata = archB.RationaleADD(proyectoActual.getProID(), "add4");
-                                    String[] rationale = null;
-                                    if (rata != null) {
-                                        rationale = rata.getRatAddDescripcion().split("/@/");
-                                    }
-                                    for (Escenario esc : listaEsc) {
-                                        Atributocalidad atr = esc.getTblAtributoCalidadacID();
-                                        for (Tactica tac : listaTac) {
-                                            Atributocalidad tacAtributo = tac.getTblAtributocalidadID();
-                                            if (tacAtributo != null) {
-                                                if (tacAtributo.getAcID() == atr.getAcID()) {
-                                                    //listaTacSel.add(tac);
-                                                    //List<Patron> listadoPat = archB.ListarPatronesDeTactica(tac.getTacID());
-                                                    out.println("<tr>");
-                                                    out.println("<td>");
-                                                    if (rationale != null) {
-                                                        if (rationale.length > 1) {                                                            
-                                                            String[] tact = ((String) rationale[0]).split(",");
-                                                            boolean band=true;
-                                                            for (String s : tact) {
-                                                                if (Integer.parseInt(s) == tac.getTacID()) {
-                                                                    band=false;
-                                                                    out.println("<input  type = 'checkbox' checked name = 'tacticaSel' id='chkTac' value = '" + tac.getTacID() + "'/>");
-                                                                }
+                            <%ArchAssistantBean archB = new ArchAssistantBean();
+                                List<Escenario> listaEsc = archB.ListarCandidatosDriver(proyectoActual);
+                                List<Tactica> listaTacSel = new LinkedList<Tactica>();
+                                List<Tactica> listaTac = archB.ListarTacticas();
+                                Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+                                if (descMod == null) {
+                                    descMod = archB.buscarModDescomposicion(proyectoActual);
+                                    request.getSession().setAttribute("padreActual", descMod);
+                                }
+                                Rationaleadd rata = archB.RationaleADD(proyectoActual.getProID(), "add4_" + descMod.getModId());
+
+                                String[] rationale = null;
+                                if (rata != null) {
+                                    rationale = rata.getRatAddDescripcion().split("/@/");
+                                }
+                                for (Escenario esc : listaEsc) {
+                                    Atributocalidad atr = esc.getTblAtributoCalidadacID();
+                                    for (Tactica tac : listaTac) {
+                                        Atributocalidad tacAtributo = tac.getTblAtributocalidadID();
+                                        if (tacAtributo != null) {
+                                            /**
+                                             * aqui comparamos el atributo de
+                                             * calidad de la tactica sbre la
+                                             * cual estamos haciendo el for con
+                                             * la el atributo de calidad que
+                                             * tiene el escenario candidato a
+                                             * driver
+                                             *
+                                             *
+                                             */
+                                            if (tacAtributo.getAcID() == atr.getAcID()) {
+                                                //listaTacSel.add(tac);
+                                                //List<Patron> listadoPat = archB.ListarPatronesDeTactica(tac.getTacID());
+                                                out.println("<tr>");
+                                                out.println("<td>");
+                                                if (rationale != null) {
+                                                    //validamos si el rationale tiene tacticas guardadas que se seleccionaron 
+                                                    if (rationale.length > 1) {
+                                                        //indica que se tiene al menos dos valores el rationale y tacticas seleccionadas
+                                                        //hacemos un split para obtener los id de las tacticas seleccionadas
+                                                        String[] tact = ((String) rationale[0]).split(",");
+                                                        boolean band = true;
+                                                        for (String s : tact) {
+                                                            if (Integer.parseInt(s) == tac.getTacID()) {
+                                                                band = false;
+                                                                out.println("<input  type = 'checkbox' checked name = 'tacticaSel' id='chkTac' value = '" + tac.getTacID() + "'/>");
                                                             }
-                                                            if(band) out.println("<input  type = 'checkbox' name = 'tacticaSel' id='chkTac' value = '" + tac.getTacID() + "'/>");
                                                         }
-                                                        else{
+                                                        if (band) {
                                                             out.println("<input  type = 'checkbox' name = 'tacticaSel' id='chkTac' value = '" + tac.getTacID() + "'/>");
                                                         }
                                                     } else {
                                                         out.println("<input  type = 'checkbox' name = 'tacticaSel' id='chkTac' value = '" + tac.getTacID() + "'/>");
                                                     }
-                                                    //out.println(mod.getModId());
-                                                    out.println("</td>");
-                                                    out.println("<td>");
-                                                    out.println(tac.getTacNombre());
-                                                    out.println("</td>");
-                                                    out.println("<td>");
-                                                    out.println(tac.getTacDescripcion());
-                                                    out.println("</td>");
-                                                    //out.println("<td>");
-                                                    //out.println(mod.getModFinal());
-                                                    //out.println("</td>");
-                                                    out.println("</tr>");
+                                                } else {
+                                                    out.println("<input  type = 'checkbox' name = 'tacticaSel' id='chkTac' value = '" + tac.getTacID() + "'/>");
                                                 }
+                                                //out.println(mod.getModId());
+                                                out.println("</td>");
+                                                out.println("<td>");
+                                                out.println(tac.getTacNombre());
+                                                out.println("</td>");
+                                                out.println("<td>");
+                                                out.println(tac.getTacDescripcion());
+                                                out.println("</td>");
+                                                //out.println("<td>");
+                                                //out.println(mod.getModFinal());
+                                                //out.println("</td>");
+                                                out.println("</tr>");
                                             }
                                         }
                                     }
-                                %>
-                                <tr>
-                                    <td colspan="3" class="alDer">
-                                        <input class="btn btn-primary" type="button" value="Guardar Seleccion" name="btnGuardarSeleccion" id="submit"/>
-                                    </td>
-                                </tr>
+                                }
+                            %>
                             </tbody>
                         </table>
+                        <input class="btn btn-primary alIzq" type="button" value="Guardar Seleccion" name="btnGuardarSeleccion" id="submit"/>
                     </div>
                     <div class="col-lg-1 "></div>
-                    <div id="tabla">
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-1"></div>                      
+                    <div class="col-lg-10 col-md-6 col-sm-12" id="tblPatrones">                        
+                    </div>
+                    <div class="col-lg-1"></div>  
+                </div>
+                <div class="col-lg-12 col-md-6 col-sm-12" name="listaTacticas" id="listaTacticas">                                       
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-8 col-sm-12" >
+                        <from name="add-4" action="ADD4" method="POST">
+                            <h2 class="page-header">Datos del nuevo modulo</h2>
+                            <table class="tblCentfull">
+                                <tbody>
+                                    <tr><td>
+                                            <input type="text" id="txtNomMod" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <textarea name="descMod" id="txtDesMod" value="" placeholder="Descripcion Modulo" class="form-control" rows="9" cols="100"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="alIzq">
+                                            <input type="button" id="btnCrearModulo" name="btnCrearModulo" value="Crear" class="btn btn-primary"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </from>
+                    </div>
+                    <div class="col-lg-5 col-md-12 col-sm-12"> 
+                        <%
+                            out.println("<h2 class='page-header'> Submodulos de " + descMod.getModNombre() + "</h2>");
+                        %>
+                        <div id="tblModulos"></div>                                     
+                    </div>                        
+                    <div class="col-lg-1"></div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12"> 
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <from id="add-4" name="add-4" action="ADD4">
+                            <h2 class="page-header">Rationale:</h2>
+                            <textarea rows="9" cols="120" name="ratadd4" id="txtRationale" class="form-control parrafo"><%
+                                session.setAttribute("paso", "add4");
+                                if (rata != null && rationale != null) {
+                                    if (rationale.length > 1) {
+                                        out.print(rationale[1]);
+                                    } else {
+                                        out.print(rationale[0]);
+                                    }
+                                }
+                                %></textarea>
+                            <br/>
+                            <input type="submit" value="Guardar" name="btnAdd4Guardar" class="btn btn-primary"/>
 
                     </div>
-                    <p:editor/>
-                    <!--
-                    <div hidden class="col-lg-10 col-md-6 col-sm-12" id="listaPatrones">
-                        <h2 class="page-header">Patrones:</h2>
-                    <!-- Los patrones listados corresponden únicamente los que asociados a las tácticas seleccionadas en la tabla anterior -->
-                    <!--<table width="100%" border="3" class="tblCentfull">
-                        <tbody>
-                            <tr>
-                    <!--<th scope="col">Código</th>-->
-                    <!--<th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Seleccionar</th>
-                </tr>                    
-                    <%/*List<Patron> listaPat = archB.ListarPatronesT();
-
-                        for (Patron pat : listaPat) {
-                            out.println("<tr>");
-                            out.println("<td>");
-                            out.println(pat.getPatNombre());
-                            out.println("</td>");
-                            out.println("<td>");
-                            out.println(pat.getPatDescripcion());
-                            out.println("</td>");
-                            //out.println("<td>");
-                            //out.println(mod.getModFinal());
-                            //out.println("</td>");
-                            out.println("<td>");
-                            out.println("<input  type = 'checkbox' name = 'patronSel' id='chkTac' value = '" + pat.getPatID() + "'/>");
-                            //out.println(mod.getModId());
-                            out.println("</td>");
-
-                            out.println("</tr>");
-                        }*/%>
-                </tbody>
-            </table>
-            </fieldset>
-        </div>
-    </div>
-                    -->
-                    <div class="col-lg-12 col-md-12 col-sm-12">                    
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-4 col-md-8 col-sm-12" >
-                            <from namr="add-4" action="ADD4" method="POST">
-                                <h2 class="page-header">Datos del nuevo modulo</h2>
-                                <table class="tblCentContent">
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <div>
+                            <h2 class="page-header">Archivos:</h2>
+                            <form name="add-4" action="ADD4" method="post" enctype="multipart/form-data">
+                                <table width="400" border="0" class="tblCent">
+                                    <tr><td><input type="file" name="archivo" id="myfile"/></td>
+                                        <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="divScroll">
+                            <form name="add-5" action="ADD5">
+                                <table width="400" border="0" class="tblCentfull">
                                     <tbody>
-                                        <tr><td>
-                                                <input type="text" id="txtNomMod" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <textarea name="descMod" id="txtDesMod" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="button" id="btnCrearModulo" name="btnCrearModulo" value="Crear" class="btn btn-primary"/>
-                                            </td>
-                                        </tr>
+                                        <%
+                                            GuardarArchivo arch = new GuardarArchivo();
+                                            List<File> archivos = null;
+                                            if (rata != null) {
+                                                archivos = arch.listarArchivos(rata.getRatAddArchivo());
+                                            }
+                                            if (archivos != null) {
+                                                for (File archivo : archivos) {
+                                                    out.print("<tr>");
+                                                    out.print("<td>" + archivo.getName() + "</td>");
+                                                    out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                                    out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
+                                                    out.print("</tr>");
+                                                }
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
-                            </from>
+                            </form>
                         </div>
-                        <div class="col-lg-6 col-md-12 col-sm-12">
-                            <h2 class="page-header">Submódulos del sistema:</h2>
-                            <p>En este momento se debe aplicar los patrones seleccionados, tras ésto, el módulo seleccionado anteriormente se 
-                                dividirá en submódulos, por favor lístelos en la siguiente tabla:</p>
-                            <div id="tblModulos"></div>                                                
-                        </div>                        
-                        <div class="col-lg-1"></div>
                     </div>
-
-                    <div class="col-lg-7 col-md-6 col-sm-12">
-                        <h2 class="page-header">Rationale:</h2>
-                        <textarea rows="5" cols="120" name="ratadd4" id="txtRationale" class="form-control parrafo"><%session.setAttribute(
-                                    "paso", "add4");
-                            if (rata != null&&rationale!=null) {
-                                if(rationale.length>1){
-                                out.print(rationale[1]);
-                                }else{
-                                    out.print(rationale[0]);
-                                }
-                            }
-                            %></textarea>
-                        <br/>
-                        <input type="submit" value="Guardar" name="btnAdd4Guardar" class="btn btn-primary"/>
-                    </div>
-
-            </form>
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <div>
-                    <h2 class="page-header">Archivos:</h2>
-                    <form name="add-4" action="ADD4" method="post" enctype="multipart/form-data">
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="divScroll">
-                    <form name="add-5" action="ADD5">
-                        <table width="400" border="0" class="tblCentfull">
-                            <tbody>
-                                <%
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (rata != null) {
-                                        archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                            out.print("</tr>");
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                    </form>
                 </div>
             </div>
-            <form name="add-4" action="ADD4">    
-                <table border="0" class="tblCent">
-                    <tbody>
-                        <tr>
-                            <td class="alDer"><input type="submit" value="Regresar" name="btnAdd4anterior" class="btn btn-primary btn-lg"/></td>
-                            <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
-                            <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>            
-            <!--<h2>Ejemplo de AJAX con JSP y Servelts</h2>
-            <form id="form1">
-                Nombre:<input type="text" id="nombre" /> <br>
-                Apellido: <input type="text" id="apellido" /> <br>
-                Edad: <input type="text" id="edad" /> <br>
-                <input type="button" id="submit1" value="Añadir" /> 
-            </form>
-            <br>-->
-            <!-- 	En este div metemos el contenido de la tabla con AJAX -->
-
-        </div>
+        </form>
+        <form name="add-4" action="ADD4">    
+            <table border="0" class="tblCent">
+                <tbody>
+                    <tr>
+                        <td class="alDer"><input type="submit" value="Regresar" name="btnAdd4anterior" class="btn btn-primary btn-lg"/></td>
+                        <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
+                        <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </body>
 </html>

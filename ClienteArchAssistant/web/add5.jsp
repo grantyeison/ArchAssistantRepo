@@ -82,13 +82,6 @@
                                     List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
                                     for (Escenario esce : listaEsc) {
                                         if (esce.getEscPrioridad() != null && esce.getEscPrioridad() > 0) {
-
-                                            /*
-                                                            out.println("<tr>");
-                                                            out.println("<td>");
-                                                            out.println(esce.getEscID());
-                                                            out.println("</td>");
-                                             */
                                             out.println("<td>");
                                             out.println(esce.getTblAtributoCalidadacID().getAcNombre());
                                             out.println("</td>");
@@ -130,7 +123,7 @@
                                                 out.println(0);
                                             }
                                             out.println("</td>");
-                                            out.println("<td>");                                            
+                                            out.println("<td>");
                                             String estado = esce.getEscEstado();
                                             if (estado != null) {
                                                 String vec[] = estado.split(";");
@@ -140,7 +133,7 @@
                                                 } else {
                                                     impacto = vec[0];
                                                 }
-                                                    out.println(impacto);
+                                                out.println(impacto);
                                             }
                                             out.println("</td>");
                                             out.println("</tr>");
@@ -180,10 +173,7 @@
                                                 out.println("</td>");
                                                 out.println("<td>");
                                                 out.println(m.getModDescripcion());
-                                                out.println("</td>");
-                                                //out.println("<td>");
-                                                //out.println(mod.getModFinal());
-                                                //out.println("</td>");                                        
+                                                out.println("</td>");                                        
                                                 out.println("</tr>");
                                             }
                                         }
@@ -197,8 +187,8 @@
                     <div class="col-lg-1 " ></div>
                     <div class="col-lg-5 col-md-6 col-sm-12" >
                         <from namr="add-5" action="ADD5" method="POST">
-                            <h2 class="page-header">Crear y asignar responsabilidades a los modulos hijos</h2>
-                            <table class="tblCentContent">
+                            <h2 class="page-header">Crear y asignar responsabilidades</h2>
+                            <table class="tblCentfull">
                                 <tbody>
                                     <tr><td>
                                             <input type="text" id="txtNomResp" name="nombreMod" value="" placeholder="Nombre modulo" class="form-control" />
@@ -206,14 +196,14 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <textarea name="descMod" id="txtDesResp" value="" placeholder="Descripcion Modulo" class="form-control descripcion" rows="10"></textarea>
+                                            <textarea name="descMod" id="txtDesResp" value="" placeholder="Descripcion Modulo" class="form-control" rows="9" ></textarea>
                                         </td>
                                     </tr>                                
                                     <tr>
                                         <td>
                                             <%
                                                 Responsabilidad resp = new Responsabilidad();
-                                                out.println("<select name='selModelo' id='selModelo'  class='form-control'>");
+                                                out.println("<select name='selModulo' id='selModulo'  class='form-control'>");
                                                 out.println("<option value='null'>Eliga un modulo </option>");
                                                 if (padreActual == null) {
                                                     padreActual = archB.buscarModDescomposicion(proyectoActual);
@@ -240,7 +230,8 @@
                             </table>
                         </from>
                     </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12" id="tblResponsabilidades">   
+                    <div class="col-lg-5 col-md-6 col-sm-12" id="tblResponsabilidades">
+                        <h2 class="page-header"> Asignacion a submodulos</h2>
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
@@ -251,24 +242,32 @@
     <div class="col-lg-12 col-md-8 col-sm-12">
         <div class="col-lg-1 " ></div>
         <div class="col-lg-5 col-md-6 col-sm-12">
-            <table width="100" border="0" class="tblCentfull">
-                <tbody>
-                    <tr>
-                        <td>
-                            <h2 class="page-header">Rationale:</h2>
-                            <textarea rows="5" cols="120" name="ratadd5" class="form-control parrafo"><%                    ArchAssistantBean p = new ArchAssistantBean();
-                                Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add5");
-                                if (rata != null) {
-                                    out.print(rata.getRatAddDescripcion());
-                                }
-                                %></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="alIzq"><input type="submit" value="Guardar" name="btnAdd5Guardar" class="btn btn-primary"/></td>
-                    </tr>
-                </tbody>
-            </table>
+            <form id="add-5" name="add-5" action="ADD5">
+                <table width="100" border="0" class="tblCentfull">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h2 class="page-header">Rationale:</h2>
+                                <textarea rows="9" cols="120" name="ratadd5" class="form-control parrafo"><%                                ArchAssistantBean p = new ArchAssistantBean();
+                                    Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+                                    if (descMod == null) {
+                                        descMod = archB.buscarModDescomposicion(proyectoActual);
+                                        request.getSession().setAttribute("padreActual", descMod);
+                                    }
+                                    Rationaleadd rata = archB.RationaleADD(proyectoActual.getProID(), "add5_" + descMod.getModId());
+
+                                    if (rata != null) {
+                                        out.print(rata.getRatAddDescripcion());
+                                    }
+                                    %></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="alIzq"><input type="submit" value="Guardar" name="btnAdd5Guardar" class="btn btn-primary"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <div class="col-lg-5 col-md-6 col-sm-12">
             <div>

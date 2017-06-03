@@ -21,7 +21,8 @@
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
         <script src="./js/jquery-3.2.1.js"></script>
         <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
-        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>        
+        <script src="./js/funciones.js"></script>
         <title>ArchAssistant - ADD</title>
     </head>
     <body>
@@ -62,8 +63,7 @@
                             <li>Manejo de errores.</li>
                         </ul></div>
                     <div class="col-lg-3 col-md-2"></div>                        
-                </div>                
-
+                </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-1"> </div>
                     <div class="col-lg-10 col-md-6 col-sm-12" name="listaModulos" id="listaModulos">                        
@@ -109,21 +109,21 @@
                 <div class="col-lg-12 col-md-8 col-sm-12">
                     <div class="col-lg-1"></div>   
                     <div class="col-lg-5 col-md-6 col-sm-12" >
-                        <from namr="add-5" action="ADD5" method="POST">
+                        <from namr="add-6" action="ADD6" method="POST">
                             <h2 class="page-header">Crear y asignar responsabilidades a los modulos hijos</h2>
                             <table width="100%" border="0" align="center" class="tblCentfull">
                                 <tbody>
                                     <tr>
                                         <td class="alIzq">Nombre: </td>
-                                        <td><input class="form-control"/></td>
+                                        <td><input class="form-control" id="txtNom"/></td>
                                     </tr>
                                     <tr>
                                         <td class="alIzq">Descripción</td>
-                                        <td><input class="form-control"/></td>
+                                        <td><textarea class="form-control" id ="txtDesc" rows="9" cols="60"></textarea></td>
                                     </tr>
                                     <tr>
                                         <td class="alIzq">Tipo</td>
-                                        <td><select class="form-control">
+                                        <td><select class="form-control" id="txtTipo">
                                                 <option class="form-control" value=" Sintaxis de operaciones"> Sintaxis de operaciones</option>
                                                 <option class="form-control" value="Semántica de operaciones">Semántica de operaciones</option>
                                                 <option class="form-control" value="Información que intercambia">Información que intercambia</option>
@@ -133,23 +133,22 @@
                                     </tr>
                                     <tr>
                                         <td class="alIzq">SubModulo</td>
-                                        <td>
-                                            <%
-                                                Interface inter = new Interface();
-                                                out.println("<select name='selModelo' id='selModelo'  class='form-control'>");
-                                                out.println("<option value='null'>Eliga un modulo </option>");
-                                                if (padreActual == null) {
-                                                    padreActual = archB.buscarModDescomposicion(proyectoActual);
-                                                }
-                                                for (Modulo m : listaMod) {
-                                                    Modulo padreM = m.getTblModuloModId();
-                                                    if (padreM != null) {
-                                                        if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
-                                                            out.println("<option value='" + m.getModId() + "'>" + m.getModNombre() + " </option>");
-                                                        }
+                                        <td><%
+                                            Interface inter = new Interface();
+                                            out.println("<select name='selModulo' id='selModulo'  class='form-control'>");
+                                            out.println("<option value='null'>Eliga un modulo </option>");
+                                            if (padreActual == null) {
+                                                padreActual = archB.buscarModDescomposicion(proyectoActual);
+                                            }
+                                            for (Modulo m : listaMod) {
+                                                Modulo padreM = m.getTblModuloModId();
+                                                if (padreM != null) {
+                                                    if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
+                                                        out.println("<option value='" + m.getModId() + "'>" + m.getModNombre() + " </option>");
                                                     }
                                                 }
-                                                out.println("</select>");
+                                            }
+                                            out.println("</select>");
 
                                             %>
                                         </td>
@@ -164,53 +163,41 @@
                         </from>
                     </div>
                     <div class="col-lg-5 col-md-6 col-sm-12" id="tblResponsabilidades"> 
-                        <h2>Interfaces</h2>
-                        <table width="100%" border="3">
-                            <tbody>
-                                <tr>
-                                    <th scope="col">Código</th>
-                                    <th scope="col">nombre</th>
-                                    <th scope="col">Descrioción</th>
-                                    <th scope="col">Tipo</th><!--  el tipo puede ser 
-                                          •	Sintaxis de operaciones.
-                                      •	Semántica de operaciones.
-                                      •	Información que intercambia.
-                                      •	Requerimientos de atributos de calidad de los elementos individuales y operaciones.
-                                      •	Manejo de errores.
-                                    -->
-                                    <th scope="col">Submódulo</th>
+                        <div id="tblAux">
+                            <h2 class="page-header">Interfaces</h2>
+                            <table width="100%" border="3">
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">nombre</th>
+                                        <th scope="col">Descrioción</th>
+                                        <th scope="col">Tipo</th><!--  el tipo puede ser 
+                                              •	Sintaxis de operaciones.
+                                          •	Semántica de operaciones.
+                                          •	Información que intercambia.
+                                          •	Requerimientos de atributos de calidad de los elementos individuales y operaciones.
+                                          •	Manejo de errores.
+                                        -->
+                                        <th scope="col">Submódulo</th>
 
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
@@ -218,31 +205,36 @@
             <div class="col-lg-12 col-md-8 col-sm-12">
                 <div class="col-lg-1 " ></div>
                 <div class="col-lg-5 col-md-6 col-sm-12">
-                    <table width="100" border="0" class="tblCentfull">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h2 class="page-header">Rationale:</h2>
-                                    <textarea rows="5" cols="120" name="ratadd6" class="form-control">
-                                        <%                    ArchAssistantBean p = new ArchAssistantBean();
-                                            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add6");
+                    <form id="add-6" name="add-6" action="ADD6">
+                        <table width="100" border="0" class="tblCentfull">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h2 class="page-header">Rationale:</h2>
+                                        <textarea rows="9" cols="120" name="ratadd6" class="form-control"><%
+                                            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+                                            if (descMod == null) {
+                                                descMod = archB.buscarModDescomposicion(proyectoActual);
+                                                request.getSession().setAttribute("padreActual", descMod);
+                                            }
+                                            Rationaleadd rata = archB.RationaleADD(proyectoActual.getProID(), "add6_" + descMod.getModId());
                                             if (rata != null) {
                                                 out.print(rata.getRatAddDescripcion());
                                             }
-                                        %>
-                                    </textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="alIzq"><input type="submit" value="Guardar" name="btnAdd5Guardar" class="btn btn-primary"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                            %></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="alIzq"><input type="submit" value="Guardar" name="btnAdd6Guardar" class="btn btn-primary"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-12">
                     <div>
                         <h2 class="page-header">Archivos:</h2>
-                        <form name="add-3" action="ADD3" method="post" enctype="multipart/form-data">
+                        <form name="add-7" action="ADD7" method="post" enctype="multipart/form-data">
                             <table width="400" border="0" class="tblCent">
                                 <tr><td><input type="file" name="archivo" id="myfile" /></td>
                                     <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
@@ -250,7 +242,7 @@
                         </form>
                     </div>
                     <div class="divScroll">
-                        <form name="add-5" action="ADD5">
+                        <form name="add-6" action="ADD6">
                             <table width="400" border="0" class="tblCentfull">
                                 <tbody>
                                     <%

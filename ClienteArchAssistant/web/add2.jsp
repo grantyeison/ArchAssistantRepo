@@ -26,10 +26,10 @@
             <form name="add-2" action="ADD2">
                 <h2 class="subtitle">ADD</h2>
                 <h2 class="bienvenida">                    
-                    <% if(session.getAttribute("validUsuario") == null){
-                        response.sendRedirect("InicioUsuario.jsp");
-   //redirijo al login
-                    }%>
+                    <% if (session.getAttribute("validUsuario") == null) {
+                            response.sendRedirect("InicioUsuario.jsp");
+                            //redirijo al login
+                        }%>
                     <jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
                     <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
                 <table border="0" class="tblCentfull">
@@ -85,7 +85,11 @@
                                     if (estado.equals("Descomposicion")) {
                                         out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
                                     } else {
-                                        out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                        if (estado.equals("Procesado")) {
+                                            out.println("<input disabled  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                        } else {
+                                            out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                        }
                                     }
                                     //out.println(mod.getModId());
                                     out.println("</td>");
@@ -103,20 +107,26 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-1"></div>
-                <input type="hidden" name="modPadre" value=""/>
-                <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2 class="page-header">Rationale:</h2>
-                    <textarea rows="5" cols="120" name="ratadd2" class="form-control parrafo"><%
-                        ArchAssistantBean p = new ArchAssistantBean();
-                        Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add2");
-                        if (rata != null) {
-                            out.print(rata.getRatAddDescripcion());
-                        }
-                        %></textarea>
-                    <br/>
-                    <input type="submit" value="Guardar" name="btnAdd2Guardar" class="btn btn-primary"/>
-                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-1"></div>
+                    <input type="hidden" name="modPadre" value=""/>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <h2 class="page-header">Rationale:</h2>
+                        <textarea rows="5" cols="120" name="ratadd2" class="form-control parrafo"><%
+                            ArchAssistantBean p = new ArchAssistantBean();
+                            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+                            if (descMod == null) {
+                                descMod = archB.buscarModDescomposicion(proyectoActual);
+                                request.getSession().setAttribute("padreActual", descMod);
+                            }
+                            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add2_" + descMod.getModId());
+                            if (rata != null) {
+                                out.print(rata.getRatAddDescripcion());
+                            }
+                            %></textarea>
+                        <br/>
+                        <input type="submit" value="Guardar" name="btnAdd2Guardar" class="btn btn-primary"/>
+                    </div>
             </form>
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <div>
@@ -154,17 +164,19 @@
                     </form>
                 </div>
             </div>
-            <form name="add-2" action="ADD2">    
-                <table border="0" class="tblCent">
-                    <tbody>
-                        <tr>
-                            <td class="alDer"><input type="submit" value="Regresar" name="btnAdd2anterior" class="btn btn-primary btn-lg"/></td>
-                            <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
-                            <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
+            <div class="col-lg-1"></div> 
         </div>
-    </body>
+        <form name="add-2" action="ADD2">    
+            <table border="0" class="tblCent">
+                <tbody>
+                    <tr>
+                        <td class="alDer"><input type="submit" value="Regresar" name="btnAdd2anterior" class="btn btn-primary btn-lg"/></td>
+                        <td class="alCen"><input type="submit" value="Cerrar Proyecto" name="btnInicio" class="btn btn-primary btn-lg"/></td>
+                        <td class="alIzq"><input type="submit" value="Continuar" name="btnContinuar" class="btn btn-primary btn-lg"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
 </html>
