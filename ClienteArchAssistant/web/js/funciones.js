@@ -48,8 +48,8 @@ function SeleccionarPatrones() {
     //var listaTacticas = $("#txtTacticas").val();
     var rationale = $("#txtRationale").val();
     //var listaPatrones = $("#txtPatrones").val();
-    alert("Tacticas seleccionados___" + selt);
-    alert("Patrones seleccionados___" + selp);
+    //alert("Tacticas seleccionados___" + selt);
+    //alert("Patrones seleccionados___" + selp);
     var msj = "guardarPatrones";
     $.get('ADD4', {
         //nombre: nombreVar,
@@ -60,7 +60,7 @@ function SeleccionarPatrones() {
         peticion: msj,
         listadop: selp
     }, function (responseText) {
-        $('#tabla').html(responseText);
+        $('#tblPatrones').html(responseText);
     });
 }
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
         var porNombre = document.getElementsByName("tacticaSel");
         var rationale = $("#txtRationale").val();
         var resultado = "ninguno";
-        alert("Click en guardar seleccionados")
+        //alert("Click en guardar seleccionados")
         var lista = "";
         // Recorremos todos los valores del radio button para encontrar el
         // seleccionado
@@ -81,10 +81,7 @@ $(document).ready(function () {
 
             }
         }
-        alert("Lista " + lista);
-        //var nombre = $('#nombre').val();
-        //var apellidoVar = $('#apellido').val();
-        //var edadVar = $('#edad').val();
+        //alert("Lista " + lista);
         // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
         $.get('ADD4', {
             //nombre: nombreVar,
@@ -93,7 +90,7 @@ $(document).ready(function () {
             ratadd4: rationale,
             listadot: lista
         }, function (responseText) {
-            $('#tabla').html(responseText);
+            $('#tblPatrones').html(responseText);
         });
     });
 <<<<<<< .mine
@@ -122,12 +119,12 @@ $(document).ready(function () {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
         if (nom != null && desc != null) {
-            alert(nom + "  " + desc)
+            //alert(nom + "  " + desc)
             $.post('ADD4', {
                 //nombre: nombreVar,
                 //apellido: apellidoVar,
                 //edad: edadVar
-                mensaje: "crearModulo",
+                mensaje: "crear",
                 nombreModulo: nom,
                 descripcionModulo: desc
             }, function (responseText) {
@@ -137,13 +134,12 @@ $(document).ready(function () {
     });
 
     $('#btnCrearResp').click(function (event) {
-
         var nom = $("#txtNomResp").val();
         var desc = $("#txtDesResp").val();
-        var sel = $("#selModelo").val();
+        var sel = $("#selModulo").val();
         alert("click" + nom + desc + sel);
         if (nom != null && desc != null && sel != null) {
-            alert(nom + "  " + desc)
+            //alert(nom + "  " + desc)
             $.post('ADD5', {
                 //nombre: nombreVar,
                 //apellido: apellidoVar,
@@ -156,12 +152,45 @@ $(document).ready(function () {
                 //alert(responseText);
                 $("#txtNomResp").val("");
                 $("#txtDesResp").val("");
-                $("#selModelo").val(null);                
+                $("#selModulo").val(null);                
                 $('#tblResponsabilidades').html(responseText);
             });
         }
     });
+<<<<<<< .mine
+    
+    $('#btnCrearInter').click(function (event) {
+        var nom = $("#txtNom").val();
+        var desc = $("#txtDesc").val();        
+        var tipo = $("#txtTipo").val();
+        var sel = $("#selModulo").val();
+        //alert("click" + nom + desc + sel + tipo);
+        if (nom != null && desc != null && sel != null && tipo!=null) {
+            //alert(nom + "  " + desc)
+            $.post('ADD6', {
+                //nombre: nombreVar,
+                //apellido: apellidoVar,
+                //edad: edadVar
+                mensaje: "crear",
+                seleccion: sel,
+                nombre: nom,
+                tipo: tipo,
+                descripcion: desc
+            }, function (responseText) {
+                //alert(responseText);
+                $("#txtNom").val("");
+                $("#txtDesc").val("");
+                $("#txtTipo").val(null); 
+                $("#selModelo").val(null); 
+                $("#tblAux").hide();
+                $('#tblResponsabilidades').html(responseText);
+            });
+        }
+    });    
+||||||| .r78
+=======
 >>>>>>> .r80
+>>>>>>> .r83
 });
 
 
