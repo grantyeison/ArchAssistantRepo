@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import servicios.Atributocalidad;
 import servicios.Escenario;
+import servicios.Interface;
 import servicios.Modulo;
 import servicios.Patron;
 import servicios.Proyecto;
@@ -346,7 +347,7 @@ public class ArchAssistantBean {
             Modulo modu = new Modulo();
             modu.setModNombre(proy.getProNombre());
             modu.setModDescripcion(proy.getProDescripcion());
-            modu.setModFinal("no");
+            modu.setModFinal("Descomposicion");
             modu.setTblModuloModId(buscarModulo(1));
             modu.setTblProyectoProID(proy);
             crearModulo(modu);
@@ -456,6 +457,31 @@ public class ArchAssistantBean {
     public void EliminarResponsabilidad(Responsabilidad resp)
     {
         eliminarResponsabilidad(resp);
+    }
+    
+    public List<Interface> ListarInterfaces()
+    {
+        return listarInterfaces();
+    }
+    
+    public void CrearInterface(Interface parameter)
+    {
+        crearInterface(parameter);
+    }
+    
+    public void ModificarInterface(Interface parameter)
+    {
+        modificarInterface(parameter);
+    }
+    
+    public void EliminarInterface(Interface parameter)
+    {
+        eliminarInterface(parameter);
+    }
+    
+    public List<Modulo> ListarModulos()
+    {
+        return listarModulos();
     }
             
     private static java.util.List<servicios.Proyecto> listarProyectos(java.lang.String parameter) {
@@ -614,6 +640,42 @@ public class ArchAssistantBean {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         port.modificarResponsabilidad(parameter);
+    }
+
+    private static void crearInterface(servicios.Interface parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.crearInterface(parameter);
+    }
+
+    private static void eliminarInterface(servicios.Interface parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.eliminarInterface(parameter);
+    }
+
+    private static Interface buscarInterface(int parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.buscarInterface(parameter);
+    }
+
+    private static java.util.List<servicios.Interface> listarInterfaces() {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarInterfaces();
+    }
+
+    private static void modificarInterface(servicios.Interface parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.modificarInterface(parameter);
+    }
+
+    private static java.util.List<servicios.Modulo> listarModulos() {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarModulos();
     }
     
     
