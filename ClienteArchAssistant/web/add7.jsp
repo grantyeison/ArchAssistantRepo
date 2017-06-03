@@ -96,7 +96,7 @@
                                                     out.println("<option value='SubModulo' >Submodulo</option>");
                                                 } else {
                                                     out.println("<option value='Modulo'>Modulo</option>");
-                                                    out.println("<option value='Submodulo' selected >Submodulo</option>");
+                                                    out.println("<option value='SubModulo' selected >Submodulo</option>");
                                                 }
 
                                                 out.println("</select>");
