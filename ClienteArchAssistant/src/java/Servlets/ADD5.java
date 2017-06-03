@@ -52,13 +52,18 @@ public class ADD5 extends HttpServlet {
         if (guardar != null) {
             ArchAssistantBean archB = new ArchAssistantBean();
             Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add5");
+            Modulo descMod = (Modulo)request.getSession().getAttribute("padreActual");
+            if(descMod==null){                
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual",descMod);
+            }
+            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add5_"+descMod.getModId());
             if (rata == null) {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd5"));
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add5");
+            rata.setRatAddPaso("add5_"+descMod.getModId());
             guardarRationaleAdd(rata);
             proy.setProAvance("add5");
             modificarProyecto(proy);

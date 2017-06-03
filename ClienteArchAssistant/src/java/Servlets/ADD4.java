@@ -59,9 +59,17 @@ public class ADD4 extends HttpServlet {
             ArchAssistantBean archB = new ArchAssistantBean();
             Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
             String[] rationale = null;
-            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add4");
+            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+            if (descMod == null) {
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", descMod);
+            }
+            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add4_" + descMod.getModId());
             if (rata == null) {
                 rata = new Rationaleadd();
+            }
+            if (rata.getRatAddDescripcion() == null) {
+                rata.setRatAddDescripcion("");
             }
             rationale = rata.getRatAddDescripcion().split("/@/");
             if (rationale.length > 1) {
@@ -74,7 +82,7 @@ public class ADD4 extends HttpServlet {
                 rata.setRatAddDescripcion(request.getParameter("ratadd4"));
             }
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add4");
+            rata.setRatAddPaso("add4_" + descMod.getModId());
             guardarRationaleAdd(rata);
             proy.setProAvance("add4");
             modificarProyecto(proy);
@@ -111,28 +119,36 @@ public class ADD4 extends HttpServlet {
         String mensaje = request.getParameter("peticion");
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        out.println("<table style= cellspacing='1' bgcolor='#0099cc' class='tblCentfull' border='1' >");
+        //obtenemos el proyecto actual
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        //obtenemos el padre actual que es el modulo en descomposicion si no existe lo obtenemos de la base de datos
+        //y lo almacenamos en la variable de sesion
+        Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+        if (descMod == null) {
+            descMod = archB.buscarModDescomposicion(proy);
+            request.getSession().setAttribute("padreActual", descMod);
+        }
+        //obtenemos el rationale en la base de datos para el modulo en descomposicion
+        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add4_" + descMod.getModId());
+        out.println("<h2 class='page-header'> Patrones relacionados a las tacticas </h2>");
+        out.println("<table class='tblCentfull alCen' border='1'>");
         out.println("<tr>");
-        out.println("<th style= rowspan='7' align='center' bgcolor='#f8f8f8'> TACTICA</th>");
-        //out.println("<th style= rowspan='7' align='center' bgcolor='#f8f8f8'> ID PATRON </th>");
-        out.println("<th style= rowspan='7' align='center' bgcolor='#f8f8f8'>Nombre</th>");
-        out.println("<th style= rowspan='7' align='center' bgcolor='#f8f8f8'>Descripcion</th>");
+        out.println("<th> Tactica</th>");
+        out.println("<th class='alCen'> Patron  </th>");
         out.println("</tr>");
         String listado = request.getParameter("listadot");
         if (mensaje != null) {
             if (mensaje.equals("guardarPatrones")) {
                 String listadop = request.getParameter("listadop");
                 if (listadop != null) {
-                    Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-                    Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add4");
+
                     if (rata == null) {
                         rata = new Rationaleadd();
                     }
                     String[] ratio = rata.getRatAddDescripcion().split("/@/");
                     rata.setRatAddDescripcion(request.getParameter("listadot") + "/@/" + ratio[1] + "/@/" + request.getParameter("listadop"));
                     rata.setTblProyectoProID(proy);
-                    rata.setRatAddPaso("add4");
+                    rata.setRatAddPaso("add4_" + descMod.getModId());
                     guardarRationaleAdd(rata);
                     proy.setProAvance("add4");
                     modificarProyecto(proy);
@@ -142,48 +158,52 @@ public class ADD4 extends HttpServlet {
                     for (String t : seleccionadas) {
                         List<Patron> patrones = archB.ListarPatronesDeTactica(Integer.parseInt(t));
                         Tactica tac = archB.ObtenerTactica(Integer.parseInt(t));
-                        out.println("<tr rowspan='" + patrones.size() + "'>");
-                        out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'> " + tac.getTacNombre() + "</td>");
-                        int i = 0;
-                        for (Patron p : patrones) {
-                            if (p != null) {
-                                if (i != 0) {
-                                    out.println("<tr><td></td>");
-                                }
-                                //out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'> " + p.getPatID() + "</td>");
-                                out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatNombre() + "</td>");
-                                out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatDescripcion() + "</td>");
-                                out.println("<td>");
-                                boolean band = false;
-                                for (String ptn : patSeleccionados) {
-                                    String[] ptp = ptn.split("_");
-                                    if (p.getPatID() == Integer.parseInt(ptp[2])) {
-                                        band = true;
+
+                        out.println("<tr>");
+                        out.println("<td> " + tac.getTacNombre() + "</td>");
+                        out.println("<td>");
+                        if (patrones.size() != 0) {
+                            out.println("<table class='tblCentfull' border='0'>");
+                            out.println("<tr>");
+                            out.println("<th> Nombre </th>");
+                            out.println("<th> Descripcion </th>");
+                            out.println("<th> Seleccionar </th>");
+                            out.println("</tr>");
+                            int i = 0;
+                            for (Patron p : patrones) {
+                                if (p != null) {
+                                    out.println("<tr>");
+                                    //out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'> " + p.getPatID() + "</td>");
+                                    out.println("<td>" + p.getPatNombre() + "</td>");
+                                    out.println("<td>" + p.getPatDescripcion() + "</td>");
+                                    out.println("<td>");
+                                    boolean band = false;
+                                    for (String ptn : patSeleccionados) {
+                                        String[] ptp = ptn.split("_");
+                                        if (p.getPatID() == Integer.parseInt(ptp[2])) {
+                                            band = true;
+                                        }
                                     }
-                                }
-                                if (band) {
-                                    out.println("<input  type = 'checkbox' checked name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
-                                } else {
-                                    out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
-                                }
-                                out.println("</td>");
-                                if (i != 0) {
+                                    if (band) {
+                                        out.println("<input  type = 'checkbox' checked name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                    } else {
+                                        out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                    }
+                                    out.println("</td>");
                                     out.println("</tr>");
                                 }
-                                i++;
                             }
+                            out.println("</table>");
                         }
+                        out.println("</td>");
                         out.println("</tr>");
                     }
                 }
                 out.println("</table>");
-                out.println("<input type='button' class='btn btn-primary' id='btnElegirPatrones' onclick='SeleccionarPatrones()' value='Elegir patrones'>");
+                out.println("<input type='button' class='btn btn-primary alIzq' id='btnElegirPatrones' onclick='SeleccionarPatrones()' value='Elegir patrones'>");
             }
         } else {
-
             if (listado != null) {
-                Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-                Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add4");
                 if (rata == null) {
                     rata = new Rationaleadd();
                 }
@@ -201,7 +221,7 @@ public class ADD4 extends HttpServlet {
                 }
 
                 rata.setTblProyectoProID(proy);
-                rata.setRatAddPaso("add4");
+                rata.setRatAddPaso("add4_" + descMod.getModId());
                 guardarRationaleAdd(rata);
                 proy.setProAvance("add4");
                 modificarProyecto(proy);
@@ -209,47 +229,52 @@ public class ADD4 extends HttpServlet {
                 for (String t : seleccionadas) {
                     List<Patron> patrones = archB.ListarPatronesDeTactica(Integer.parseInt(t));
                     Tactica tac = archB.ObtenerTactica(Integer.parseInt(t));
-                    out.println("<tr rowspan='" + patrones.size() + "'>");
-                    out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'> " + tac.getTacNombre() + "</td>");
-                    int i = 0;
-                    for (Patron p : patrones) {
-                        if (p != null) {
-                            if (i != 0) {
-                                out.println("<tr><td></td>");
-                            }
-                            //out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'> " + p.getPatID() + "</td>");
-                            out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatNombre() + "</td>");
-                            out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'>" + p.getPatDescripcion() + "</td>");
-                            out.println("<td>");
 
-                            if (patSeleccionados != null) {
-                                boolean band = false;
-                                for (String ptn : patSeleccionados) {
-                                    String[] ptp = ptn.split("_");
-                                    if (p.getPatID() == Integer.parseInt(ptp[2])) {
-                                        band = true;
+                    out.println("<tr>");
+                    out.println("<td> " + tac.getTacNombre() + "</td>");
+                    out.println("<td>");
+                    if (patrones.size() != 0) {
+                        out.println("<table class='tblCentfull alCen' border='0'>");
+                        out.println("<tr>");
+                        out.println("<th> Nombre </th>");
+                        out.println("<th> Descripcion </th>");
+                        out.println("<th> Seleccionar </th>");
+                        out.println("</tr>");
+                        for (Patron p : patrones) {
+                            if (p != null) {
+                                out.println("<tr>");
+                                //out.println("<td style= rowspan='7' align='center' bgcolor='#f8f8f8'> " + p.getPatID() + "</td>");
+                                out.println("<td>" + p.getPatNombre() + "</td>");
+                                out.println("<td>" + p.getPatDescripcion() + "</td>");
+                                out.println("<td>");
+                                if (patSeleccionados != null) {
+                                    boolean band = false;
+                                    for (String ptn : patSeleccionados) {
+                                        String[] ptp = ptn.split("_");
+                                        if (p.getPatID() == Integer.parseInt(ptp[2])) {
+                                            band = true;
+                                        }
                                     }
-                                }
-                                if (band) {
-                                    out.println("<input checked type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                    if (band) {
+                                        out.println("<input checked type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                    } else {
+                                        out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
+                                    }
                                 } else {
                                     out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
                                 }
-                            } else {
-                                out.println("<input  type = 'checkbox' name = 'patronSel' id='chkPat' value = '" + proy.getProID() + "_" + tac.getTacID() + "_" + p.getPatID() + "'/>");
-                            }
-                            out.println("</td>");
-                            if (i != 0) {
+                                out.println("</td>");
                                 out.println("</tr>");
                             }
-                            i++;
                         }
+                        out.println("</table>");
                     }
+                    out.println("</td>");
                     out.println("</tr>");
                 }
             }
             out.println("</table>");
-            out.println("<input type='button' class='btn btn-primary' id='btnElegirPatrones' onclick='SeleccionarPatrones()' value='Elegir patrones'>");
+            out.println("<input type='button' class='btn btn-primary alIzq' id='btnElegirPatrones' onclick='SeleccionarPatrones()' value='Elegir patrones'>");
         }
     }
 
@@ -286,9 +311,8 @@ public class ADD4 extends HttpServlet {
             nmod.setModFinal("SubModulo");
             nmod.setTblModuloModId(padreActual);
             nmod.setTblProyectoProID(proy);
-            archB.crearMod(nmod);
-            out.println("<h2 class='page-header'>Patrones relacionados</h2>");
-            out.println("<table width='100%' border='3' class='tblCentfull'>");
+            archB.crearMod(nmod);            
+            out.println("<table width='100%' border='1' class='tblCentfull'>");
             out.println("<tbody>");
             out.println("<tr>");
             out.println("<th scope='col'>Nombre</th>");

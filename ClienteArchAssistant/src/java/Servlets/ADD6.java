@@ -8,6 +8,7 @@ package Servlets;
 import Beans.ArchAssistantBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
+import servicios.Interface;
+import servicios.Modulo;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
+import servicios.Responsabilidad;
 
 /**
  *
@@ -44,44 +48,39 @@ public class ADD6 extends HttpServlet {
         String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd6anterior");
         String canc = request.getParameter("btnInicio");
-        if (canc != null)
-        {
+        if (canc != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if (guardar != null)
-        {
+        if (guardar != null) {
             ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
-            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add6");
-            if (rata == null)
-            {
+            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            Modulo descMod = (Modulo)request.getSession().getAttribute("padreActual");
+            if(descMod==null){                
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual",descMod);
+            }
+            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add6_"+descMod.getModId());
+            if (rata == null) {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd6"));
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add6");
+            rata.setRatAddPaso("add6_"+descMod.getModId());
             guardarRationaleAdd(rata);
             proy.setProAvance("add6");
             modificarProyecto(proy);
             response.sendRedirect("add6.jsp");
-        
-            
         }
-        if (continuar != null)
-        {
-            if (request.getParameter("ratadd6")!= "")
-            {
+        if (continuar != null) {
+            if (request.getParameter("ratadd6") != "") {
                 response.sendRedirect("add7.jsp");
-            }
-            else
-            {
+            } else {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
         }
-        if (regresar != null)
-        {
+        if (regresar != null) {
             response.sendRedirect("add5.jsp");
         }
     }
@@ -113,6 +112,71 @@ public class ADD6 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        ArchAssistantBean archB = new ArchAssistantBean();
+        String msj = request.getParameter("mensaje");
+        if (msj.equals("crear")) {
+
+            Interface nInter = new Interface();
+            String nom = request.getParameter("nombre");
+            String desc = request.getParameter("descripcion");
+            String modSel = request.getParameter("seleccion");
+            String tipo = request.getParameter("tipo");
+
+            nInter.setIntNombre(nom);
+            nInter.setIntDescripcion(desc);
+            nInter.setTblModuloModId(archB.buscarMod(Integer.parseInt(modSel)));
+            nInter.setIntTipo(tipo);
+
+            archB.CrearInterface(nInter);
+        }
+        out.println("<h2 class='page-header' > Listado Interfaces de modulos</h2>");
+        out.println("<table width='100%' border='3' class='tblCentfull'>");
+        out.println("<tbody>");
+        out.println("<tr>");
+        out.println("<th scope='col'>Nombre</th>");
+        out.println("<th scope='col'>Descripción</th>");
+        out.println("<th scope='col'>Tipo</th>");
+        out.println("<th scope='col'>Modulo</th>");
+        out.println("</tr>");
+        List<Modulo> listaMod = archB.ListarModulos(proy);
+
+        Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
+        if (padreActual == null) {
+            padreActual = archB.buscarModDescomposicion(proy);
+        }
+        for (Modulo m : listaMod) {
+            Modulo padreM = m.getTblModuloModId();
+            if (padreM != null) {
+                if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado") && m.getModFinal().equals("SubModulo")) {
+                    List<Interface> interfaces = archB.ListarInterfaces();
+                    if (interfaces != null) {
+                        for (Interface i : interfaces) {
+                            if (i.getTblModuloModId().getModId() == m.getModId()) {
+                                out.println("<tr>");
+                                out.println("<td>");
+                                out.println(i.getIntNombre());
+                                out.println("</td>");
+                                out.println("<td>");
+                                out.println(i.getIntDescripcion());
+                                out.println("</td>");
+                                out.println("<td>");
+                                out.println(i.getIntTipo());
+                                out.println("</td>");
+                                out.println("<td>");
+                                out.println(i.getTblModuloModId().getModNombre());
+                                out.println("</td>");
+                            }
+                        }
+                        out.println("</tr>");
+                    }
+                }
+            }
+        }
+        out.println("</tbody>");
+        out.println("</table>");
     }
 
     /**

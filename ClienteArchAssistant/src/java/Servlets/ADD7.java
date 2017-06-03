@@ -8,6 +8,7 @@ package Servlets;
 import Beans.ArchAssistantBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
+import servicios.Modulo;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 
@@ -44,44 +46,48 @@ public class ADD7 extends HttpServlet {
         String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd7anterior");
         String canc = request.getParameter("btnInicio");
-        if (canc != null)
-        {
+        if (canc != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if (guardar != null)
-        {
+        if (guardar != null) {
             ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
-            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add7");
-            if (rata == null)
-            {
+            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+            if (descMod == null) {
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", descMod);
+            }
+            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add7_" + descMod.getModId());
+            List<Modulo> listaMod = archB.ListarModulos(proy);
+            for (Modulo m : listaMod) {
+                String Opc = (String) request.getParameter("selModulo_" + m.getModId());
+                if (Opc != null) {
+                    m.setModFinal(Opc);
+                    modificarModulo(m);
+                }
+            }
+            if (rata == null) {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd7"));
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add7");
+            rata.setRatAddPaso("add7_" + descMod.getModId());
             guardarRationaleAdd(rata);
             proy.setProAvance("add7");
             modificarProyecto(proy);
             response.sendRedirect("add7.jsp");
-        
-            
+
         }
-        if (continuar != null)
-        {
-            if (request.getParameter("ratadd7")!= "")
-            {
+        if (continuar != null) {
+            if (request.getParameter("ratadd7") != "") {
                 response.sendRedirect("add8.jsp");
-            }
-            else
-            {
+            } else {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
         }
-        if (regresar != null)
-        {
+        if (regresar != null) {
             response.sendRedirect("add6.jsp");
         }
     }
@@ -137,6 +143,13 @@ public class ADD7 extends HttpServlet {
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         port.modificarProyecto(parameter);
+    }
+
+    private void modificarModulo(servicios.Modulo parameter) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.modificarModulo(parameter);
     }
 
 }

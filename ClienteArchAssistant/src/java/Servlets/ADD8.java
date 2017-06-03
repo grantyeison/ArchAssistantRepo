@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
+import servicios.Modulo;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 
@@ -41,52 +42,56 @@ public class ADD8 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String guardar = request.getParameter("btnAdd8Guardar");
-        String continuar = request.getParameter("btnAdd8Continuar");
+        String continuar = request.getParameter("btnContinuar");
         String regresar = request.getParameter("btnAdd8anterior");
-        String finalizar = request.getParameter("btnAdd8Finalizar");
-        String canc = request.getParameter("btnQawInicio");
-        if (canc != null)
-        {
+        String finalizar = request.getParameter("btnFinalizar");
+        String canc = request.getParameter("btnInicio");
+        if (canc != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if (guardar != null)
-        {
+        if (guardar != null) {
             ArchAssistantBean archB = new ArchAssistantBean();
-            Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
-            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add8");
-            if (rata == null)
-            {
+            Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+            if (descMod == null) {
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", descMod);
+            }
+            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add8_" + descMod.getModId());
+            if (rata == null) {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd8"));
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add8");
+            rata.setRatAddPaso("add8_" + descMod.getModId());
             guardarRationaleAdd(rata);
             proy.setProAvance("add8");
             modificarProyecto(proy);
             response.sendRedirect("add8.jsp");
-        
-            
+
         }
-        if (continuar != null)
-        {
-            if (request.getParameter("ratadd8")!= "")
-            {
+        if (continuar != null) {
+            if (request.getParameter("ratadd8") != "") {
+                ArchAssistantBean archB = new ArchAssistantBean();
+                Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+                Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+                if (descMod == null) {
+                    descMod = archB.buscarModDescomposicion(proy);
+                    request.getSession().setAttribute("padreActual", descMod);
+                }
+                descMod.setModFinal("Procesado");
+                modificarModulo(descMod);
                 response.sendRedirect("add2.jsp");
-            }
-            else
-            {
+            } else {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
         }
-        if (regresar != null)
-        {
+        if (regresar != null) {
             response.sendRedirect("add7.jsp");
         }
-        if (finalizar != null)
-        {
+        if (finalizar != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
     }
@@ -142,6 +147,13 @@ public class ADD8 extends HttpServlet {
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         port.modificarProyecto(parameter);
+    }
+
+    private void modificarModulo(servicios.Modulo parameter) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.modificarModulo(parameter);
     }
 
 }

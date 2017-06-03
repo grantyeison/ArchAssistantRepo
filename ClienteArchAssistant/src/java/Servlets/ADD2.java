@@ -51,26 +51,23 @@ public class ADD2 extends HttpServlet {
         String regresar = request.getParameter("btnAdd2anterior");
         ArchAssistantBean archB = new ArchAssistantBean();
         String canc = request.getParameter("btnInicio");
-        
+
         Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add2");
-        if (canc != null)
-        {
+        if (canc != null) {
             response.sendRedirect("InicioUsuario.jsp");
         }
         if (request.getParameter("selPadre") != null) {
-            String modPadre = request.getParameter("selPadre");        
+            String modPadre = request.getParameter("selPadre");
             Modulo padre = archB.buscarMod(Integer.parseInt(modPadre));
-            Modulo padreActual = (Modulo)request.getSession().getAttribute("padreActual");
-            if(padre!=null){
-                if(padreActual == null){
-                    request.getSession().setAttribute("padreActual",padre);
-                }
-                else{
-                    if(!padreActual.equals(padre)){
-                        padreActual.setModFinal("Descompuesto");
+            Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
+            if (padre != null) {
+                if (padreActual == null) {
+                    request.getSession().setAttribute("padreActual", padre);
+                } else {
+                    if (!padreActual.equals(padre)) {
+                        padreActual.setModFinal("Procesado");
                         archB.modificarMod(padreActual);
-                        request.getSession().setAttribute("padreActual",padre);
+                        request.getSession().setAttribute("padreActual", padre);
                     }
                 }
                 padre.setModFinal("Descomposicion");
@@ -79,19 +76,25 @@ public class ADD2 extends HttpServlet {
             }
         }
         if (guardar != null) {
+            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+            if (descMod == null) {
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", descMod);
+            }
+            Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add2_" + descMod.getModId());
             if (rata == null) {
                 rata = new Rationaleadd();
             }
             rata.setRatAddDescripcion(request.getParameter("ratadd2"));
             rata.setTblProyectoProID(proy);
-            rata.setRatAddPaso("add2");
+            rata.setRatAddPaso("add2_" + descMod.getModId());
             guardarRationaleAdd(rata);
             proy.setProAvance("add2");
             modificarProyecto(proy);
             response.sendRedirect("add2.jsp");
 
         }
-        
+
         if (continuar != null) {
             if (request.getParameter("ratadd2") != "") {
                 response.sendRedirect("add3.jsp");
@@ -101,31 +104,32 @@ public class ADD2 extends HttpServlet {
                 }
             }
         }
-        
+
         if (regresar != null) {
             response.sendRedirect("add1.jsp");
         }
+        Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+        if (descMod == null) {
+            descMod = archB.buscarModDescomposicion(proy);
+            request.getSession().setAttribute("padreActual", descMod);
+        }
+        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add2_" + descMod.getModId());
         GuardarArchivo arch = new GuardarArchivo();
-        if (rata != null)
-        {
+        if (rata != null) {
             List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
 
-            for (File archivo : archivos)
-            {
-                if (request.getParameter("btnAddBajar"+archivo.getName())!= null)
-                {
+            for (File archivo : archivos) {
+                if (request.getParameter("btnAddBajar" + archivo.getName()) != null) {
                     arch.descargar(archivo.getAbsolutePath(), archivo.getName());
                     response.sendRedirect("add2.jsp");
                 }
 
-                if (request.getParameter("btnAddEliminar"+archivo.getName())!= null)
-                {
+                if (request.getParameter("btnAddEliminar" + archivo.getName()) != null) {
                     arch.eliminarArchivo(archivo.getAbsolutePath());
                     response.sendRedirect("add2.jsp");
                 }
             }
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -159,33 +163,26 @@ public class ADD2 extends HttpServlet {
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
         String DirectorioArchivo = "";
         ArchAssistantBean archB = new ArchAssistantBean();
-        Rationaleadd rata = archB.RationaleADD(pro.getProID(), "add2");                
-        try 
-        {
-            DirectorioArchivo = arch.guardarArchivo(request,pro.getProID().toString() , "ADD2");
-        } 
-        catch (Exception ex) 
-        {
+        Rationaleadd rata = archB.RationaleADD(pro.getProID(), "add2");
+        try {
+            DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), "ADD2");
+        } catch (Exception ex) {
             Logger.getLogger(ADD2.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-        
-        if (rata == null)
-        {
+
+        if (rata == null) {
             rata = new Rationaleadd();
             rata.setTblProyectoProID(pro);
-            rata.setRatAddPaso("add2");        
+            rata.setRatAddPaso("add2");
         }
-        
-        if (rata.getRatAddDescripcion()== null)
-        {
+
+        if (rata.getRatAddDescripcion() == null) {
             rata.setRatAddDescripcion("debes registrar el rationale en este espacio!!");
         }
 
         rata.setRatAddArchivo(DirectorioArchivo);
         guardarRationaleAdd(rata);
-         
-                
+
         response.sendRedirect("add2.jsp");
     }
 
