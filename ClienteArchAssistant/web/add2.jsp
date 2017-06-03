@@ -4,6 +4,10 @@
     Author     : Prometheus
 --%>
 
+<%@page import="java.util.LinkedList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Dictionary"%>
 <%@page import="java.io.File"%>
 <%@page import="Servlets.GuardarArchivo"%>
 <%@page import="servicios.Modulo"%>
@@ -49,7 +53,7 @@
                 <h2 class="page-header">Escoger un elemento del sistema para descomponerlo:</h2>
                 <div class="col-lg-12 col-md-12 col-sm-12"> 
                     <div class="col-lg-3 col-md-2"></div>
-                    <div class="col-lg-8 col-md-6 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <p class="parrafo">
                             Durante este paso, se escoge el elemento en el cual se enfocará el proceso, el primer elemento que se descompone es el sistema en sí, en caso de ya haber sido descompuesto, cada elemento debe tener asignados algunos de los requerimientos.
                             Para escoger un elemento, hay que basarse en las siguientes áreas:
@@ -60,50 +64,148 @@
                             <li>Criterio de negocios.</li>
                             <li>Criterio organizacional.</li>
                         </ul>
+                        <p class="parrafo">
+                            inicialmente será todo el sistema, además todos los escenarios estarán asociados a este único módulo
+                            posteriormente, se dividirá el sistema en módulos y a cada uno se le asignará un conjunto de escenarios
+                        </p>
                     </div>
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
                 <div class="col-lg-1"></div>
-                <div class="col-lg-10 col-md-12 col-sm-12">
+                <div class="col-lg-10 col-md-12 col-sm-12">                   
                     <h2 class="page-header"> Módulos del sistema:</h2>
-                    <!-- inicialmente será todo el sistema, además todos los escenarios estarán asociados a este único módulo
-    posteriormente, se dividirá el sistema en módulos y a cada uno se le asignará un conjunto de escenarios -->
+                    <!--  -->
                     <table width="100%" border="3" class="tblCentfull">
                         <tbody>
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Descripción</th>
-                                <th scope="col">Módulo final</th>
-                            </tr><%ArchAssistantBean archB = new ArchAssistantBean();
-                                List<Modulo> listaMod = archB.ListarModulos(proyectoActual);
-
-                                for (Modulo mod : listaMod) {
-                                    out.println("<tr>");
-                                    out.println("<td>");
-                                    String estado = mod.getModFinal();
-                                    if (estado.equals("Descomposicion")) {
-                                        out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
-                                    } else {
-                                        if (estado.equals("Procesado")) {
-                                            out.println("<input disabled  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
-                                        } else {
-                                            out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                <th scope="col">Estado modulo</th>
+                                    <%
+                                        /*ArchAssistantBean archB = new ArchAssistantBean();
+                                        Modulo padre = null;
+                                        Map<Modulo, List<Modulo>> arbol = new HashMap<Modulo, List<Modulo>>();
+                                        for (Modulo mod : listaMod) {
+                                            padre = mod;
+                                            List<Modulo> hijos = new LinkedList<Modulo>();
+                                            for (Modulo m : listaMod) {                                
+                                                if (m.getTblModuloModId()== padre) {
+                                                    hijos.add(m);
+                                                }
+                                            }
+                                            arbol.put(padre, hijos);
+                                        }*/
+                                        ArchAssistantBean archB = new ArchAssistantBean();
+                                        List<Modulo> listaMod = archB.ListarModulos(proyectoActual);
+                                        /*if (listaMod == null || listaMod.size() == 0) {
+                                            Modulo sys = new Modulo();
+                                            sys.setModNombre("Modulo " + proyectoActual.getProNombre());
+                                            sys.setModDescripcion("Para la primera iteración se como modulo a descomponer el sistema completo ");
+                                            sys.setModFinal("Descomposicion");
+                                            sys.setTblModuloModId(null);
+                                            sys.setTblProyectoProID(proyectoActual);
+                                            archB.crearMod(sys);
+                                            Modulo descMod = (Modulo) session.getAttribute("padreActual");
+                                            if (descMod == null) {
+                                                descMod = sys;
+                                                session.setAttribute("padreActual", descMod);
+                                            }
+                                            listaMod.add(sys);
+                                        }*/
+                                        for (Modulo mod : listaMod) {
+                                            out.println("<tr>");
+                                            out.println("<td>");
+                                            String estado = mod.getModFinal();
+                                            if (estado.equals("Descomposicion")) {
+                                                out.println("<input checked type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
+                                            } else {
+                                                if (estado.equals("Procesado")) {
+                                                    out.println("<input disabled  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                } else {
+                                                    out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                }
+                                            }
+                                            //out.println(mod.getModId());
+                                            out.println("</td>");
+                                            out.println("<td>");
+                                            out.println(mod.getModNombre());
+                                            out.println("</td>");
+                                            out.println("<td>");
+                                            out.println(mod.getModDescripcion());
+                                            out.println("</td>");
+                                            out.println("<td>");
+                                            out.println(mod.getModFinal());
+                                            out.println("</td>");
+                                            out.println("</tr>");
                                         }
-                                    }
-                                    //out.println(mod.getModId());
-                                    out.println("</td>");
-                                    out.println("<td>");
-                                    out.println(mod.getModNombre());
-                                    out.println("</td>");
-                                    out.println("<td>");
-                                    out.println(mod.getModDescripcion());
-                                    out.println("</td>");
-                                    out.println("<td>");
-                                    out.println(mod.getModFinal());
-                                    out.println("</td>");
-                                    out.println("</tr>");
-                                }%>
+
+
+                                        /*
+                                        if (padre != null) {                            
+                                            for (Modulo mod : listaMod) {
+                                                String estado = mod.getModFinal();
+                                                if (mod.getTblModuloModId() == padre) {
+                                                    out.println("<table width='100%' border='3' class='tblCentfull'>");
+                                                    out.println("<tbody>");
+                                                    out.println("<tr>");
+                                                    out.println("<th scope='col'></th>");
+                                                    out.println("<th scope='col'>Nombre</th>");
+                                                    out.println("<th scope='col'>Descripción</th>");
+                                                    out.println("<th scope='col'>Módulo final</th>");
+                                                    out.println("</tr>");
+                                                    out.println("<tr>");
+                                                    out.println("<td>");
+                                                    if (estado.equals("Descomposicion")) {
+                                                        out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
+                                                    } else {
+                                                        if (estado.equals("Procesado")) {
+                                                            out.println("<input disabled  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                        } else {
+                                                            out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                        }
+                                                    }
+                                                    //out.println(mod.getModId());
+                                                    out.println("</td>");
+                                                    out.println("<td>");
+                                                    out.println(mod.getModNombre());
+                                                    out.println("</td>");
+                                                    out.println("<td>");
+                                                    out.println(mod.getModDescripcion());
+                                                    out.println("</td>");
+                                                    out.println("<td>");
+                                                    out.println(mod.getModFinal());
+                                                    out.println("</td>");
+                                                    out.println("</tr>");
+                                                } else {
+                                                    out.println("<tr>");
+                                                    out.println("<td>");
+
+                                                    if (estado.equals("Descomposicion")) {
+                                                        out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
+                                                    } else {
+                                                        if (estado.equals("Procesado")) {
+                                                            out.println("<input disabled  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                        } else {
+                                                            out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                        }
+                                                    }
+                                                    //out.println(mod.getModId());
+                                                    out.println("</td>");
+                                                    out.println("<td>");
+                                                    out.println(mod.getModNombre());
+                                                    out.println("</td>");
+                                                    out.println("<td>");
+                                                    out.println(mod.getModDescripcion());
+                                                    out.println("</td>");
+                                                    out.println("<td>");
+                                                    out.println(mod.getModFinal());
+                                                    out.println("</td>");
+                                                    out.println("</tr>");
+
+                                                }
+                                            }
+                                        }*/%>
                         </tbody>
                     </table>
                 </div>
@@ -114,10 +216,10 @@
                         <h2 class="page-header">Rationale:</h2>
                         <textarea rows="5" cols="120" name="ratadd2" class="form-control parrafo"><%
                             ArchAssistantBean p = new ArchAssistantBean();
-                            Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
+                            Modulo descMod = (Modulo) session.getAttribute("padreActual");
                             if (descMod == null) {
                                 descMod = archB.buscarModDescomposicion(proyectoActual);
-                                request.getSession().setAttribute("padreActual", descMod);
+                                session.setAttribute("padreActual", descMod);
                             }
                             Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add2_" + descMod.getModId());
                             if (rata != null) {
