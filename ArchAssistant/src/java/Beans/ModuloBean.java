@@ -30,6 +30,11 @@ public class ModuloBean
         return dao.ListarModulos(proy);
     }
     
+    public List<Modulo> Listar()
+    {
+        return dao.ListarModulos();
+    }
+    
     public void Crear(Modulo atr)
     {
         dao.CrearModulo(atr);

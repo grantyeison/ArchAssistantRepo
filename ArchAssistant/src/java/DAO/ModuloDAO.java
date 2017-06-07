@@ -25,4 +25,6 @@ public interface ModuloDAO
     void ModificarModulo (Modulo mod);
     
     void EliminarModulo (Modulo mod);
+
+    List<Modulo> ListarModulos();
 }

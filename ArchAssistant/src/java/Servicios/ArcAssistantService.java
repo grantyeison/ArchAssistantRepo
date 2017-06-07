@@ -501,6 +501,15 @@ public class ArcAssistantService {
         modB = new ModuloBean();
         return modB.Listar(parameter);
     }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "ListarModulos")
+    public List<Modulo> ListarModulos() {
+        modB = new ModuloBean();
+        return modB.Listar();
+    }
 
     /**
      * Web service operation

@@ -85,5 +85,13 @@ public class ModuloJPADAO implements ModuloDAO
         
         //return mod;
     }
+
+    @Override
+    public List<Modulo> ListarModulos() {
+        List<Modulo> lst = null;
+        Query q = em.createQuery("SELECT m FROM Modulo m");
+        lst = q.getResultList();
+        return lst;
+    }
     
 }
