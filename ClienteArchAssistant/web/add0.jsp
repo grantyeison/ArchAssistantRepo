@@ -53,7 +53,7 @@
                     <div class="col-lg-5 col-md-6 col-sm-12">
                         <p class="parrafo"> Este proceso se repite hasta que todos los requisitos de gran importancia arquitect&oacute;nica se cumplen.</p>
                         
-                        <img src="img/pasosadd.png" alt="pasosdel metodo ADD"/>
+                        <img src="img/pasosadd.png" class="alCen" style="width: 400px" alt="pasosdel metodo ADD"/>
 
                     </div>
                     <div class="col-lg-1"></div>

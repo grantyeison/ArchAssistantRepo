@@ -3,6 +3,9 @@
     Created on : 25/01/2017, 12:10:18 PM
     Author     : Prometheus
 --%>
+<%@page import="Servlets.Utilidad"%>
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.Collections"%>
 <%@page import="servicios.Escenario"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.File"%>
@@ -18,23 +21,23 @@
         <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
         <script src="./js/jquery-3.2.1.js"></script>
-         <!--<script src="./js/funciones.js"></script>
-       <script src="./js/jquery-3.2.1.min.js" ></script>-->
+        <!--<script src="./js/funciones.js"></script>
+      <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/bootstrap.min.js"></script>
-        
+
     </head>
     <body>
         <div class="col-lg-12 col-md-12 col-md-12">
-            <form name="add-1" action="ADD1">
+            <form name="add-1" action="ADD1" method="POST" enctype="multipart/form-data">
                 <h2 class="subtitle">ADD</h2>
                 <h2 class="bienvenida">
-                    <% if(session.getAttribute("validUsuario") == null){
-                        response.sendRedirect("InicioUsuario.jsp");
-   //redirijo al login
-                    }%>
+                    <% if (session.getAttribute("validUsuario") == null) {
+                            response.sendRedirect("InicioUsuario.jsp");
+                            //redirijo al login
+                        }%>
                     <jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
                     <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>             
-                    
+
                 <table width="100%" border="0" class="tblCentfull">
                     <tbody>
                         <tr>
@@ -59,141 +62,148 @@
                     </p>
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
-                <div class="col-lg-1"></div>
-                <div class="col-lg-10 col-md-12 col-sm-12">
-                    <h2 class="page-header">Escenarios priorizados:</h2>
-                    <table width="100%" border="3" class="tblCentfull">
-                        <tbody>
-                            <tr>
-                                <!--<th scope="col">Código</th>-->
-                                <th scope="col">Nombre Atributo</th>
-                                <th scope="col">Nombre Escenario</th>
-                                <th scope="col">Estímulo</th>
-                                <th scope="col">Fuente</th>
-                                <th scope="col">Ambiente</th>
-                                <th scope="col">Artefacto</th>
-                                <th scope="col">Respuesta</th>
-                                <th scope="col">Medida</th>
-                                <th scope="col">Prioridad</th>
-                                <th scope="col">Acción</th>
-                            </tr>
-                            <%
-                                ArchAssistantBean archB = new ArchAssistantBean();
-                                List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
-                                for (Escenario esce : listaEsc) {
-                                    if (esce.getEscPrioridad() != null && esce.getEscPrioridad() > 0) {
-                                        /*
-                                        out.println("<tr>");
-                                        out.println("<td>");
-                                        out.println(esce.getEscID());
-                                        out.println("</td>");
-                                         */
-                                        out.println("<td>");
-                                        out.println(esce.getTblAtributoCalidadacID().getAcNombre());
-                                        out.println("</td>");
-                                        out.println("<td>");
-                                        out.println(esce.getEscNombre());
-                                        out.println("</td>");
-                                        out.println("<td>");
-                                        out.println(esce.getEscEstimulo());
-                                        out.println("</td>");
-                                        if (esce.getEscFuente() != null) {
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2 class="page-header">Escenarios priorizados:</h2>
+                        <table width="100%" border="3" class="table table-responsive">
+                            <tbody>
+                                <tr>
+                                    <!--<th scope="col">Código</th>-->
+                                    <th scope="col">Nombre Atributo</th>
+                                    <th scope="col">Nombre Escenario</th>
+                                    <th scope="col">Estímulo</th>
+                                    <th scope="col">Fuente</th>
+                                    <th scope="col">Ambiente</th>
+                                    <th scope="col">Artefacto</th>
+                                    <th scope="col">Respuesta</th>
+                                    <th scope="col">Medida</th>
+                                    <th scope="col">Prioridad</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                                <%
+                                    ArchAssistantBean archB = new ArchAssistantBean();
+                                    List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
+                                    Collections.sort(listaEsc, new Utilidad(false));
+                                    for (Escenario esce : listaEsc) {
+                                        String estado = esce.getEscEstado();
+                                        if (esce.getEscPrioridad() != null && esce.getEscPrioridad() > 0 && estado != null) {
+                                            if (estado.equals("refinado")) {
+                                                /*
+                                            out.println("<tr>");
                                             out.println("<td>");
-                                            out.println(esce.getEscFuente());
+                                            out.println(esce.getEscID());
                                             out.println("</td>");
-                                        } else {
-                                            out.println("<td>&nbsp;</td>");
-                                        }
-                                        out.println("<td>" + esce.getEscAmbiente());
-                                        out.println("</td>");
-                                        if (esce.getEscArtefacto() != null) {
-                                            out.println("<td>");
-                                            out.println(esce.getEscArtefacto());
-                                            out.println("</td>");
-                                        } else {
-                                            out.println("<td>&nbsp;</td>");
-                                        }
-                                        out.println("<td>" + esce.getEscRespuesta());
-                                        out.println("</td>");
-                                        if (esce.getEscMedidaRespuesta() != null) {
-                                            out.println("<td>");
-                                            out.println(esce.getEscMedidaRespuesta());
-                                            out.println("</td>");
-                                        } else {
-                                            out.println("<td>&nbsp;</td>");
-                                        }
-                                        out.println("<td>");
-                                        if (esce.getEscPrioridad() != null) {
-                                            out.println(esce.getEscPrioridad());
-                                        } else {
-                                            out.println(0);
-                                        }
-                                        out.println("</td>");
-                                        out.println("<td><button type=\"submit\" value=\"votar\" name=\"btnQaw8Refinar" + esce.getEscID() + "\" class=\"btn btn-primary\" >  <span class=\"glyphicon glyphicon-cog\" aria-hidden=\"true\"></span></button></td>");
-                                        out.println("</tr>");
+                                                 */
+                                                out.println("<td>");
+                                                out.println(esce.getTblAtributoCalidadacID().getAcNombre());
+                                                out.println("</td>");
+                                                out.println("<td>");
+                                                out.println(esce.getEscNombre());
+                                                out.println("</td>");
+                                                out.println("<td>");
+                                                out.println(esce.getEscEstimulo());
+                                                out.println("</td>");
+                                                if (esce.getEscFuente() != null) {
+                                                    out.println("<td>");
+                                                    out.println(esce.getEscFuente());
+                                                    out.println("</td>");
+                                                } else {
+                                                    out.println("<td>&nbsp;</td>");
+                                                }
+                                                out.println("<td>" + esce.getEscAmbiente());
+                                                out.println("</td>");
+                                                if (esce.getEscArtefacto() != null) {
+                                                    out.println("<td>");
+                                                    out.println(esce.getEscArtefacto());
+                                                    out.println("</td>");
+                                                } else {
+                                                    out.println("<td>&nbsp;</td>");
+                                                }
+                                                out.println("<td>" + esce.getEscRespuesta());
+                                                out.println("</td>");
+                                                if (esce.getEscMedidaRespuesta() != null) {
+                                                    out.println("<td>");
+                                                    out.println(esce.getEscMedidaRespuesta());
+                                                    out.println("</td>");
+                                                } else {
+                                                    out.println("<td>&nbsp;</td>");
+                                                }
+                                                out.println("<td>");
+                                                if (esce.getEscPrioridad() != null) {
+                                                    out.println(esce.getEscPrioridad());
+                                                } else {
+                                                    out.println(0);
+                                                }
+                                                out.println("</td>");
+                                                out.println("<td><button type=\"submit\" value=\"votar\" name=\"btnQaw8Refinar" + esce.getEscID() + "\" class=\"btn btn-primary\" >  <span class=\"glyphicon glyphicon-cog\" aria-hidden=\"true\"></span></button></td>");
+                                                out.println("</tr>");
+                                            }
 
-                                    } else {
+                                        } else {
 
+                                        }
                                     }
-                                }
-                            %>                       
-                        </tbody>
-                    </table>
+                                %>                       
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-1"></div>
                 </div>
-                <div class="col-lg-1"></div>
-                
-                <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2 class="page-header">Rationale:</h2>
-                    <textarea id="ratadd1" rows="5" cols="120" name="ratadd1" class="form-control parrafo"><%
-                        ArchAssistantBean p = new ArchAssistantBean();
-                        Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add1");
-                        if (rata != null) {
-                            out.print(rata.getRatAddDescripcion());
-                        }%></textarea>  
-                    <br/>
-                    <input type="submit" value="Guardar" name="btnAdd1Guardar" class="btn btn-primary"/>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <h2 class="page-header">Rationale:</h2>
+                        <textarea rows="5" cols="120" name="ratadd1" class="form-control parrafo"><%
+                            ArchAssistantBean p = new ArchAssistantBean();
+                            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add1");
+                            if (rata != null) {
+                                out.print(rata.getRatAddDescripcion());
+                            }%></textarea>  
+                        <br/>
+                        <input type="submit" value="Guardar" name="btnAdd1Guardar" class="btn btn-primary"/>
+                    </div>                    
+                    <div class="col-lg-5 col-md-6 col-sm-12">                
+                        <div>
+                            <form name="add-1" action="ADD1" method="post"  enctype="multipart/form-data" id="frmArchivos">
+                                <h2 class="page-header">Archivos:</h2>
+                                <table width="400" border="0" class="tblCent">
+                                    <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
+                                        <td><input id="btnAddsubir" type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
+                                </table>
+                            </form>           
+                        </div>
+                        <div class="divScroll" id="divArchivos">
+
+                            <table width="400" border="0" class="tblCentfull">
+                                <tbody>
+                                    <%
+                                        GuardarArchivo arch = new GuardarArchivo();
+                                        List<File> archivos = null;
+                                        if (rata != null) {
+                                            archivos = arch.listarArchivos(rata.getRatAddArchivo());
+                                        }
+                                        if (archivos != null) {
+                                            for (File archivo : archivos) {
+                                                out.print("<tr>");
+                                                out.print("<td>" + archivo.getName() + "</td>");
+                                                out.print("<td class='alDer'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnAddEliminar"
+                                                        + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
+                                                        + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                                                out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar"
+                                                        + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
+                                                        + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
+                                                        + "</span></button>" + "</td>");
+                                                out.print("</tr>");
+                                            }
+                                        }/**/
+                                    %>
+                                </tbody>
+                            </table> 
+                        </div>                
+                    </div>
                 </div>
             </form>
-            <div class="col-lg-5 col-md-6 col-sm-12">                
-                <div>
-                    <form name="add-1" action="ADD1" method="post"  enctype="multipart/form-data" id="frmArchivos">
-                        <h2 class="page-header">Archivos:</h2>
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                                <td><input id="btnAddsubir" type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
-                        </table>
-                    </form>           
-                </div>
-                <div class="divScroll" id="divArchivos">
-                    
-                        <table width="400" border="0" class="tblCentfull">
-                            <tbody>
-                                
-                                <%
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (rata != null) {
-                                        archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alDer'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnAddEliminar"
-                                                    + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                    + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar"
-                                                    + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                    + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
-                                                    + "</span></button>" + "</td>");
-                                            out.print("</tr>");
-                                        }
-                                    }/**/
-                                %>
-                            </tbody>
-                        </table> 
-                </div>                
-            </div>
             <form name="add-1" action="ADD1"> 
                 <table width="100" border="0" class="tblCent">
                     <tbody>

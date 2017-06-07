@@ -198,8 +198,9 @@
                 <table border="0" class="tblCent">
                     <tbody>
                         <tr>
-                            <td class="alDer"><input type="submit" value="Regresar" name="btnQaw8anterior" class="btn btn-primary btn-lg"/></td>
+                            <td class="alDer"><input type="submit" value="Regresar" name="btnQaw8anterior" class="btn btn-primary btn-lg"/></td>                            
                             <td class="alCen"><input id="btnCont" value="Inicio" name="btnQaw8Inicio" class="btn btn-primary btn-lg"/></td>
+                            <td class="alDer"><input type="submit" value="Continuar" name="btnQaw8continuar" class="btn btn-primary btn-lg"/></td>
                         </tr>
                     </tbody>
                 </table>
