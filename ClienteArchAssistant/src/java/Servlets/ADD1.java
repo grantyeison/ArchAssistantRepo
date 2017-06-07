@@ -104,7 +104,7 @@ public class ADD1 extends HttpServlet {
         }
 
         GuardarArchivo arch = new GuardarArchivo();
-        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1_");
+        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1");
         if (rata != null) {
             List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
 
@@ -152,45 +152,49 @@ public class ADD1 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        GuardarArchivo arch = new GuardarArchivo();
-        Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        String DirectorioArchivo = "";
-        ArchAssistantBean archB = new ArchAssistantBean();
-        Rationaleadd rata = archB.RationaleADD(pro.getProID(), "add1");
-
         try {
-            DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), "ADD1");
-        } catch (Exception ex) {
+            processRequest(request, response);
+            GuardarArchivo arch = new GuardarArchivo();
+            Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            String DirectorioArchivo = "";
+            ArchAssistantBean archB = new ArchAssistantBean();
+            Rationaleadd rata = archB.RationaleADD(pro.getProID(), "add1");
+
+            try {
+                DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), "ADD1");
+            } catch (Exception ex) {
+                Logger.getLogger(ADD1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (rata == null) {
+                rata = new Rationaleadd();
+                rata.setTblProyectoProID(pro);
+                rata.setRatAddPaso("add1");
+
+            }
+
+            if (rata.getRatAddDescripcion() == null) {
+                if (request.getParameter("ratadd1") == null) {
+                    rata.setRatAddDescripcion("debes registrar la justificacion de sus decisiones en este espacio!!");
+                } else {
+                    rata.setRatAddDescripcion(request.getParameter("ratadd1"));
+                }
+
+            } else {
+                String descrip = "";
+                descrip = request.getParameter("ratadd1");
+                if (descrip != null) {
+                    //rata.setRatAddDescripcion(rata.getRatAddDescripcion() + descrip);
+                }
+
+            }
+
+            rata.setRatAddArchivo(DirectorioArchivo);
+            guardarRationaleAdd(rata);
+            response.sendRedirect("add1.jsp");
+        } catch (FileUploadException ex) {
             Logger.getLogger(ADD1.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        if (rata == null) {
-            rata = new Rationaleadd();
-            rata.setTblProyectoProID(pro);
-            rata.setRatAddPaso("add1");
-
-        }
-
-        if (rata.getRatAddDescripcion() == null) {
-            if (request.getParameter("ratadd1") == null) {
-                rata.setRatAddDescripcion("debes registrar la justificacion de sus decisiones en este espacio!!");
-            } else {
-                rata.setRatAddDescripcion(request.getParameter("ratadd1"));
-            }
-
-        } else {
-            String descrip = "";
-            descrip = request.getParameter("ratadd1");
-            if (descrip != null) {
-                rata.setRatAddDescripcion(rata.getRatAddDescripcion() + descrip);
-            }
-
-        }
-
-        rata.setRatAddArchivo(DirectorioArchivo);
-        guardarRationaleAdd(rata);
-        response.sendRedirect("add1.jsp");
     }
 
     /**
