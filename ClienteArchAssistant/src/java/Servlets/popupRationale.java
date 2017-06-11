@@ -21,6 +21,8 @@ import servicios.Proyecto;
 import servicios.Rationaleqaw;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import servicios.Modulo;
+import servicios.Rationaleadd;
 
 /**
  *
@@ -44,57 +46,51 @@ public class popupRationale extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //response.setContentType("text/html;charset=UTF-8");
-        
+
         String paso = (String) request.getSession().getAttribute("pasoActual");
         ArchAssistantBean archB = new ArchAssistantBean();
-        Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
         Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), paso);
         GuardarArchivo arch = new GuardarArchivo();
-        
-        if (request.getParameter("btnContinuar") != null)
-        {
-            
-                if (ratq == null)
-                {
-                    ratq = new Rationaleqaw();
-                }
-                ratq.setRatQawDescripcion(request.getParameter("rationale"));
-                ratq.setTblProyectoProID(proy);
-                ratq.setRatQawPaso(paso);
-                guardarRationaleQaw(ratq);
-                proy.setProAvance(paso);
-                modificarProyecto(proy);
-                System.out.println("guardar activao"+" "+proy.getProNombre()+" "+ratq.getRatQawDescripcion());
-                int este = Integer.parseInt("" + paso.charAt(3));
-                String siguiente = paso.substring(0, 3) + String.valueOf(este + 1);
-                if (paso.equals("qaw5")) {
-                    request.getSession().removeAttribute("AtributoActual");
-                }
-                if (paso.equals("qaw8")) {
-                    response.sendRedirect("InicioUsuario.jsp");
-                } else {
-                    response.sendRedirect(siguiente + ".jsp");
-                }
-               // response.sendRedirect(paso+".jsp");
-                //response.sendRedirect("");
+
+        if (request.getParameter("btnContinuar") != null) {
+
+            if (ratq == null) {
+                ratq = new Rationaleqaw();
+            }
+            ratq.setRatQawDescripcion(request.getParameter("rationale"));
+            ratq.setTblProyectoProID(proy);
+            ratq.setRatQawPaso(paso);
+            guardarRationaleQaw(ratq);
+            proy.setProAvance(paso);
+            modificarProyecto(proy);
+            System.out.println("guardar activao" + " " + proy.getProNombre() + " " + ratq.getRatQawDescripcion());
+            int este = Integer.parseInt("" + paso.charAt(3));
+            String siguiente = paso.substring(0, 3) + String.valueOf(este + 1);
+            if (paso.equals("qaw5")) {
+                request.getSession().removeAttribute("AtributoActual");
+            }
+            if (paso.equals("qaw8")) {
+                response.sendRedirect("InicioUsuario.jsp");
+            } else {
+                response.sendRedirect(siguiente + ".jsp");
+            }
+            // response.sendRedirect(paso+".jsp");
+            //response.sendRedirect("");
             //request.getRequestDispatcher(paso+".jsp").forward(request,response);
         }
-        if (ratq != null)
-        {
+        if (ratq != null) {
             List<File> archivos = arch.listarArchivos(ratq.getRatQawArchivo());
 
-            for (File archivo : archivos)
-            {
-                if (request.getParameter("btnQawBajar"+archivo.getName())!= null)
-                {
+            for (File archivo : archivos) {
+                if (request.getParameter("btnQawBajar" + archivo.getName()) != null) {
                     arch.descargar(archivo.getAbsolutePath(), archivo.getName());
-            response.sendRedirect(paso+".jsp");
+                    response.sendRedirect(paso + ".jsp");
                 }
 
-                if (request.getParameter("btnQawEliminar"+archivo.getName())!= null)
-                {
+                if (request.getParameter("btnQawEliminar" + archivo.getName()) != null) {
                     arch.eliminarArchivo(archivo.getAbsolutePath());
-                    response.sendRedirect(paso+".jsp");
+                    response.sendRedirect(paso + ".jsp");
                 }
             }
         }
@@ -158,57 +154,75 @@ public class popupRationale extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
         String DirectorioArchivo = "";
         ArchAssistantBean archB = new ArchAssistantBean();
         String paso = (String) request.getSession().getAttribute("pasoActual");
-        Rationaleqaw ratq = archB.RationaleQAW(pro.getProID(), paso);
-          
-        if (paso.equals("qaw6"))
-        {
-            request.getSession().setAttribute("sigAtr", 0);
-        }
-        
-        try 
-        {
-            DirectorioArchivo = arch.guardarArchivo(request,pro.getProID().toString() , paso);
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(QAW1.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
-        
-        if (ratq == null)
-        {
-            ratq = new Rationaleqaw();
-            ratq.setTblProyectoProID(pro);
-            ratq.setRatQawPaso(paso);
-        
-        }
-        
-        if (ratq.getRatQawDescripcion()== null)
-        {
-            ratq.setRatQawDescripcion("debes registrar el rationale en este espacio!!");
-        }
+        if (paso.substring(0, 3).equals("add")) {   
+            Rationaleadd rata;
+            if(Integer.parseInt(paso.substring(3, 4))>2){
+                Modulo desc = (Modulo) request.getSession().getAttribute("padreActual");
+                if(desc==null)  desc = archB.buscarModDescomposicion(pro);
+                rata = archB.RationaleADD(pro.getProID(), paso+desc.getModId());
+            }else{
+                rata = archB.RationaleADD(pro.getProID(), paso);
+            }
+            try {
+                DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), paso);
+            } catch (Exception ex) {
+                Logger.getLogger(QAW1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (rata == null) {
+                rata = new Rationaleadd();
+                rata.setTblProyectoProID(pro);
+                rata.setRatAddPaso(paso);
+            }
+            if (rata.getRatAddDescripcion() == null) {
+                rata.setRatAddDescripcion("debes registrar el rationale en este espacio!!");
+            }
+            rata.setRatAddArchivo(DirectorioArchivo);
+            guardarRationaleAdd(rata);
 
-        ratq.setRatQawArchivo(DirectorioArchivo);
-        guardarRationaleQaw(ratq);
-         
-                
-        response.sendRedirect(paso+".jsp");
-        
-    }
+            response.sendRedirect(paso + ".jsp");
+        } else {
+            Rationaleqaw ratq = archB.RationaleQAW(pro.getProID(), paso);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+            if (paso.equals("qaw6")) {
+                request.getSession().setAttribute("sigAtr", 0);
+            }
+
+            try {
+                DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), paso);
+            } catch (Exception ex) {
+                Logger.getLogger(QAW1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (ratq == null) {
+                ratq = new Rationaleqaw();
+                ratq.setTblProyectoProID(pro);
+                ratq.setRatQawPaso(paso);
+
+            }
+
+            if (ratq.getRatQawDescripcion() == null) {
+                ratq.setRatQawDescripcion("debes registrar el rationale en este espacio!!");
+            }
+
+            ratq.setRatQawArchivo(DirectorioArchivo);
+            guardarRationaleQaw(ratq);
+
+            response.sendRedirect(paso + ".jsp");
+        }
+}
+
+/**
+ * Returns a short description of the servlet.
+ *
+ * @return a String containing servlet description
+ */
+@Override
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
@@ -224,6 +238,13 @@ public class popupRationale extends HttpServlet {
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         port.modificarProyecto(parameter);
+    }
+
+    private void guardarRationaleAdd(servicios.Rationaleadd parameter) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        port.guardarRationaleAdd(parameter);
     }
 
 }
