@@ -3,7 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/*
+function seleccionarPaso(id)
+{
+    $("#btnQAW0").removeClass("btn-info");
+    $("#btnQAW1").removeClass("btn-info");
+    $("#btnQAW2").removeClass("btn-info");
+    $("#btnQAW3").removeClass("btn-info");
+    $("#btnQAW4").removeClass("btn-info");
+    $("#btnQAW5").removeClass("btn-info");
+    $("#btnQAW6").removeClass("btn-info");
+    $("#btnQAW7").removeClass("btn-info");
+    $("#btnQAW8").removeClass("btn-info");
+    
+    $("#btnQAW0").addClass("btn-default");
+    $("#btnQAW1").addClass("btn-default");
+    $("#btnQAW2").addClass("btn-default");
+    $("#btnQAW3").addClass("btn-default");
+    $("#btnQAW4").addClass("btn-default");
+    $("#btnQAW5").addClass("btn-default");
+    $("#btnQAW6").addClass("btn-default");
+    $("#btnQAW7").addClass("btn-default");
+    $("#btnQAW8").addClass("btn-default");
+    
+    $("#"+id).removeClass("btn-default"); 
+    $("#"+id).addClass("btn-info");    
+}
+*/
 function SeleccionPadre() {
 
     var resultado = "ninguno";
@@ -111,6 +137,8 @@ $(document).ready(function () {
         });
         
     });
+    
+    
     
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();

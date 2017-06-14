@@ -50,6 +50,7 @@
                             <td><h3 class="bienvenida">Paso 6</h3></td>
                             <td><h3 class="bienvenida">Paso 7</h3></td>
                             <td><h3 class="bienvenida">Paso 8</h3></td>
+                            
                         </tr>
                     </tbody>
                 </table>

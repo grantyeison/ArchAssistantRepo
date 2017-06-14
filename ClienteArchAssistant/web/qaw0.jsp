@@ -6,56 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ArchAssistant - QAW</title>
-        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
-        <link rel="stylesheet" href="./css/estilos.css" /><!---->
-        <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
-        <script src="./js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="col-lg-12 col-md-12 col-md-12">
-            <form name="gestionarProyectos" action="GestionarProyectos" method="POST">
-                <table class="tblCentfull">
-                    <tr>
-                        <td>
-                            <h1 class="bienvenida"> Bienvenido 
-                                <jsp:useBean id="validUsuario" scope="session" class="servicios.Usuario" />
-                                <jsp:getProperty name="validUsuario" property="usuNombre" />
-                            </h1>
-                        </td>
-                        <td>
-                            <input type="submit" name="BtnCerrarSesion" value="Cerrar Sesión" class="btn btn-primary alDer"/>
 
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <h1 align="center" class="title">ArchAssistant</h1>
-            <h2 align="center" class="bienvenida">QAW</h2>
-            <h2 align="center" class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
-            <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
+        <div class="col-lg-12 col-md-12 col-md-12">
+            
             <form name="qaw-0" action="QAW0">
-                <table width="100%" border="0" align="center">
-                  <tbody>
-                    <tr>
-                      <td><h3>Paso 1</h3></td>
-                      <td><h3>Paso 2</h3></td>
-                      <td><h3>Paso 3</h3></td>
-                      <td><h3>Paso 4</h3></td>
-                      <td><h3>Paso 5</h3></td>
-                      <td><h3>Paso 6</h3></td>
-                      <td><h3>Paso 7</h3></td>
-                      <td><h3>Paso 8</h3></td>
-                    </tr>
-                  </tbody>
-                </table>
+                
                 <h2 class="page-header">Que es QAW?</h2>
 
-                <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
+                <p class="col-lg-5 col-md-9 col-sm-12 parrafo">
                     QAW o Taller de Atributos de Calidad en español es un método optimizado que involucra 
                     a los stakeholders del sistema es decir, los usuarios, instaladores, administradores 
                     (de la base de datos, de redes, de escritorios de ayuda, etc.), arquitectos, compradores, 
@@ -77,7 +35,7 @@
                 
                 <img src="img/qaw.png" class="img-rounded"/>
                 
-                <p class="col-lg-6 col-md-9 col-sm-12 parrafo">
+                <p class="col-lg-5 col-md-9 col-sm-12 parrafo">
                     Figura I. Entradas, salidas y participantes QAW
                     Para este proceso debe haber al menos 5 stakeholders presentes pero no más de 30 por un solo taller, 
                     es importante tener en cuenta que todos los participantes del QAW deben estar enfocados y 
@@ -98,5 +56,4 @@
                 </table>
             </form>
         </div>
-    </body>
-</html>
+    
