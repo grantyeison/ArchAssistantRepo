@@ -70,7 +70,8 @@ public class GestionarProyectos extends HttpServlet {
                 }
                 else
                 {
-                    response.sendRedirect(proy.getProAvance()+".jsp");
+                    //response.sendRedirect(proy.getProAvance()+".jsp");
+                    response.sendRedirect("progreso.jsp");
                 }
             }
             if (request.getParameter("btnEliminarProyecto"+proy.getProID()) != null)

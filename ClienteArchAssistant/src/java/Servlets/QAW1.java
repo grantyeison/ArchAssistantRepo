@@ -44,14 +44,14 @@ public class QAW1 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //String guardar = request.getParameter("btnQaw1Guardar");
+        String guardar = request.getParameter("btnQaw1Guardar");
         String continuar = request.getParameter("btnContinuar");
         String canc = request.getParameter("btnQawInicio");
         if (canc != null)
         {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        /*if (guardar != null)
+        if (guardar != null)
         {
             ArchAssistantBean archB = new ArchAssistantBean();
             Proyecto proy = (Proyecto)request.getSession().getAttribute("proyectoActual");
@@ -67,7 +67,7 @@ public class QAW1 extends HttpServlet {
             proy.setProAvance("qaw1");
             modificarProyecto(proy);
             response.sendRedirect("qaw1.jsp");
-        }*/
+        }
         if (continuar != null)
         {
             if (request.getParameter("ratqaw1")!= "")
@@ -81,7 +81,7 @@ public class QAW1 extends HttpServlet {
                 }
             }
         }
-        /*
+        
         ArchAssistantBean archB = new ArchAssistantBean();
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
@@ -104,7 +104,7 @@ public class QAW1 extends HttpServlet {
                     response.sendRedirect("qaw1.jsp");
                 }
             }
-        }*/
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
