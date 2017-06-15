@@ -19,12 +19,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./css/bootstrap.min.css" />
-        <link rel="stylesheet" href="./css/estilos.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ArchAssistant - ADD</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
+        <link rel="stylesheet" href="./css/estilos.css" /><!---->
+        <link rel="stylesheet" href="./css/editor.css" />
+        <link rel="stylesheet" href="./css/font-awesome.min.css" />
+
+        <!--
+        <script src="./js/jquery-1.min.js" ></script>-->
         <script src="./js/jquery-3.2.1.js"></script>
         <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/editor.js"></script>
         <script src="./js/funciones.js"></script>
-        <title>ArchAssistant - ADD</title>
     </head>
     <body>
         <div class="col-lg-12 col-md-12 col-md-12">
@@ -212,6 +219,7 @@
                     </table>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
+                    <%@include file='rationale.jsp'%>
                     <div class="col-lg-1"></div>
                     <input type="hidden" name="modPadre" value=""/>
                     <div>

@@ -4,32 +4,32 @@
  * and open the template in the editor.
  */
 /*
-function seleccionarPaso(id)
-{
-    $("#btnQAW0").removeClass("btn-info");
-    $("#btnQAW1").removeClass("btn-info");
-    $("#btnQAW2").removeClass("btn-info");
-    $("#btnQAW3").removeClass("btn-info");
-    $("#btnQAW4").removeClass("btn-info");
-    $("#btnQAW5").removeClass("btn-info");
-    $("#btnQAW6").removeClass("btn-info");
-    $("#btnQAW7").removeClass("btn-info");
-    $("#btnQAW8").removeClass("btn-info");
-    
-    $("#btnQAW0").addClass("btn-default");
-    $("#btnQAW1").addClass("btn-default");
-    $("#btnQAW2").addClass("btn-default");
-    $("#btnQAW3").addClass("btn-default");
-    $("#btnQAW4").addClass("btn-default");
-    $("#btnQAW5").addClass("btn-default");
-    $("#btnQAW6").addClass("btn-default");
-    $("#btnQAW7").addClass("btn-default");
-    $("#btnQAW8").addClass("btn-default");
-    
-    $("#"+id).removeClass("btn-default"); 
-    $("#"+id).addClass("btn-info");    
-}
-*/
+ function seleccionarPaso(id)
+ {
+ $("#btnQAW0").removeClass("btn-info");
+ $("#btnQAW1").removeClass("btn-info");
+ $("#btnQAW2").removeClass("btn-info");
+ $("#btnQAW3").removeClass("btn-info");
+ $("#btnQAW4").removeClass("btn-info");
+ $("#btnQAW5").removeClass("btn-info");
+ $("#btnQAW6").removeClass("btn-info");
+ $("#btnQAW7").removeClass("btn-info");
+ $("#btnQAW8").removeClass("btn-info");
+ 
+ $("#btnQAW0").addClass("btn-default");
+ $("#btnQAW1").addClass("btn-default");
+ $("#btnQAW2").addClass("btn-default");
+ $("#btnQAW3").addClass("btn-default");
+ $("#btnQAW4").addClass("btn-default");
+ $("#btnQAW5").addClass("btn-default");
+ $("#btnQAW6").addClass("btn-default");
+ $("#btnQAW7").addClass("btn-default");
+ $("#btnQAW8").addClass("btn-default");
+ 
+ $("#"+id).removeClass("btn-default"); 
+ $("#"+id).addClass("btn-info");    
+ }
+ */
 function SeleccionPadre() {
 
     var resultado = "ninguno";
@@ -119,7 +119,7 @@ $(document).ready(function () {
             $('#tblPatrones').html(responseText);
         });
     });
-    
+
     $('#btnAddsubir').click(function (event) {
         event.preventDefault();
         var formData = new FormData(document.getElementById("frmArchivos"));
@@ -132,14 +132,14 @@ $(document).ready(function () {
             cache: false,
             contentType: false,
             processData: false
-        }).done(function (res){
-             $('#divArchivos').html(res);
+        }).done(function (res) {
+            $('#divArchivos').html(res);
         });
-        
+
     });
-    
-    
-    
+
+
+
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
@@ -177,19 +177,19 @@ $(document).ready(function () {
                 //alert(responseText);
                 $("#txtNomResp").val("");
                 $("#txtDesResp").val("");
-                $("#selModulo").val(null);                
+                $("#selModulo").val(null);
                 $('#tblResponsabilidades').html(responseText);
             });
         }
     });
-    
+
     $('#btnCrearInter').click(function (event) {
         var nom = $("#txtNom").val();
-        var desc = $("#txtDesc").val();        
+        var desc = $("#txtDesc").val();
         var tipo = $("#txtTipo").val();
         var sel = $("#selModulo").val();
         //alert("click" + nom + desc + sel + tipo);
-        if (nom != null && desc != null && sel != null && tipo!=null) {
+        if (nom != null && desc != null && sel != null && tipo != null) {
             //alert(nom + "  " + desc)
             $.post('ADD6', {
                 //nombre: nombreVar,
@@ -204,13 +204,49 @@ $(document).ready(function () {
                 //alert(responseText);
                 $("#txtNom").val("");
                 $("#txtDesc").val("");
-                $("#txtTipo").val(" Sintaxis de operaciones"); 
-                $("#selModulo").val(null); 
+                $("#txtTipo").val(" Sintaxis de operaciones");
+                $("#selModulo").val(null);
                 $("#tblAux").hide();
                 $('#tblResponsabilidades').html(responseText);
             });
         }
     });
+
+    $("#txtEditor").Editor();
+
+    $("#btnGuardarRat").click(function () {
+        var rationale = $("#txtEditor").Editor('getText');
+        alert(rationale);
+
+        //alert("click" + nom + desc + sel + tipo);
+        if (rationale != null) {
+            //alert(nom + "  " + desc)
+            $.post('Rationale', {
+                //nombre: nombreVar,
+                //apellido: apellidoVar,
+                //edad: edadVar
+                mensaje: "guardar",
+                rata: rationale
+
+            }, function (responseText) {
+                //alert("sale del llamado ");
+                $("#divR").show();
+                $("#divR").html(responseText);
+                $("#divR").hide(6000);
+            });
+        }
+    });
+
+    $.post('Rationale', {
+        //nombre: nombreVar,
+        //apellido: apellidoVar,
+        //edad: edadVar
+        mensaje: "obtener"
+
+    }, function (responseText) {
+        $("#txtEditor").Editor('setText', responseText);
+    });
+
 });
 
 

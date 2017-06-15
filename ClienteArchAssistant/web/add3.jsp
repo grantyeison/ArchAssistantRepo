@@ -16,11 +16,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./css/bootstrap.min.css" />
-        <link rel="stylesheet" href="./css/estilos.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ArchAssistant - ADD</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
+        <link rel="stylesheet" href="./css/estilos.css" /><!---->
+        <link rel="stylesheet" href="./css/editor.css" />
+        <link rel="stylesheet" href="./css/font-awesome.min.css" />
+
+        <!--
+        <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/jquery-3.2.1.js"></script>
         <script src="./js/bootstrap.min.js"></script>
-        <title>ArchAssistant - ADD</title>
+        <script src="./js/editor.js"></script>
+        <script src="./js/funciones.js"></script>
     </head>
     <body>
         <form name="add-3" action="ADD3">
@@ -95,6 +103,7 @@
                         <fieldset>
                             <legend>ATRIBUTOS DE CALIDAD SELECCIONADOS</legend>
                             <%List<Atributocalidad> listaAtributos;
+                                session.setAttribute("pasoActual", "add3");
                                 ArchAssistantBean p = new ArchAssistantBean();
                                 listaAtributos = p.ListarAtr();
 
@@ -260,18 +269,13 @@
                     <div class="col-lg-1"></div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-5 col-md-6 col-sm-12">
-                        <h2 class="page-header">Rationale:</h2>
-                        <textarea rows="9" cols="120" class="form-control parrafo" name="ratadd3"><%
-                            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add3_" + m.getModId());
-                            if (rata != null) {
-                                out.print(rata.getRatAddDescripcion());
-                            }
-                            %></textarea>
-                        <br/>
-                        <input type="submit" value="Guardar" name="btnAdd3Guardar" class="btn btn-primary"/>
-                    </div>
+                    <%
+                        Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add3_" + m.getModId());
+                        if (rata != null) {
+                            out.print(rata.getRatAddDescripcion());
+                        }
+                    %>
+                    <%@include file='rationale.jsp'%>
                     <div class="col-lg-5 col-md-6 col-sm-12">
                         <div>
                             <h2 class="page-header">Archivos:</h2>
@@ -305,7 +309,6 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-1"></div>
                 </div>                               
 
             </div>

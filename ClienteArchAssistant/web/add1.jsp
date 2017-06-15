@@ -21,10 +21,15 @@
         <title>ArchAssistant - ADD</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
+        <link rel="stylesheet" href="./css/editor.css" />
+        <link rel="stylesheet" href="./css/font-awesome.min.css" />
+
+        <!--
+        <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/funciones.js"></script>
-      <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/editor.js"></script>
+        <script src="./js/funciones.js"></script>
 
     </head>
     <body>
@@ -157,21 +162,15 @@
         </form>
 
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <h2 class="page-header">Rationale:</h2>
-                <form name="add-1" action="ADD1"  method="get">
-                    <textarea rows="5" cols="120" name="ratadd1" class="form-control parrafo"><%
-                        ArchAssistantBean p = new ArchAssistantBean();
-                        
-                        Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add1");
-                        if (rata != null) {
-                            out.print(rata.getRatAddDescripcion());
-                        }%></textarea>  
-                    <br/>
-                    <input type="submit" value="Guardar" name="btnAdd1Guardar" class="btn btn-primary"/>
-                </form>
-            </div>                    
+            <!--<div class="col-lg-1"></div>-->
+            <%ArchAssistantBean p = new ArchAssistantBean();
+
+            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add1");
+            //if (rata != null) {
+                //out.print(rata.getRatAddDescripcion());
+            //}
+            %>
+            <%@include file='rationale.jsp'%>
             <div class="col-lg-5 col-md-6 col-sm-12">                
                 <div>
                     <form name="popupRatio" action="popupRationale" method="post"  enctype="multipart/form-data">
