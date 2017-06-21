@@ -72,15 +72,15 @@ public class QAW5 extends HttpServlet {
 
         if (Atributo != null) {
             System.out.println("atributo seleccionado" + seleccionado);
-            //List<Atributocalidad> listaAtributos;
-            //ArchAssistantBean p = new ArchAssistantBean();
-            //listaAtributos = p.ListarAtr();
+            List<Atributocalidad> listaAtributos;
+            ArchAssistantBean p = new ArchAssistantBean();
+            listaAtributos = p.ListarAtr();
             actual = buscarAtributo(Integer.parseInt(seleccionado));
-            /*for (Atributocalidad atr : listaAtributos)
+            for (Atributocalidad atr : listaAtributos)
             {
                 if (atr.getAcID() == Integer.parseInt(seleccionado))
                     actual = atr;
-            }*/
+            }
             sesion.setAttribute("AtributoActual", actual);
 
             response.sendRedirect("qaw5.jsp");
@@ -105,7 +105,7 @@ public class QAW5 extends HttpServlet {
             response.sendRedirect("qaw5.jsp");
 
         }
-        /*
+        
         if (guardar != null)
         {
             Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw5");
@@ -119,7 +119,7 @@ public class QAW5 extends HttpServlet {
             guardarRationaleQaw(ratq);
             proy.setProAvance("qaw5");
             modificarProyecto(proy);
-            response.sendRedirect("qaw5.jsp");
+            response.sendRedirect("progreso.jsp");
         }
         if (continuar != null)
         {
@@ -134,12 +134,12 @@ public class QAW5 extends HttpServlet {
                     out.println("debe llenar e campo Rationale antes de contunuar");
                 }
             }
-        }*/
+        }
         if (regresar != null) {
             response.sendRedirect("qaw4.jsp");
         }
 
-        /*
+        
         Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw5");
         
         if (ratq != null)
@@ -161,7 +161,7 @@ public class QAW5 extends HttpServlet {
                     response.sendRedirect("qaw5.jsp");
                 }
             }
-        }*/
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -250,7 +250,7 @@ public class QAW5 extends HttpServlet {
             out.println("</tbody>");
             out.println("</table>");
         }
-        /*
+        
         GuardarArchivo arch = new GuardarArchivo();
         Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
         String DirectorioArchivo = "";
@@ -282,7 +282,7 @@ public class QAW5 extends HttpServlet {
         guardarRationaleQaw(ratq);
          
                 
-        response.sendRedirect("qaw5.jsp");*/
+        response.sendRedirect("qaw5.jsp");
     }
 
     /**

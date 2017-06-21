@@ -66,7 +66,7 @@ public class QAW1 extends HttpServlet {
             guardarRationaleQaw(ratq);
             proy.setProAvance("qaw1");
             modificarProyecto(proy);
-            response.sendRedirect("qaw1.jsp");
+            response.sendRedirect("progreso.jsp");
         }
         if (continuar != null)
         {

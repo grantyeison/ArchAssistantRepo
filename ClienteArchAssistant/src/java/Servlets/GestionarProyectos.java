@@ -59,6 +59,10 @@ public class GestionarProyectos extends HttpServlet {
         ArchAssistantBean p = new ArchAssistantBean();
         Usuario usu = (Usuario) request.getSession().getAttribute("validUsuario");
         lista = p.Listar(usu.getUsuUsuario());
+        if (request.getParameter("cerrarProyecto") != null)
+        {
+            response.sendRedirect("InicioUsuario.jsp");
+        }
         for (Proyecto proy : lista)
         {
             if (request.getParameter("btnSeleccionarProyecto"+proy.getProID()) != null)

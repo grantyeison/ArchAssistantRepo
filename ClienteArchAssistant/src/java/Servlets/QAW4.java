@@ -60,7 +60,7 @@ public class QAW4 extends HttpServlet {
         {
             response.sendRedirect("InicioUsuario.jsp");
         }
-        if(guardarAtributos != null)
+/*        if(guardarAtributos != null)
         {
             String atris = "";
             
@@ -99,7 +99,7 @@ public class QAW4 extends HttpServlet {
             }
             response.sendRedirect("qaw4.jsp");
         }
-        
+        */
         if (nuevoAtributo != null)
         {
             Atributocalidad atri = new Atributocalidad();
@@ -147,7 +147,7 @@ public class QAW4 extends HttpServlet {
             guardarRationaleQaw(ratq);
             proy.setProAvance("qaw4");
             modificarProyecto(proy);
-            response.sendRedirect("qaw4.jsp");
+            response.sendRedirect("progreso.jsp");
         }
         if (continuar != null)
         {
@@ -204,6 +204,112 @@ public class QAW4 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+ 
+        
+        Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+        PrintWriter out = response.getWriter();
+        ArchAssistantBean p = new ArchAssistantBean();
+        Rationaleqaw ratq = p.RationaleQAW(proy.getProID(), "qaw4");
+        List<Atributocalidad> listaAtributos = p.ListarAtr();
+        //List<Atributocalidad> atrEscogidos = p.ObtenerAtributosEscogidos(ratq);
+        //out.println("<table border=\"0\" class=\"tblCentContent\">");
+        
+        String atris = "";
+            
+        String escogidos = request.getParameter("listadot");
+        String[] atrEscogidos = escogidos.split(",");
+        
+        String descripcion;
+        int indAtri = 0;
+    /*    List<Atributocalidad> atributos = p.ListarAtr();
+        List<Atributocalidad>seleccionados = new LinkedList<Atributocalidad>();
+        for (Atributocalidad atr : atributos)
+        {
+            if(request.getParameter("chk"+atr.getAcID())!=null)
+            {
+                seleccionados.add(atr);
+                atris+=atr.getAcID()+",";
+            }
+        }*/
+        atris = escogidos+"~|~|";
+        
+        //Rationaleqaw ratq = archB.RationaleQAW(proy.getProID(), "qaw4");
+        if (ratq == null)
+        {
+            ratq = new Rationaleqaw();
+        }
+        descripcion = "";
+        if (ratq.getRatQawDescripcion() != null)
+        {
+            indAtri = ratq.getRatQawDescripcion().indexOf("~|~|") + 5;
+            descripcion = ratq.getRatQawDescripcion().substring(indAtri);
+        }
+        ratq.setRatQawDescripcion(atris+"\n"+descripcion);
+        ratq.setTblProyectoProID(proy);
+        ratq.setRatQawPaso("qaw4");
+        guardarRationaleQaw(ratq);
+        if (atrEscogidos.length>=1)
+        {
+            request.getSession().setAttribute("AtributoActual",p.buscarAtr(Integer.parseInt(atrEscogidos[0])));
+        }
+        
+        
+        ////////////////////////////////////////////////
+        
+        
+        out.println("<tbody>");
+        Atributocalidad atr;
+        for (int i = 0; i <= listaAtributos.size(); i += 3) {
+            if (listaAtributos.size() > i) {
+                atr = listaAtributos.get(i);
+                out.println("<tr>");
+                out.println("<td class=\"alIzq\">");
+                out.println("<input value=\""+atr.getAcID()+"\" type=\"checkbox\" class=\"check\" name=\"chk" + atr.getAcID() + "\" ");
+                for (String atrEsc : atrEscogidos) {
+                    if (atr.getAcID() == Integer.parseInt(atrEsc)) {
+                        out.println("checked");
+                    }
+                }
+                out.println(">\t" + atr.getAcNombre());
+                out.println("<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>");
+                out.println("</td>");
+            }
+
+            if (listaAtributos.size() > i + 1) {
+                atr = listaAtributos.get(i + 1);
+                out.println("<td class=\"alIzq\">");
+                out.println("<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" name=\"chk" + atr.getAcID() + "\" ");
+                for (String atrEsc : atrEscogidos) {
+                    if (atr.getAcID() == Integer.parseInt(atrEsc)) {
+                        out.println("checked");
+                    }
+                }
+                out.println(">\t" + atr.getAcNombre());
+                out.println("<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>");
+                out.println("</td>");
+            }
+
+            if (listaAtributos.size() > i + 2) {
+                atr = listaAtributos.get(i + 2);
+                out.println("<td class=\"alIzq\">");
+                out.println("<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" class=\"margenS\" name=\"chk" + atr.getAcID() + "\" ");
+                for (String atrEsc : atrEscogidos) {
+                    if (atr.getAcID() == Integer.parseInt(atrEsc)) {
+                        out.println("checked");
+                    }
+                }
+                out.println(">\t" + atr.getAcNombre());
+                out.println("<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>");
+                out.println("</td>");
+            }
+            out.println("</tr>");
+
+        }
+
+        //out.println("</div>");
+        out.println("</tbody>");
+      // out.println("</table>");
+                   
     }
 
     /**
