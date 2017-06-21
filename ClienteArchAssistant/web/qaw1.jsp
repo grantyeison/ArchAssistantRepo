@@ -52,16 +52,16 @@
                 <h2 class="page-header">Presentación de QAW e introducciones:</h2>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-3 col-md-2"></div>
-                    
-                    <input type="button" data-toggle="collapse" data-target="#descqaw1" value="Descripción paso" class="btn btn-primary">
+                    <div class="col-lg-6 col-md-8 col-sm-12">
 
-                    <div  id="descqaw1" class="collapse">
-                        <p class="parrafo col-lg-6 col-md-8 col-sm-12">
-                            En este paso, se explica detalladamente el propósito y funcionalidad de QAW,
-                            dando a conocer cada uno de los pasos de manera clara a los involucrados, además 
-                            cada uno de ellos se presentará a sí mismo indicando su rol en la organización y su 
-                            relación con el sistema a desarrollar.
-                        </p>
+                            En este paso, se explica detalladamente el propósito y funcionalidad de QAW
+                        <div  id="descqaw1" class="collapse">
+                                dando a conocer cada uno de los pasos de manera clara a los involucrados, además 
+                                cada uno de ellos se presentará a sí mismo indicando su rol en la organización y su 
+                                relación con el sistema a desarrollar.
+                            
+                        </div>
+                            <u><input readonly="true" class="textColl" style="border-width:0; color:blue; text-decoration: underline;" data-toggle="collapse" data-target="#descqaw1" id="verDescPaso" value="ver más..."></u>
                     </div>
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
@@ -121,6 +121,7 @@
                     </form>
                 </div>
             </div>
+                            <!--
             <form name="qaw-1" action="QAW1">
                 <table width="100" border="0" class="tblCent">
                     <tbody>
@@ -130,7 +131,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </form>
+            </form>-->
         </div>
               
     

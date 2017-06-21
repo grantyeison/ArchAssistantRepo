@@ -39,6 +39,7 @@
                 });
             });
         </script>
+        <%@include  file='crearProyecto.jsp'%>
     </head>
     <body class="loading">
         <div class="col-lg-12 col-md-12 col-md-12">
@@ -107,7 +108,7 @@
                         <tr>
                         <!--    <td><input type="submit" id="btnSel" value="Seleccionar" name="btnSeleccionarProyecto" class="btn btn-primary"/></td>-->
                         
-                        <td class="alDer"><button type="submit" value="Nuevo" name="btnCrearProyecto" class="btn btn-primary"/>  <span class="glyphicon glyphicon-plus" aria-hidden="true"/></button></td>
+                        <td class="alDer"><button type="button" data-toggle="modal" data-target="#crearProyecto" value="Nuevo" name="btnCrearProyecto" class="btn btn-primary"/>  <span class="glyphicon glyphicon-plus" aria-hidden="true"/></button></td>
                     <!--<span class="btn btn-primary btn-file"> Browse<input type="file"> </span>-->
                         </tr>
                     </tbody>

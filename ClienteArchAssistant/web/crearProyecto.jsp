@@ -4,23 +4,17 @@
     Author     : Prometheus
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ArchAssistant - Nuevo Proyecto</title>
-        <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
-        <link rel="stylesheet" href="./css/estilos.css" /><!---->
-        <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
-        <script src="./js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="col-lg-12 col-md-12 col-md-12">
-            <h1 class="title">Crear Proyecto </h1>
+<div class="modal fade" id="crearProyecto" role="dialog">
+    <div class="modal-dialog">
+    <div class="modal-content">
             <form action="GuardarProyecto" method="POST">
-                <table border="0" class="tblCent">
+        <div class="modal-header modal-header-success">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h1>Crear Proyecto </h1>
+        </div>
+        <div class="modal-body">
+
+                <table border="0" class="tblCentfull">
                     <tbody>
                         <tr>
                             <td>Nombre Proyecto: </td>
@@ -28,15 +22,33 @@
                         </tr>
                         <tr>
                             <td>Descripcion: </td>
-                            <td><textarea name="txtDescripcionProyecto" rows="4" cols="20" class="form-control"></textarea></td>
+                            <td><textarea name="txtDescripcionProyecto" rows="10" cols="50" class="form-control"></textarea></td>
                         </tr>
-                        <tr>
-                            <td class="alIzq"><input type="submit" value="Guardar" name="btnGuardarProyecto" class="btn btn-primary"/></td>
-                            <td class="alDer"><input type="submit" value="Cancelar" name="btnCancelar" class="btn btn-primary"/></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
-            </form>
+
         </div>
-    </body>
-</html>
+        <div class="modal-footer">
+            <table class="tblCentfull">
+                <tr>
+                   <td class="alIzq"><button type="button" class="btn btn-default pull-left btn-lg" data-dismiss="modal">Cancelar</button></td> 
+                   <td class="alDer"><input type="submit" value="Guardar" name="btnGuardarProyecto" class="btn btn-primary btn-lg"/></td>
+                </tr>
+            </table>
+        </div>
+            </form>
+    </div><!-- /.modal-content -->
+    </div>
+</div><!-- /.modal-dialog -->
+
+
+
+
+<!--<h4><kbd>esc</kbd> or click anyway to close</h4>
+<hr>
+<div class="alert alert-danger"><h4>You can add any html and css ;)</h4></div>-->
+
+
+
+

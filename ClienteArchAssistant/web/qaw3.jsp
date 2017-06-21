@@ -19,14 +19,18 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-3 col-md-2"></div>
                     <div class="col-lg-6 col-md-8 col-sm-12">
-                        <p class="parrafo">
-                            Si bien a estas alturas del taller no se conoce aún la arquitectura del sistema, se pueden tener algunos gráficos generales técnicos que aclaren a los participantes un poco cual es la finalidad del proceso en curso, en este paso se puede mostrar la siguiente información:
-                        </p>
-                        <ul>
-                            <li>planes para satisfacer los requerimientos del negocio/misión.</li>
-                            <li>Información técnica como especificaciones físicas de los equipos, sistemas operativos, estándares.</li>
-                            <li>Diagramas de contexto, diagramas de alto nivel del sistema y otras descripciones.</li>
-                        </ul>
+                            Si bien a estas alturas del taller no se conoce aún la arquitectura del sistema, 
+                             <div  id="descqaw3" class="collapse">
+                                    se pueden tener algunos gráficos generales técnicos que aclaren a los participantes un poco cual es la finalidad del proceso en curso, en este paso se puede mostrar la siguiente información:
+
+                                <ul>
+                                    <li>planes para satisfacer los requerimientos del negocio/misión.</li>
+                                    <li>Información técnica como especificaciones físicas de los equipos, sistemas operativos, estándares.</li>
+                                    <li>Diagramas de contexto, diagramas de alto nivel del sistema y otras descripciones.</li>
+                                </ul>
+                            </div>
+                        <input readonly="true" style="border-width:0; color:blue; text-decoration: underline;" data-toggle="collapse" data-target="#descqaw3" id="verDescPaso" value="ver más...">
+                    
                     </div>
                     <div class="col-lg-3 col-md-2"></div><!---->
                 </div>
@@ -82,6 +86,7 @@
                     </form>
                 </div>
             </div>
+                            <!--
             <form name="qaw-3" action="QAW3">    
                 <table border="0" class="tblCent">
                     <tbody>
@@ -92,6 +97,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </form>
+            </form>-->
         </div>
         

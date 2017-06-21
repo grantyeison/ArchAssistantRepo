@@ -21,9 +21,14 @@
                 <h2 class="page-header">Presentación del negocio o misión del sistema a desarrollar:</h2>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="col-lg-3 col-md-2"></div>
-                    <p class="parrafo col-lg-6 col-md-8 col-sm-12">
-                        Luego de la presentación inicial, uno de los representantes de los stakeholders, generalmente alguien con un cargo administrativo, explica el negocio o la misión, dejando claro cuál es el propósito de la organización, es posible que en este paso se invierta alrededor de una hora además el o los moderadores en este paso deben analizar muy bien la información presentada sacando la mayor cantidad de atributos de calidad que se puedan identificar para pasos posteriores.
-                    </p>
+                    <div class="col-lg-6 col-md-8 col-sm-12">
+                        
+                        Luego de la presentación inicial, uno de los representantes de los stakeholders, 
+                        <div  id="descqaw2" class="collapse">
+                            generalmente alguien con un cargo administrativo, explica el negocio o la misión, dejando claro cuál es el propósito de la organización, es posible que en este paso se invierta alrededor de una hora además el o los moderadores en este paso deben analizar muy bien la información presentada sacando la mayor cantidad de atributos de calidad que se puedan identificar para pasos posteriores.
+                        </div>
+                        <input readonly="true" style="border-width:0; color:blue; text-decoration: underline;" data-toggle="collapse" data-target="#descqaw2" id="verDescPaso" value="ver más...">
+                    </div>
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
                 <div class="col-lg-7 col-md-6 col-sm-12">
@@ -88,6 +93,7 @@
                   </form>
                 </div>
             </div>
+                      <!--
             <form name="qaw-2" action="QAW2">    
                 <table border="0" class="tblCent">
                   <tbody>
@@ -99,6 +105,6 @@
                   </tbody>
                 </table>
 
-            </form>
+            </form>-->
         </div>
                       

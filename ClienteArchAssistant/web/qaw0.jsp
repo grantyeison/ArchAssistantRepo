@@ -47,13 +47,13 @@
                     al máximo ya que el QAW es un proceso demandante.
 
                 </p>
-
+<!--
                 <table class="tblCentfull">
                     <tr>
                         <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnQawInicio" class="btn btn-primary btn-lg"/></td>
                         <td class="alIzq"><input type="submit" value="Continuar" name="btnQaw0Continuar" class="btn btn-primary btn-lg"/></td>
                     </tr>
-                </table>
+                </table>-->
             </form>
         </div>
     

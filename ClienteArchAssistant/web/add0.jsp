@@ -59,12 +59,13 @@
                     <div class="col-lg-1"></div>
                 </div>
             </div>
+                <!--
             <table class="tblCentfull">
                 <tr>
                     <td class="alDer"><input type="submit" value="Cerrar Proyecto" name="btnAddInicio" class="btn btn-primary btn-lg"/></td>
                     <td class="alIzq"><input type="submit" value="Continuar" name="btnAddContinuar" class="btn btn-primary btn-lg"/></td>
                 </tr>
-            </table>
+            </table>-->
         </form>
     </body>
 </html>

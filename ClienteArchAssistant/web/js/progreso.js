@@ -1,7 +1,8 @@
 $(function(){
  $('.btn-circle').on('click',function(){
-   $('.btn-circle.btn-info').removeClass('btn-info').addClass('btn-default');
-   $(this).addClass('btn-info').removeClass('btn-default').blur();
+   //$('.btn-circle.btn-primary').removeClass('btn-primary').addClass('.btn-info');
+   $('.btn-circle.btn-info').addClass('.btn-primary').removeClass('btn-info');
+   $(this).addClass('.btn-info').removeClass('btn-primary').blur();
  });/**/
 
  $('.next-step, .prev-step').on('click', function (e){
