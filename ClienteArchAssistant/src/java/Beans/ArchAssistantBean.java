@@ -50,6 +50,79 @@ public class ArchAssistantBean {
     private static final Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
      
     
+    public String cargarAtributosCheck(Proyecto proy)
+    {
+        /*
+        //PrintWriter out = response.getWriter();
+        //ArchAssistantBean p = new ArchAssistantBean();
+        List<Atributocalidad> listaAtributos = ListarAtr();
+                    
+        //String escogidos = request.getParameter("listadot");
+        Rationaleqaw ratq4 = RationaleQAW(proy.getProID(), "qaw4");
+        System.out.println("rationale 4:  "+ratq4.getRatQawDescripcion());
+        List<Atributocalidad> atrEscogidos = ObtenerAtributosEscogidos(ratq4);
+        System.out.println("Escogidos:  "+atrEscogidos);
+        
+        String htmlRetorno = "";
+        //List<String> atrEscogidos = new LinkedList<String>();
+                
+        htmlRetorno += "<tbody>";
+        Atributocalidad atr;
+        for (int i = 0; i <= listaAtributos.size(); i += 3) {
+            if (listaAtributos.size() > i) {
+                atr = listaAtributos.get(i);
+                htmlRetorno += "<tr>";
+                htmlRetorno += "<td class=\"alIzq\">";
+                htmlRetorno += "<input value=\""+atr.getAcID()+"\" type=\"checkbox\" class=\"check\" name=\"chk" + atr.getAcID() + "\" data-toggle=\"tooltip\" title=\""+atr.getAcDescripcion()+"\"";
+                for (Atributocalidad atrEsc : atrEscogidos) {
+                    if (atr.getAcID() == atrEsc.getAcID()) {
+                        htmlRetorno += "checked";
+                    }
+                }
+                htmlRetorno += ">\t" + atr.getAcNombre();
+                htmlRetorno += "<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>";
+                htmlRetorno += "</td>";
+            }
+
+            if (listaAtributos.size() > i + 1) {
+                atr = listaAtributos.get(i + 1);
+                htmlRetorno += "<td class=\"alIzq\">";
+                htmlRetorno += "<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" name=\"chk" + atr.getAcID()+ "\" data-toggle=\"tooltip\" title=\""+atr.getAcDescripcion()+"\"";
+                for (Atributocalidad atrEsc : atrEscogidos) {
+                    if (atr.getAcID() == atrEsc.getAcID()) {
+                        htmlRetorno += "checked";
+                    }
+                }
+                htmlRetorno += ">\t" + atr.getAcNombre();
+                htmlRetorno += "<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>";
+                htmlRetorno += "</td>";
+            }
+
+            if (listaAtributos.size() > i + 2) {
+                atr = listaAtributos.get(i + 2);
+                htmlRetorno += "<td class=\"alIzq\">";
+                htmlRetorno += "<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" class=\"margenS\" name=\"chk" + atr.getAcID()+ "\" data-toggle=\"tooltip\" title=\""+atr.getAcDescripcion()+"\"";
+                for (Atributocalidad atrEsc : atrEscogidos) {
+                    if (atr.getAcID() == atrEsc.getAcID()) {
+                        htmlRetorno += "checked";
+                    }
+                }
+                htmlRetorno += ">\t" + atr.getAcNombre();
+                htmlRetorno += "<input readonly hidden='true' value ='" + atr.getAcDescripcion() + "' id=atrDesc'" + atr.getAcID() + "'/>";
+                htmlRetorno += "</td>";
+            }
+            htmlRetorno += "</tr>";
+
+        }
+
+        //htmlRetorno += "</div>";
+        htmlRetorno += "</tbody>";
+      // htmlRetorno += "</table>";
+                   
+       return htmlRetorno;  */
+        return null;
+    }
+    
     public void GenerarReporteQAW(Proyecto pro) throws FileNotFoundException, DocumentException, IOException
     {
         

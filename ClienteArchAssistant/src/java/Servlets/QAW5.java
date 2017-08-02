@@ -9,6 +9,7 @@ import Beans.ArchAssistantBean;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,6 +178,51 @@ public class QAW5 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        ArchAssistantBean p2 = new ArchAssistantBean();
+            try (PrintWriter out = response.getWriter()) {
+                Proyecto proyectoActual = (Proyecto) request.getSession().getAttribute("proyectoActual");
+                Rationaleqaw ratq4 = p2.RationaleQAW(proyectoActual.getProID(), "qaw4");
+                /*List<Atributocalidad> listaAtributos = p2.ObtenerAtributosEscogidos(ratq4);*/
+                
+                ArchAssistantBean arcB = new ArchAssistantBean();
+                String escogidos = request.getParameter("listadot");
+                String descripcion = request.getParameter("ratqaw4");
+                List<Atributocalidad> TodosAtributos = arcB.ListarAtr();
+                List<Atributocalidad> listaAtributos = new LinkedList<Atributocalidad>();
+                String atris = "";
+                String[] atrEscogidos = escogidos.split(",");
+                atris = escogidos+"~|~|";  
+                int index = 0;
+                
+                for (Atributocalidad atr : TodosAtributos)
+                {
+                    if (atr.getAcID() == Integer.parseInt(atrEscogidos[index]))
+                    {
+                        listaAtributos.add(atr);
+                        index++;
+                    }
+                }
+                ratq4.setRatQawDescripcion(atris+"\n"+descripcion);
+                ratq4.setTblProyectoProID(proyectoActual);
+                ratq4.setRatQawPaso("qaw4");
+                guardarRationaleQaw(ratq4);
+                
+                Atributocalidad atrActual = (Atributocalidad) request.getSession().getAttribute("AtributoActual");
+                
+                for (Atributocalidad atr2 : listaAtributos) {
+                    out.println("<option value=\"" + atr2.getAcID() + "\" ");
+                    if (atrActual != null) {
+                        if (atrActual.getAcID() == atr2.getAcID()) {
+                            out.println("selected=\"selected\"");
+                        }
+                    }
+
+                    out.println(">" + atr2.getAcNombre() + "</option>");
+                }
+                request.getSession().setAttribute("sigAtr", 0);
+                System.out.println("escogidos**: "+listaAtributos);    
+            }
     }
 
     /**
