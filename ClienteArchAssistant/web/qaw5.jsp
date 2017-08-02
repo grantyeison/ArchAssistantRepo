@@ -22,37 +22,43 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="col-lg-3 col-md-2"></div>
             <div class="col-lg-6 col-md-8 col-sm-12">
-                <p class="parrafo">
-                    una vez hecha la presentación de los atributos directores o drivers del sistema, el o los facilitadores guiarán a los stakeholders en una lluvia de ideas en modo round-robin en la que cada uno generará un escenario dependiendo de sus funciones e intereses en el sistema, cada escenario debe constar de un estímulo, un ambiente y una respuesta, se espera que cada stakeholder genere al menos dos escenarios; hay que tener en cuenta que este paso es el corazón del proceso QAW por lo tanto hay que ser muy cuidadosos.
-                </p>
+                Una vez hecha la presentación de los atributos directores o drivers del sistema, 
+                 <div  id="descqaw5" class="collapse">
+                    el o los facilitadores guiarán a los stakeholders en una lluvia de ideas en modo round-robin en la que cada uno generará un escenario dependiendo de sus funciones e intereses en el sistema, cada escenario debe constar de un estímulo, un ambiente y una respuesta, se espera que cada stakeholder genere al menos dos escenarios; hay que tener en cuenta que este paso es el corazón del proceso QAW por lo tanto hay que ser muy cuidadosos.
+                </div>
+                <input readonly="true" style="border-width:0; color:blue; text-decoration: underline;" data-toggle="collapse" data-target="#descqaw5" id="verDescPaso" value="ver más...">
+                    
             </div>
             <div class="col-lg-3 col-md-2"></div>
         </div>
 
         <h2 class="bienvenida page-header">Escenarios:</h2>
         <div class="col-lg-6 col-md-12 col-sm-12">
-            <select name="slcAtributo">
-                <%
+            <div id="seleccionar">
+                <select name="slcAtributo" id="slcAtributo">
+                    <%
+                       
+                        Atributocalidad atrActual = (Atributocalidad) session.getAttribute("AtributoActual");
+                        ArchAssistantBean p2 = new ArchAssistantBean();
 
-                    ArchAssistantBean p2 = new ArchAssistantBean();
-
-                    Rationaleqaw ratq4 = p2.RationaleQAW(proyectoActual.getProID(), "qaw4");
-                    Atributocalidad atrActual = (Atributocalidad) session.getAttribute("AtributoActual");
-                    listaAtributos = p2.ObtenerAtributosEscogidos(ratq4);
-
-                    for (Atributocalidad atr2 : listaAtributos) {
-                        out.println("<option value=\"" + atr2.getAcID() + "\" ");
-                        if (atrActual != null) {
-                            if (atrActual.getAcID() == atr2.getAcID()) {
-                                out.println("selected=\"selected\"");
+                        Rationaleqaw ratq4 = p2.RationaleQAW(proyectoActual.getProID(), "qaw4");
+                         listaAtributos = p2.ObtenerAtributosEscogidos(ratq4);
+/*
+                        for (Atributocalidad atr2 : listaAtributos) {
+                            out.println("<option value=\"" + atr2.getAcID() + "\" ");
+                            if (atrActual != null) {
+                                if (atrActual.getAcID() == atr2.getAcID()) {
+                                    out.println("selected=\"selected\"");
+                                }
                             }
-                        }
 
-                        out.println(">" + atr2.getAcNombre() + "</option>");
-                    }
-                    session.setAttribute("sigAtr", 0);
-                %>
-            </select>
+                            out.println(">" + atr2.getAcNombre() + "</option>");
+                        }
+                        session.setAttribute("sigAtr", 0);*/
+
+                    %>
+                </select>
+            </div>
             <input type="submit" name="btnQaw5AtriSelecc" value="Seleccionar" class="btn btn-primary"/>
 
             <table width="100" border="0" class="tblCentContent">
@@ -93,7 +99,7 @@
                         <%
                             ArchAssistantBean archB = new ArchAssistantBean();
                             List<Escenario> listaEsc = archB.ListEscenarios(proyectoActual);
-
+/*
                             if (atrActual != null) {
                                 for (Escenario esce : listaEsc) {
                                     System.out.println("escenarios " + esce.getTblAtributoCalidadacID());
@@ -117,7 +123,7 @@
                                 }
                             }
 
-                        %>
+                       */ %>
                     </tbody>
                 </table>
             </div>

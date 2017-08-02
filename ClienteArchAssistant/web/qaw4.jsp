@@ -35,20 +35,19 @@
                 
                 <table border="0" class="tblCentContent" id="tblAtributos4">
                 <%
-
                      p = new ArchAssistantBean();
-                     ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
+                    // ratq = p.RationaleQAW(proyectoActual.getProID(), "qaw4");
                     List<Atributocalidad> listaAtributos = p.ListarAtr();
                     List<Atributocalidad> atrEscogidos = p.ObtenerAtributosEscogidos(ratq);
                     //out.println("<table border=\"0\" class=\"tblCentContent\">");
-                    out.println("<tbody>");
+                    /*out.println("<tbody>");
                     Atributocalidad atr;
                     for (int i = 0; i <= listaAtributos.size(); i += 3) {
                         if (listaAtributos.size() > i) {
                             atr = listaAtributos.get(i);
                             out.println("<tr>");
                             out.println("<td class=\"alIzq\">");
-                            out.println("<input value=\""+atr.getAcID()+"\" type=\"checkbox\" class=\"check\" name=\"chk" + atr.getAcID() + "\" ");
+                            out.println("<input value=\""+atr.getAcID()+"\" type=\"checkbox\" class=\"check\" name=\"chk" + atr.getAcID() + "\" data-toggle=\"tooltip\" title=\""+atr.getAcDescripcion()+"\"");
                             for (Atributocalidad atrEsc : atrEscogidos) {
                                 if (atr.getAcID() == atrEsc.getAcID()) {
                                     out.println("checked");
@@ -62,7 +61,7 @@
                         if (listaAtributos.size() > i + 1) {
                             atr = listaAtributos.get(i + 1);
                             out.println("<td class=\"alIzq\">");
-                            out.println("<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" name=\"chk" + atr.getAcID() + "\" ");
+                            out.println("<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" name=\"chk" + atr.getAcID() + "\" data-toggle=\"tooltip\" title=\""+atr.getAcDescripcion()+"\"");
                             for (Atributocalidad atrEsc : atrEscogidos) {
                                 if (atr.getAcID() == atrEsc.getAcID()) {
                                     out.println("checked");
@@ -76,7 +75,7 @@
                         if (listaAtributos.size() > i + 2) {
                             atr = listaAtributos.get(i + 2);
                             out.println("<td class=\"alIzq\">");
-                            out.println("<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" class=\"margenS\" name=\"chk" + atr.getAcID() + "\" ");
+                            out.println("<input value=\""+atr.getAcID()+"\" class=\"check\" type=\"checkbox\" class=\"margenS\" name=\"chk" + atr.getAcID() + "\" data-toggle=\"tooltip\" title=\""+atr.getAcDescripcion()+"\"");
                             for (Atributocalidad atrEsc : atrEscogidos) {
                                 if (atr.getAcID() == atrEsc.getAcID()) {
                                     out.println("checked");
@@ -93,7 +92,7 @@
                     //out.println("</div>");
                     out.println("</tbody>");
                    // out.println("</table>");
-                %>
+            */    %>
                 </table>
                 <table width="100" border="0" class="tblCent">
                     <tbody>
@@ -110,25 +109,25 @@
                     <div class="modal-content">
                         <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1><i class="glyphicon glyphicon-thumbs-up"></i> Success Modal</h1>
+                            <h1></i> Nuevo atributo de calidad</h1>
                         </div>
                         <div class="modal-body">
-                            <table width="100" border="0" class="tblCent">
+                            <table width="100" border="0" class="tblCentfullP">
                                 <tbody>
                                     <tr>
                                         <td>Nombre:</td>
-                                        <td><input type="text" name="TxtAtribNombreNueAtri" class="form-control"/></td>
+                                        <td><input id="nomNueAtri" type="text" name="TxtAtribNombreNueAtri" class="form-control"/></td>
                                     </tr>
                                     <tr>
                                         <td>Descripción:</td>
-                                        <td> <input type="text" name="TxtAtribDescripNueAtrib" class="form-control"/></td>
+                                        <td> <textarea id="descNueAtri" rows="3" cols="30" name="TxtAtribDescripNueAtrib" class="form-control parrafo"></textarea></td>
                                     </tr>
                                 </tbody>
                             </table> 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <input type="submit" name="BtnQaw4GuardarNuevoAtributo" value="Guardar" class="btn btn-primary"/>
+                            <input id="4atrSelec2" type="button" name="BtnQaw4GuardarNuevoAtributo" data-dismiss="modal" value="Guardar" class="btn btn-primary"/>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->

@@ -18,6 +18,7 @@
         <script src="./js/bootstrap.min.js"></script>
         <script src="./js/progreso.js"></script>
         <script src="./js/funciones.js"></script>
+        <script src="./js/cargarDatos.js"></script>
         <script>
             $(document).ready(function(){
                 $('[data-toggle="tooltip"]').tooltip();   
@@ -58,20 +59,20 @@
                             <button type="button" class=" <%
                                 if (pas == 0)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
                                     out.println(" btn-primary ");
                                 }
-                                %> btn-info btn-circle" data-toggle="tab" href="#menu0" data-toggle="tooltip" title="Que es QAW?"><i class="fa fa-3x">0</i></button>
+                                %> btn-circle" data-toggle="tab" href="#menu0" data-toggle="tooltip" title="Que es QAW?"><i class="fa fa-3x">0</i></button>
                             
                         </div>
                         <div class="process-step">
                             <button type="button" class="<%
                                 if (pas == 1)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -98,7 +99,7 @@
                                 type="button" class="<%
                                 if (pas == 2)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -125,7 +126,7 @@
                                 type="button" class="<%
                                 if (pas == 3)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -152,7 +153,7 @@
                                 type="button" class="<%
                                 if (pas == 4)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -179,7 +180,7 @@
                                 type="button" class="<%
                                 if (pas == 5)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -206,7 +207,7 @@
                                 type="button" class="<%
                                 if (pas == 6)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -233,7 +234,7 @@
                                 type="button" class="<%
                                 if (pas == 7)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {
@@ -260,7 +261,7 @@
                                 type="button" class="<%
                                 if (pas == 8)
                                 {
-                                    out.println(" btn-danger ");
+                                    out.println(" btn-danger btn-info");
                                 }
                                 else
                                 {

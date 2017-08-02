@@ -93,31 +93,8 @@ function SeleccionarPatrones() {
 
 $(document).ready(function () {
     
-    $('#4atrSelec').click(function (event) {
-        var rationale = $("#ratqaw4").val();
-        var atris = document.getElementsByClassName("check");
-        var lista = "";
-        for (var i = 0; i < atris.length; i++)
-        {
-            if (atris[i].checked) {
-                resultado = atris[i].value;
-                lista += resultado + ",";
-
-            }
-        }
-        alert("Lista " + lista);
-        // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
-        $.get('QAW4', {
-            //nombre: nombreVar,
-            //apellido: apellidoVar,
-            //edad: edadVar
-            ratqaw4: rationale,
-            listadot: lista
-        }, function (responseText) {
-            $('#tblAtributos4').html(responseText);
-        });
-    });
-
+    
+    
     $('#submit').click(function (event) {
         var porNombre = document.getElementsByName("tacticaSel");
         var rationale = $("#txtRationale").val();
@@ -164,7 +141,6 @@ $(document).ready(function () {
         });
 
     });
-<<<<<<< .mine
     
     
     $('.textColl').click(function (event) {
@@ -181,15 +157,9 @@ $(document).ready(function () {
         }
     });
     
-||||||| .r104
     
     
     
-=======
-
-
-
->>>>>>> .r107
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
