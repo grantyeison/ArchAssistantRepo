@@ -36,17 +36,20 @@ function SeleccionPadre() {
     var resultado = "ninguno";
 
     var porNombre = document.getElementsByName("selPadre");
-    var padre = document.frmadd2.modPadre;
+    var padre = $("#txtModDesc");
     // Recorremos todos los valores del radio button para encontrar el
     // seleccionado
     for (var i = 0; i < porNombre.length; i++)
     {
+        //if()
         if (porNombre[i].checked)
             resultado = porNombre[i].value;
-        padre.value = resultado;
+
+        padre.val(resultado);
     }
-    session.setAttribute("moduloActual", resultado);
-    //alert("Se ha seleccionado el modulo #" + resultado + " Como el modulo padre");
+    //var se= '<%= session.setAttribute("moduloActual", resultado)%>';
+    listarModulos(resultado);
+    alert("Se ha seleccionado el modulo #" + resultado + " Como el modulo padre, lo que hay en el txt " + padre.val());
 }
 
 function Seleccionados(sel) {
@@ -64,7 +67,7 @@ function Seleccionados(sel) {
             lista += resultado + ",";
         }
     }
-    return lista
+    return lista;
 }
 
 function SeleccionarPatrones() {
@@ -92,9 +95,9 @@ function SeleccionarPatrones() {
 }
 
 $(document).ready(function () {
-    
-    
-    
+
+
+
     $('#submit').click(function (event) {
         var porNombre = document.getElementsByName("tacticaSel");
         var rationale = $("#txtRationale").val();
@@ -141,25 +144,18 @@ $(document).ready(function () {
         });
 
     });
-    
-    
     $('.textColl').click(function (event) {
-       var a = $('this').val();
+        var a = $('this').val();
         if (a == "ver más...")
         {
             $('this').val("...ver menos");
             $('this').show();
-        }
-        else 
+        } else
         {
             $('this').val("ver más...");
             $('this').show();
         }
     });
-    
-    
-    
-    
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
@@ -250,9 +246,9 @@ $(document).ready(function () {
 
             }, function (responseText) {
                 //alert("sale del llamado ");
-                $("#divR").show();
-                $("#divR").html(responseText);
-                $("#divR").hide(6000);
+                $("#divMensaje").show();
+                $("#divMensaje").html(responseText);
+                $("#divMensaje").hide(6000);
             });
         }
     });
@@ -267,8 +263,74 @@ $(document).ready(function () {
         $("#txtEditor").Editor('setText', responseText);
     });
 
+    $("#multiform").submit(function (e)
+    {
+
+        var formObj = $(this);
+        var formURL = formObj.attr("action");
+        var formData = new FormData(this);
+        $.ajax({
+            url: formURL,
+            type: 'POST',
+            data: formData,
+            mimeType: "multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data, textStatus, jqXHR)
+            {
+                //alert("exito" + data);
+                $("#divMensaje").show();
+                $("#divMensaje").html("<div id='inner-message' class='alert alert-success alert-dismissable fade in'>"
+                        + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
+                        + "<strong>Archivo subido con exito!</strong> </div>");
+                $("#divMensaje").hide(6000);
+                $("#divListaArchivos").html(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert("error eroor");
+            }
+        });
+        e.preventDefault(); //Prevent Default action. 
+        e.unbind();
+    });
+
+    $("#file-1").fileinput({
+        showCaption: false,
+        browseClass: "btn btn-primary btn-lg",
+        fileType: "any"
+    });
+
+
 });
 
+//funcion para guardar el modulo que se escoge para descomponer, este se llama cuando se selecciona 
+//en la tabla de los moculos cuando se de click sobre un modulo inmediatamente se llama para decir que este 
+//modulo sera el que se va a descomponer, entonces esta funcion debe recibir el id del modulo que se va a cambiar 
+//de estado 
+function listarModulos(id) {
+    $.post('Modulos', {
+        //nombre: nombreVar,
+        //apellido: apellidoVar,
+        //edad: edadVar
+        mensaje: "modulos",
+        id: id
+    }, function (responseText) {
+        $("#txtEditor").Editor('setText', responseText);
+        alert("Rationale del modulo  "+ responseText);
+        $.post('Rationale', {
+            //nombre: nombreVar,
+            //apellido: apellidoVar,
+            //edad: edadVar
+            jd: "guardar"
+        }, function (responseText1) {
+            //$("#divListaArchivos")
+            alert("exito llamado para listar los archivos "+ responseText1);
+            $("#divListaArchivos").Html(responseText1);
+        });        
+    });
+}
 
 
 

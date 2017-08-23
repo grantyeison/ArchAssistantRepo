@@ -23,7 +23,6 @@
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
         <link rel="stylesheet" href="./css/editor.css" />
         <link rel="stylesheet" href="./css/font-awesome.min.css" />
-
         <!--
         <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/jquery-3.2.1.js"></script>
@@ -55,7 +54,7 @@
                             <td><h3 class="bienvenida">Paso 6</h3></td>
                             <td><h3 class="bienvenida">Paso 7</h3></td>
                             <td><h3 class="bienvenida">Paso 8</h3></td>
-                            
+
                         </tr>
                     </tbody>
                 </table>
@@ -159,85 +158,8 @@
                     <div class="col-lg-1"></div>
                 </div>
             </div>
-        </form>
-
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <!--<div class="col-lg-1"></div>-->
-            <%ArchAssistantBean p = new ArchAssistantBean();
-
-            Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add1");
-            //if (rata != null) {
-                //out.print(rata.getRatAddDescripcion());
-            //}
-            %>
             <%@include file='rationale.jsp'%>
-            <div class="col-lg-5 col-md-6 col-sm-12">                
-                <div>
-                    <form name="popupRatio" action="popupRationale" method="post"  enctype="multipart/form-data">
-                        <h4>Archivos:</h4>
-                        <table width="400" border="0" class="tblCent">
-                            <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                                <td><input type="submit" value="subir archivo" name="btnSubirArchivo" class="btn btn-primary"/></td></tr>
-                        </table>
-                    </form>
-                </div>
-                <div class="divScroll" id="divArchivos">
-                    <form name="add-1" action="ADD1">
-                    <table width="400" border="0" class="tblCentfull">
-                        <tbody>
-                            <%
-                                    Proyecto proyecto = (Proyecto) session.getAttribute("proyectoActual");                                    
-                                    String paso = (String) session.getAttribute("pasoActual");
-                                    rata = p.RationaleADD(proyecto.getProID(), paso);
-
-                                    GuardarArchivo arch = new GuardarArchivo();
-                                    List<File> archivos = null;
-                                    if (rata != null) {
-                                        archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                    }
-                                    if (archivos != null) {
-                                        for (File archivo : archivos) {
-                                            out.print("<tr>");
-                                            out.print("<td>" + archivo.getName() + "</td>");
-                                            out.print("<td class='alIzq'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnEliminar"
-                                                    + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                    + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                            out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnBajar"
-                                                    + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                    + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
-                                                    + "</span></button>" + "</td>");
-                                            out.print("</tr>");
-                                        }
-                                    }
-                                %>
-                            <%/*
-                                rata = p.RationaleADD(proyectoActual.getProID(), "add1");
-                                GuardarArchivo arch = new GuardarArchivo();
-                                List<File> archivos = null;
-                                if (rata != null) {
-                                    archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                }
-                                if (archivos != null) {
-                                    for (File archivo : archivos) {
-                                        out.print("<tr>");
-                                        out.print("<td>" + archivo.getName() + "</td>");
-                                        out.print("<td class='alIzq'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnQawEliminar"
-                                                + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                        out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnQawBajar"
-                                                + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
-                                                + "</span></button>" + "</td>");
-                                        out.print("</tr>");
-                                    }
-                                }*/
-                            %>
-                        </tbody>
-                    </table> 
-                    </form>
-                </div>   
-            </div>
-        </div>
+        </form>
         <form name="add-1" action="ADD1" method="get">
             <table width="100" border="0" class="tblCent">
                 <tbody>

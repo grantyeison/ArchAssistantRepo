@@ -16,22 +16,31 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ArchAssistant - ADD</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
+        <link rel="stylesheet" href="./css/editor.css" />
+        <link rel="stylesheet" href="./css/font-awesome.min.css" />
+
+        <!--
+        <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/editor.js"></script>
         <script src="./js/funciones.js"></script>
-        <title>ArchAssistant - ADD</title>
     </head>
     <body>
         <div class="col-lg-12 col-md-12 col-md-12">
             <form name="add-8" action="ADD8">
                 <h2 class="subtitle">ADD</h2>
-                <%Usuario u = (Usuario) session.getAttribute("validUsuario");
+                <%
+                    session.setAttribute("pasoActual", "add8");
+                    Usuario u = (Usuario) session.getAttribute("validUsuario");
                     if (u == null) {
                         response.sendRedirect("InicioUsuario.jsp");
-                    }%>
+                    }
+                    ArchAssistantBean archB = new ArchAssistantBean();
+                %>
                 <h2 class="bienvenida"><jsp:useBean id="proyectoActual" scope="session" class="servicios.Proyecto" />
                     <jsp:getProperty name="proyectoActual" property="proNombre" /></h2>
                 <table width="100%" border="0" align="center">
@@ -58,6 +67,8 @@
                     <div class="col-lg-3 col-md-2"></div>                        
                 </div>
             </form>
+                <%@include file='rationale.jsp'%>
+                <!--
             <div class="col-lg-12 col-md-8 col-sm-12">
                 <div class="col-lg-1 " ></div>
                 <div class="col-lg-5 col-md-6 col-sm-12">
@@ -68,6 +79,7 @@
                                     <td>
                                         <h2 class="page-header">Rationale:</h2>
                                         <textarea rows="9" cols="120" name="ratadd8" class="form-control"><%
+                                            /*
                                             ArchAssistantBean archB = new ArchAssistantBean();
                                             Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
                                             if (descMod == null) {
@@ -77,7 +89,7 @@
                                             Rationaleadd rata = archB.RationaleADD(proyectoActual.getProID(), "add8_" + descMod.getModId());
                                             if (rata != null) {
                                                 out.print(rata.getRatAddDescripcion());
-                                            }
+                                            }*/
                                             %></textarea>
                                     </td>
                                 </tr>
@@ -103,6 +115,7 @@
                             <table width="400" border="0" class="tblCentfull">
                                 <tbody>
                                     <%
+                                        /*
                                         GuardarArchivo arch = new GuardarArchivo();
                                         List<File> archivos = null;
                                         if (rata != null) {
@@ -116,14 +129,16 @@
                                                 out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
                                                 out.print("</tr>");
                                             }
-                                        }
+                                        }*/
                                     %>
                                 </tbody>
                             </table>
                         </form>
                     </div>
                 </div>
+                -->
                 <div class="col-lg-1"></div>
+                
             </div>
 
             <form name="add-8" action="ADD8">    

@@ -80,8 +80,9 @@
                     <div class="col-lg-3 col-md-2"></div>
                 </div>
                 <div class="col-lg-1"></div>
-                <div class="col-lg-10 col-md-12 col-sm-12">                   
+                <div id="divModulos" class="col-lg-10 col-md-12 col-sm-12">                   
                     <h2 class="page-header"> Módulos del sistema:</h2>
+                    <input id="txtModDesc" hidden="true" readonly="true" text="nada"/>
                     <!--  -->
                     <table width="100%" border="3" class="tblCentfull">
                         <tbody>
@@ -105,8 +106,11 @@
                                             arbol.put(padre, hijos);
                                         }*/
                                         session.setAttribute("pasoActual", "add2");
+
                                         ArchAssistantBean archB = new ArchAssistantBean();
+                                        //Modulo descMod = archB.buscarModDescomposicion(proyectoActual);
                                         List<Modulo> listaMod = archB.ListarModulos(proyectoActual);
+                                        //session.setAttribute("padreActual", descMod);
                                         /*if (listaMod == null || listaMod.size() == 0) {
                                             Modulo sys = new Modulo();
                                             sys.setModNombre("Modulo " + proyectoActual.getProNombre());
@@ -126,6 +130,18 @@
                                             out.println("<tr>");
                                             out.println("<td>");
                                             String estado = mod.getModFinal();
+                                            Modulo mD = (Modulo) request.getSession().getAttribute("padreActual");
+                                            if (mD != null) {
+                                                if (mod.getModId() == mD.getModId() && !estado.equals("Procesado")) {
+                                                    out.println("<input checked type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
+                                                } else {
+                                                if (estado.equals("Procesado")) {
+                                                    out.println("<input disabled  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                } else {
+                                                    out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
+                                                }
+                                                }
+                                            }else{
                                             if (estado.equals("Descomposicion")) {
                                                 out.println("<input checked type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
                                             } else {
@@ -135,6 +151,8 @@
                                                     out.println("<input  type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "'/>");
                                                 }
                                             }
+                                            }
+
                                             //out.println(mod.getModId());
                                             out.println("</td>");
                                             out.println("<td>");
@@ -218,55 +236,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <%@include file='rationale.jsp'%>
-                    <div class="col-lg-1"></div>
-                    <input type="hidden" name="modPadre" value=""/>
-                    <div>
-                        <form name="popupRatio" action="popupRationale" method="post"  enctype="multipart/form-data">
-                            <h4>Archivos:</h4>
-                            <table width="400" border="0" class="tblCent">
-                                <tr><td><input type="file" name="archivo" id="myfile" class="filestyle"/></td>
-                                    <td><input type="submit" value="subir archivo" name="btnSubirArchivo" class="btn btn-primary"/></td></tr>
-                            </table>
-                        </form>
-                    </div>
-                    <div class="divScroll" id="divArchivos">
-                        <form name="add-1" action="ADD1">
-                            <table width="400" border="0" class="tblCentfull">
-                                <tbody>
-                                    <%
-                                        Proyecto proyecto = (Proyecto) session.getAttribute("proyectoActual");
-                                        String paso = (String) session.getAttribute("pasoActual");
-
-                                        Rationaleadd rata = archB.RationaleADD(proyecto.getProID(), paso);
-
-                                        GuardarArchivo arch = new GuardarArchivo();
-                                        List<File> archivos = null;
-                                        if (rata != null) {
-                                            archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                        }
-                                        if (archivos != null) {
-                                            for (File archivo : archivos) {
-                                                out.print("<tr>");
-                                                out.print("<td>" + archivo.getName() + "</td>");
-                                                out.print("<td class='alIzq'>" + "<button type=\"submit\" value=\"Eliminar\" name=\"btnEliminar"
-                                                        + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                        + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                                out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnBajar"
-                                                        + archivo.getName() + "\" class=\"btn btn-primary\"/>  "
-                                                        + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
-                                                        + "</span></button>" + "</td>");
-                                                out.print("</tr>");
-                                            }
-                                        }
-                                    %>        
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
-                    <div class="col-lg-1"></div> 
-                </div>
+                <%@include file='rationale.jsp'%>
             </form>
             <form name="add-2" action="ADD2">    
                 <table border="0" class="tblCent">

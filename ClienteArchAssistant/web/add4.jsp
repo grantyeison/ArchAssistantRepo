@@ -25,19 +25,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ArchAssistant - ADD</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css" /><!---->
         <link rel="stylesheet" href="./css/estilos.css" /><!---->
+        <link rel="stylesheet" href="./css/editor.css" />
+        <link rel="stylesheet" href="./css/font-awesome.min.css" />
+
+        <!--
+        <script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/jquery-3.2.1.js"></script>
-        <!--<script src="./js/jquery-3.2.1.min.js" ></script>-->
         <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/editor.js"></script>
         <script src="./js/funciones.js"></script>
-        <title>ArchAssistant - ADD</title>
     </head>
     <body>
         <form name="add-4" action="ADD4">
             <div class="col-lg-12 col-md-12 col-md-12">
                 <h2 class="subtitle">ADD</h2>
-                <%Usuario u = (Usuario) session.getAttribute("validUsuario");
+                <%
+                    session.setAttribute("pasoActual", "add4");
+                    Usuario u = (Usuario) session.getAttribute("validUsuario");
                     if (u == null) {
                         response.sendRedirect("InicioUsuario.jsp");
                     }%>
@@ -85,18 +92,18 @@
                             <label value="TacticasSeleccionadas" id="lblPatSel"></label>
                             <%ArchAssistantBean archB = new ArchAssistantBean();
                                 List<Escenario> listaEsc = archB.ListarCandidatosDriver(proyectoActual);
-                                List<Tactica> listaTacSel = new LinkedList<Tactica>();
+                                //List<Tactica> listaTacSel = new LinkedList<Tactica>();
                                 List<Tactica> listaTac = archB.ListarTacticas();
                                 Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
                                 if (descMod == null) {
                                     descMod = archB.buscarModDescomposicion(proyectoActual);
                                     request.getSession().setAttribute("padreActual", descMod);
                                 }
-                                Rationaleadd rata = archB.RationaleADD(proyectoActual.getProID(), "add4_" + descMod.getModId());
+                                Rationaleadd rata1 = archB.RationaleADD(proyectoActual.getProID(), "add4_" + descMod.getModId());
 
                                 String[] rationale = null;
-                                if (rata != null) {
-                                    rationale = rata.getRatAddDescripcion().split("/@/");
+                                if (rata1 != null) {
+                                    rationale = rata1.getRatAddDescripcion().split("/@/");
                                 }
                                 for (Escenario esc : listaEsc) {
                                     Atributocalidad atr = esc.getTblAtributoCalidadacID();
@@ -202,7 +209,8 @@
                     </div>                        
                     <div class="col-lg-1"></div>
                 </div>
-
+                <%@include file='rationale.jsp'%>
+<!--
                 <div class="col-lg-12 col-md-12 col-sm-12"> 
                     <div class="col-lg-1"></div>
                     <div class="col-lg-5 col-md-6 col-sm-12">
@@ -210,13 +218,13 @@
                             <h2 class="page-header">Rationale:</h2>
                             <textarea rows="9" cols="120" name="ratadd4" id="txtRationale" class="form-control parrafo"><%
                                 session.setAttribute("paso", "add4");
-                                if (rata != null && rationale != null) {
+                                /*if (rata != null && rationale != null) {
                                     if (rationale.length > 1) {
                                         out.print(rationale[1]);
                                     } else {
                                         out.print(rationale[0]);
                                     }
-                                }
+                                }*/
                                 %></textarea>
                             <br/>
                             <input type="submit" value="Guardar" name="btnAdd4Guardar" class="btn btn-primary"/>
@@ -237,6 +245,7 @@
                                 <table width="400" border="0" class="tblCentfull">
                                     <tbody>
                                         <%
+                                            /*
                                             GuardarArchivo arch = new GuardarArchivo();
                                             List<File> archivos = null;
                                             if (rata != null) {
@@ -250,7 +259,8 @@
                                                     out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
                                                     out.print("</tr>");
                                                 }
-                                            }
+                                            }*/
+                                            
                                         %>
                                     </tbody>
                                 </table>
@@ -258,6 +268,7 @@
                         </div>
                     </div>
                 </div>
+                                    -->
             </div>
         </form>
         <form name="add-4" action="ADD4">    

@@ -268,50 +268,7 @@
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <%
-                        Rationaleadd rata = p.RationaleADD(proyectoActual.getProID(), "add3_" + m.getModId());
-                        if (rata != null) {
-                            out.print(rata.getRatAddDescripcion());
-                        }
-                    %>
-                    <%@include file='rationale.jsp'%>
-                    <div class="col-lg-5 col-md-6 col-sm-12">
-                        <div>
-                            <h2 class="page-header">Archivos:</h2>
-                            <form name="add-3" action="ADD3" method="post" enctype="multipart/form-data">
-                                <table width="400" border="0" class="tblCent">
-                                    <tr><td><input type="file" name="archivo" id="myfile"/></td>
-                                        <td><input type="submit" value="subir archivo" name="btnAddsubir" class="btn btn-primary"/></td></tr>
-                                </table>
-                            </form>
-                        </div>
-                        <div class="divScroll">
-                            <table width="400" border="0" class="tblCentfull">
-                                <tbody>
-                                    <%
-                                        GuardarArchivo arch = new GuardarArchivo();
-                                        List<File> archivos = null;
-                                        if (rata != null) {
-                                            archivos = arch.listarArchivos(rata.getRatAddArchivo());
-                                        }
-                                        if (archivos != null) {
-                                            for (File archivo : archivos) {
-                                                out.print("<tr>");
-                                                out.print("<td>" + archivo.getName() + "</td>");
-                                                out.print("<td class='alDer'>" + "<button type=\"submit\"  name=\"btnAddEliminar" + archivo.getName() + "\" class=\"btn btn-primary \">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                                                out.print("<button type=\"submit\" value=\"Descargar\" name=\"btnAddBajar" + archivo.getName() + "\" class=\"btn btn-primary\"/>  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button>" + "</td>");
-                                                out.print("</tr>");
-                                            }
-                                        }
-                                    %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>                               
-
-            </div>
+                <%@include file='rationale.jsp'%>
         </form>
         <form name="add-3" action="ADD3">    
             <table border="0" class="tblCent">

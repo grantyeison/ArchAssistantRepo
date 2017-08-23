@@ -54,7 +54,7 @@ body{
 
 .divScroll {
     overflow-y: scroll;
-    height: 200px;
+    height: 436px;
 }
 .divScrollG {
     overflow-y: scroll;
@@ -164,4 +164,15 @@ body{
     margin: 0px;
     height: 169px;
     width: 352px;
+}
+
+#divMensaje{
+    position: fixed;
+    top:30px;
+    left:0;
+    width: 100%;
+}
+
+#inner-message {
+    margin: 0 auto;
 }
