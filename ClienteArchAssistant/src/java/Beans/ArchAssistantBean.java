@@ -473,6 +473,11 @@ public class ArchAssistantBean {
         return buscarModuloDescomposicion(id);
     }
     
+    public List<Modulo> ListarModDeProyecto(Proyecto id)
+    {
+        return listarModulosDeProyecto(id);
+    }
+    
     public void crearMod(Modulo nMod)
     {
         crearModulo(nMod);
@@ -749,6 +754,12 @@ public class ArchAssistantBean {
         servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
         servicios.ArcAssistantService port = service.getArcAssistantServicePort();
         return port.listarModulos();
+    }
+
+    private static java.util.List<servicios.Modulo> listarModulosDeProyecto(servicios.Proyecto parameter) {
+        servicios.ArcAssistantService_Service service = new servicios.ArcAssistantService_Service();
+        servicios.ArcAssistantService port = service.getArcAssistantServicePort();
+        return port.listarModulosDeProyecto(parameter);
     }
     
     

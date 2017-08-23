@@ -6,6 +6,7 @@
 package Servlets;
 
 import Beans.ArchAssistantBean;
+import com.sun.xml.ws.runtime.dev.Session;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -96,7 +97,11 @@ public class ADD2 extends HttpServlet {
         }
 
         if (continuar != null) {
-            if (request.getParameter("ratadd2") != "") {
+            String rs = request.getParameter("ratadd2");
+            Modulo mod = (Modulo) request.getSession().getAttribute("padreActual");
+            if (mod!=null && request.getParameter("ratadd2") != "") {
+                mod.setModFinal("Descomposicion");
+                archB.modificarMod(mod);
                 response.sendRedirect("add3.jsp");
             } else {
                 try (PrintWriter out = response.getWriter()) {
@@ -108,28 +113,7 @@ public class ADD2 extends HttpServlet {
         if (regresar != null) {
             response.sendRedirect("add1.jsp");
         }
-        Modulo descMod = (Modulo) request.getSession().getAttribute("padreActual");
-        if (descMod == null) {
-            descMod = archB.buscarModDescomposicion(proy);
-            request.getSession().setAttribute("padreActual", descMod);
-        }
-        Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add2_" + descMod.getModId());
-        GuardarArchivo arch = new GuardarArchivo();
-        if (rata != null) {
-            List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
 
-            for (File archivo : archivos) {
-                if (request.getParameter("btnAddBajar" + archivo.getName()) != null) {
-                    arch.descargar(archivo.getAbsolutePath(), archivo.getName());
-                    response.sendRedirect("add2.jsp");
-                }
-
-                if (request.getParameter("btnAddEliminar" + archivo.getName()) != null) {
-                    arch.eliminarArchivo(archivo.getAbsolutePath());
-                    response.sendRedirect("add2.jsp");
-                }
-            }
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -159,31 +143,7 @@ public class ADD2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        GuardarArchivo arch = new GuardarArchivo();
-        Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
-        String DirectorioArchivo = "";
-        ArchAssistantBean archB = new ArchAssistantBean();
-        Rationaleadd rata = archB.RationaleADD(pro.getProID(), "add2");
-        try {
-            DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), "ADD2");
-        } catch (Exception ex) {
-            Logger.getLogger(ADD2.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        if (rata == null) {
-            rata = new Rationaleadd();
-            rata.setTblProyectoProID(pro);
-            rata.setRatAddPaso("add2");
-        }
-
-        if (rata.getRatAddDescripcion() == null) {
-            rata.setRatAddDescripcion("debes registrar el rationale en este espacio!!");
-        }
-
-        rata.setRatAddArchivo(DirectorioArchivo);
-        guardarRationaleAdd(rata);
-
-        response.sendRedirect("add2.jsp");
     }
 
     /**

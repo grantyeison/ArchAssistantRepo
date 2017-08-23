@@ -102,7 +102,7 @@ public class ADD1 extends HttpServlet {
                 }
             }
         }
-
+        /*
         GuardarArchivo arch = new GuardarArchivo();
         Rationaleadd rata = archB.RationaleADD(proy.getProID(), "add1");
         if (rata != null) {
@@ -121,6 +121,7 @@ public class ADD1 extends HttpServlet {
             }
         }
         //response.sendRedirect("add1.jsp");
+        */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

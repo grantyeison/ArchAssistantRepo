@@ -7,9 +7,13 @@ package Servlets;
 
 import Beans.ArchAssistantBean;
 import com.sun.faces.renderkit.html_basic.HtmlResponseWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceRef;
 import servicios.ArcAssistantService_Service;
+import servicios.Modulo;
 import servicios.Proyecto;
 import servicios.Rationaleadd;
 
@@ -77,51 +82,133 @@ public class Rationale extends HttpServlet {
         HttpSession ss = request.getSession();
         Proyecto proy = (Proyecto) ss.getAttribute("proyectoActual");
         String paso = (String) ss.getAttribute("pasoActual");
+        Modulo descMod = null;
+        Rationaleadd rata = new Rationaleadd();
+        String num = paso.substring(3, 4);
+        if (Integer.parseInt(num) >= 2) {
+            descMod = (Modulo) request.getSession().getAttribute("padreActual");
 
-        Rationaleadd rata = archB.RationaleADD(proy.getProID(), paso);
-        if (mensaje.equals("guardar")) {
-            //String nomArch = request.getParameter("nomarchivo");
+            if (descMod == null) {
+                descMod = archB.buscarModDescomposicion(proy);
+                request.getSession().setAttribute("padreActual", descMod);
+            }
+
+            rata = archB.RationaleADD(proy.getProID(), paso + "_" + descMod.getModId());
+        } else {
+            rata = archB.RationaleADD(proy.getProID(), paso);
+        }
+        if (mensaje != null) {
+            if (mensaje.equals("guardar")) {
+                //String nomArch = request.getParameter("nomarchivo");
+                if (rata == null) {
+                    rata = new Rationaleadd();
+                }
+                response.setContentType("text/html;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    rata.setRatAddDescripcion(request.getParameter(("rata")));
+                    rata.setTblProyectoProID(proy);
+                    if (descMod == null) {
+                        rata.setRatAddPaso(paso);
+                    } else {
+                        rata.setRatAddPaso(paso + "_" + descMod.getModId());
+                    }
+                    guardarRationaleAdd(rata);
+                    proy.setProAvance(paso);
+                    modificarProyecto(proy);
+                    out.println("<div id='inner-message' class='alert alert-success alert-dismissable fade in'>"
+                            + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
+                            + "<strong>Guardado con exito!</strong> "
+                            + "This alert box could indicate a successful or positive action.</div>");
+                }
+            } else {
+                if (mensaje.equals("obtener")) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    try (PrintWriter out = response.getWriter()) {
+                        String Descp = rata.getRatAddDescripcion();
+                        if (Descp == null) {
+                            out.println("");
+                        } else {
+                            out.println(Descp);
+                        }
+                    }
+                }                
+            }
+            if (mensaje.equals("descargar")) {
+                GuardarArchivo arch = new GuardarArchivo();
+                if (rata != null) {
+                    List<File> archivos = arch.listarArchivos(rata.getRatAddArchivo());
+
+                    for (File archivo : archivos) {
+                        if (request.getParameter("btnAddBajar" + archivo.getName()) != null) {
+                            arch.descargar(archivo.getAbsolutePath(), archivo.getName());
+                            //response.sendRedirect("add2.jsp");
+                        }
+
+                        if (request.getParameter("btnAddEliminar" + archivo.getName()) != null) {
+                            arch.eliminarArchivo(archivo.getAbsolutePath());
+                            //response.sendRedirect("add2.jsp");
+                        }
+                    }
+                }
+            }
+        } else {
+            GuardarArchivo arch = new GuardarArchivo();
+            Proyecto pro = (Proyecto) request.getSession().getAttribute("proyectoActual");
+            String DirectorioArchivo = "";
+
+            try {
+                if (descMod != null) {
+                    DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), paso + "_" + descMod.getModId());
+                } else {
+                    DirectorioArchivo = arch.guardarArchivo(request, pro.getProID().toString(), paso);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ADD2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             if (rata == null) {
                 rata = new Rationaleadd();
             }
 
-            response.setContentType("text/html;charset=UTF-8");
-            try (PrintWriter out = response.getWriter()) {
-                rata.setRatAddDescripcion(request.getParameter(("rata")));
-                rata.setTblProyectoProID(proy);
+            rata.setTblProyectoProID(pro);
+            if (descMod != null) {
+                rata.setRatAddPaso(paso + "_" + descMod.getModId());
+            } else {
                 rata.setRatAddPaso(paso);
-                guardarRationaleAdd(rata);
-                proy.setProAvance(paso);
-                modificarProyecto(proy);
-                out.println("<div class='alert alert-success alert-dismissable fade in'>"
-                        + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
-                        + "<strong>Guardado con exito!</strong> "
-                        + "This alert box could indicate a successful or positive action.</div>");
             }
-        } else {
-            if (mensaje.equals("obtener")) {
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    String Descp = rata.getRatAddDescripcion();
-                    if (Descp == null) {
-                        out.println("");
-                    }else{
-                        out.println(Descp);
-                    }
+
+            if (rata.getRatAddDescripcion() == null) {
+                rata.setRatAddDescripcion("debes registrar el rationale en este espacio!!");
+            }
+            rata.setRatAddArchivo(DirectorioArchivo);
+            guardarRationaleAdd(rata);
+            try (PrintWriter out = response.getWriter()) {
+                /*out.println("<div id='inner-message' class='alert alert-success alert-dismissable fade in'>"
+                        + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
+                        + "<strong>Archivo subido con exito!</strong> </div>");
+                */
+            arch = new GuardarArchivo();
+            List<File> archivos = null;
+            if (rata != null) {
+                archivos = arch.listarArchivos(rata.getRatAddArchivo());
+            }
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    out.print("<tr>");
+                    out.print("<td>" + archivo.getName() + "</td>");
+                    out.print("<td class='alIzq'>" + "<button type=\"button\" value=\"Eliminar\" name=\"btnEliminar"
+                            + archivo.getName() + "\" class=\"btn btn-primary download\">  "
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                    out.print("<button type=\"button\" value=\"Descargar\" name=\"btnBajar"
+                            + archivo.getName() + "\" class=\"btn btn-primary download\">  "
+                            + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
+                            + "</span></button>" + "</td>");
+                    out.print("</tr>");
                 }
             }
+                
+            }
         }
-
-        /* TODO output your page here. You may use following sample code. */
- /*out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Rationale</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Rationale at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");*/
     }
 
     /**

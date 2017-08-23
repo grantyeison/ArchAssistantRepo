@@ -208,16 +208,19 @@ public class ADD4 extends HttpServlet {
                     rata = new Rationaleadd();
                 }
                 String[] patSeleccionados = null;
-                String[] ratio = rata.getRatAddDescripcion().split("/@/");
-                if (ratio.length > 1) {
-                    if (ratio.length == 3) {
-                        patSeleccionados = ratio[2].split(",");
-                        rata.setRatAddDescripcion(listado + "/@/" + ratio[1] + "/@/" + ratio[2]);
+                String descp = rata.getRatAddDescripcion();
+                if (descp != null) {
+                    String[] ratio = descp.split("/@/");
+                    if (ratio.length > 1) {
+                        if (ratio.length == 3) {
+                            patSeleccionados = ratio[2].split(",");
+                            rata.setRatAddDescripcion(listado + "/@/" + ratio[1] + "/@/" + ratio[2]);
+                        } else {
+                            rata.setRatAddDescripcion(listado + "/@/" + ratio[1]);
+                        }
                     } else {
-                        rata.setRatAddDescripcion(listado + "/@/" + ratio[1]);
+                        rata.setRatAddDescripcion(listado + "/@/" + ratio[0]);
                     }
-                } else {
-                    rata.setRatAddDescripcion(listado + "/@/" + ratio[0]);
                 }
 
                 rata.setTblProyectoProID(proy);
@@ -311,7 +314,7 @@ public class ADD4 extends HttpServlet {
             nmod.setModFinal("SubModulo");
             nmod.setTblModuloModId(padreActual);
             nmod.setTblProyectoProID(proy);
-            archB.crearMod(nmod);            
+            archB.crearMod(nmod);
             out.println("<table width='100%' border='1' class='tblCentfull'>");
             out.println("<tbody>");
             out.println("<tr>");
