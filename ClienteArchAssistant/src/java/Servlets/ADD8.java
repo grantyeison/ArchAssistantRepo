@@ -81,6 +81,7 @@ public class ADD8 extends HttpServlet {
                 }
                 descMod.setModFinal("Procesado");
                 modificarModulo(descMod);
+                request.setAttribute("padreActual", "");
                 response.sendRedirect("add2.jsp");
             } else {
                 try (PrintWriter out = response.getWriter()) {

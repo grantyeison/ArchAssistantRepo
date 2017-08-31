@@ -83,7 +83,7 @@ public class Rationale extends HttpServlet {
         Proyecto proy = (Proyecto) ss.getAttribute("proyectoActual");
         String paso = (String) ss.getAttribute("pasoActual");
         Modulo descMod = null;
-        Rationaleadd rata = new Rationaleadd();
+        Rationaleadd rata = null;
         String num = paso.substring(3, 4);
         if (Integer.parseInt(num) >= 2) {
             descMod = (Modulo) request.getSession().getAttribute("padreActual");
@@ -130,8 +130,28 @@ public class Rationale extends HttpServlet {
                         } else {
                             out.println(Descp);
                         }
+                        out.println("-----");
+                        GuardarArchivo arch = new GuardarArchivo();
+                        List<File> archivos = null;
+                        if (rata != null) {
+                            archivos = arch.listarArchivos(rata.getRatAddArchivo());
+                        }
+                        if (archivos != null) {
+                            for (File archivo : archivos) {
+                                out.print("<tr>");
+                                out.print("<td>" + archivo.getName() + "</td>");
+                                out.print("<td class='alIzq'> <button type='button' value='Eliminar' name='btnEliminar"
+                                        + archivo.getName() + "' class='btn btn-primary download'>  "
+                                        + "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>");
+                                out.print("<button type='button' value='Descargar' name='btnBajar"
+                                        + archivo.getName() + "' class='btn btn-primary download'> "
+                                        + "<span class='glyphicon glyphicon-download-alt' aria-hidden='true'>"
+                                        + "</span></button>" + "</td>");
+                                out.print("</tr>");
+                            }
+                        }
                     }
-                }                
+                }
             }
             if (mensaje.equals("descargar")) {
                 GuardarArchivo arch = new GuardarArchivo();
@@ -149,6 +169,17 @@ public class Rationale extends HttpServlet {
                             //response.sendRedirect("add2.jsp");
                         }
                     }
+                }
+            }
+            if (mensaje.equals("archivoGuardar")) {
+
+            }
+            if (mensaje.equals("archivoListar")) {
+                try (PrintWriter out = response.getWriter()) {
+                    /*out.println("<div id='inner-message' class='alert alert-success alert-dismissable fade in'>"
+                        + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
+                        + "<strong>Archivo subido con exito!</strong> </div>");
+                     */
                 }
             }
         } else {
@@ -182,31 +213,27 @@ public class Rationale extends HttpServlet {
             }
             rata.setRatAddArchivo(DirectorioArchivo);
             guardarRationaleAdd(rata);
+
             try (PrintWriter out = response.getWriter()) {
-                /*out.println("<div id='inner-message' class='alert alert-success alert-dismissable fade in'>"
-                        + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
-                        + "<strong>Archivo subido con exito!</strong> </div>");
-                */
-            arch = new GuardarArchivo();
-            List<File> archivos = null;
-            if (rata != null) {
-                archivos = arch.listarArchivos(rata.getRatAddArchivo());
-            }
-            if (archivos != null) {
-                for (File archivo : archivos) {
-                    out.print("<tr>");
-                    out.print("<td>" + archivo.getName() + "</td>");
-                    out.print("<td class='alIzq'>" + "<button type=\"button\" value=\"Eliminar\" name=\"btnEliminar"
-                            + archivo.getName() + "\" class=\"btn btn-primary download\">  "
-                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
-                    out.print("<button type=\"button\" value=\"Descargar\" name=\"btnBajar"
-                            + archivo.getName() + "\" class=\"btn btn-primary download\">  "
-                            + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
-                            + "</span></button>" + "</td>");
-                    out.print("</tr>");
+                arch = new GuardarArchivo();
+                List<File> archivos = null;
+                if (rata != null) {
+                    archivos = arch.listarArchivos(rata.getRatAddArchivo());
                 }
-            }
-                
+                if (archivos != null) {
+                    for (File archivo : archivos) {
+                        out.print("<tr>");
+                        out.print("<td>" + archivo.getName() + "</td>");
+                        out.print("<td class='alIzq'> <button type='button' value='Eliminar' name='btnEliminar"
+                                + archivo.getName() + "' class='btn btn-primary download'>  "
+                                + "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>");
+                        out.print("<button type='button' value='Descargar' name='btnBajar"
+                                + archivo.getName() + "' class='btn btn-primary download'> "
+                                + "<span class='glyphicon glyphicon-download-alt' aria-hidden='true'>"
+                                + "</span></button>" + "</td>");
+                        out.print("</tr>");
+                    }
+                }
             }
         }
     }

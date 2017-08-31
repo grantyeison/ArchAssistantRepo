@@ -345,6 +345,48 @@ public class ADD4 extends HttpServlet {
             }
             out.println("</tbody>");
             out.println("</table>");
+        } else {
+            if (msj.equals("listar")) {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                Proyecto proy = (Proyecto) request.getSession().getAttribute("proyectoActual");
+                
+                Modulo padreActual = (Modulo) request.getSession().getAttribute("padreActual");
+                if (padreActual == null) {
+                    padreActual = archB.buscarModDescomposicion(proy);
+                    request.getSession().setAttribute("padreActual", padreActual);
+                }                
+                out.println("<table width='100%' border='1' class='tblCentfull'>");
+                out.println("<tbody>");
+                out.println("<tr>");
+                out.println("<th scope='col'>Nombre</th>");
+                out.println("<th scope='col'>Descripción</th>");
+                out.println("</tr>");
+                List<Modulo> listaMod = archB.ListarModulos(proy);
+                if (padreActual == null) {
+                    padreActual = archB.buscarModDescomposicion(proy);
+                }
+                for (Modulo m : listaMod) {
+                    Modulo padreM = m.getTblModuloModId();
+                    if (padreM != null) {
+                        if (padreM.getModId() == padreActual.getModId() && !m.getModFinal().equals("terminado")) {
+                            out.println("<tr>");
+                            out.println("<td>");
+                            out.println(m.getModNombre());
+                            out.println("</td>");
+                            out.println("<td>");
+                            out.println(m.getModDescripcion());
+                            out.println("</td>");
+                            //out.println("<td>");
+                            //out.println(mod.getModFinal());
+                            //out.println("</td>");                                        
+                            out.println("</tr>");
+                        }
+                    }
+                }
+                out.println("</tbody>");
+                out.println("</table>");
+            }
         }
 
         // Obtengo los datos de la peticion

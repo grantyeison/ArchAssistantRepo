@@ -6,8 +6,10 @@
 package Servlets;
 
 import Beans.ArchAssistantBean;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +40,7 @@ public class Modulos extends HttpServlet {
             throws ServletException, IOException {
         //response.setContentType("text/html;charset=UTF-8");
         //try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        /* TODO output your page here. You may use following sample code. */
  /*out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -87,7 +89,7 @@ public class Modulos extends HttpServlet {
         Modulo descMod = null;
         Rationaleadd rata = new Rationaleadd();
         String num = paso.substring(3, 4);
-        if (Integer.parseInt(num) >= 2) {            
+        if (Integer.parseInt(num) >= 2) {
             descMod = archB.buscarMod(modId);
             request.getSession().setAttribute("padreActual", descMod);
             rata = archB.RationaleADD(proy.getProID(), paso + "_" + descMod.getModId());
@@ -96,15 +98,36 @@ public class Modulos extends HttpServlet {
         }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            if(rata!=null){
+            if (rata != null) {
                 String Descp = rata.getRatAddDescripcion();
                 if (Descp == null) {
                     out.println("");
                 } else {
                     out.println(Descp);
                 }
-            }else{
+            } else {
                 out.println("");
+            }
+
+            out.println("-----");
+            GuardarArchivo arch = new GuardarArchivo();
+            List<File> archivos = null;
+            if (rata != null) {
+                archivos = arch.listarArchivos(rata.getRatAddArchivo());
+            }
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    out.print("<tr>");
+                    out.print("<td>" + archivo.getName() + "</td>");
+                    out.print("<td class='alIzq'>" + "<button type=\"button\" value=\"Eliminar\" name=\"btnEliminar"
+                            + archivo.getName() + "\" class=\"btn btn-primary download\">  "
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>        ");
+                    out.print("<button type=\"button\" value=\"Descargar\" name=\"btnBajar"
+                            + archivo.getName() + "\" class=\"btn btn-primary download\">  "
+                            + "<span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\">"
+                            + "</span></button>" + "</td>");
+                    out.print("</tr>");
+                }
             }
         }
     }
