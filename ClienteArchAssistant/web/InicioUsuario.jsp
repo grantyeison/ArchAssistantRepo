@@ -84,9 +84,8 @@
                                 out.println("<td class=\"ancho\"><button type=\"submit\" value=\"Seleccionar\" name=\"btnSeleccionarProyecto"+pro.getProID()+"\" class=\"btn btn-primary\" >  <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span></button>");
                                 out.println("<button type=\"submit\" value=\"Eliminar\" name=\"btnEliminarProyecto"+pro.getProID()+"\" class=\"btn btn-primary\">  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>");
                                 
-                                if ((pro.getProAvance().equals("qaw8"))||(pro.getProAvance().substring(0, 2).equals("add")))
-                                {
-                                    out.println("</td><td><button type=\"submit\" value=\"Reporte\" name=\"btnGenerarReporte" + pro.getProID() + "\" class =\"btn btn-primary\">  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button></td></tr>");
+                                if (pro.getProAvance().equals("qaw8")) {
+                                    out.println("<button type=\"submit\" value=\"Reporte\" name=\"btnGenerarReporte" + pro.getProID() + "\" class =\"btn btn-primary\">  <span class=\"glyphicon glyphicon-download-alt\" aria-hidden=\"true\"></span></button></td></tr>");
                                 }
                                 else
                                 {

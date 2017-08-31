@@ -169,7 +169,7 @@
                             </table>
                         </from>
                     </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12" id="tblResponsabilidades"> 
+                    <div class="col-lg-5 col-md-6 col-sm-12" id="tblInterfaces"> 
                         <div id="tblAux">
                             <h2 class="page-header">Interfaces</h2>
                             <table width="100%" border="3">

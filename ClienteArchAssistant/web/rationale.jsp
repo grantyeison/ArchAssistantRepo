@@ -60,13 +60,13 @@
                             for (File archivo : archivos) {
                                 out.print("<tr>");
                                 out.print("<td>" + archivo.getName() + "</td>");
-                                out.print("<td class='alIzq'>" + "<button type='button' value='Eliminar' name='btnEliminar"
-                                        + archivo.getName() + " class='btn btn-primary'>  "
-                                        + "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>        ");
+                                out.print("<td class='alIzq'> <button type='button' value='Eliminar' name='btnEliminar"
+                                        + archivo.getName() + "' class='btn btn-primary'>  "
+                                        + "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>");
                                 out.print("<button type='button' value='Descargar' name='btnBajar"
-                                        + archivo.getName() + " class='btn btn-primary download'>  "
+                                        + archivo.getName() + "' class='btn btn-primary download'>  "
                                         + "<span class='glyphicon glyphicon-download-alt' aria-hidden='true'>"
-                                        + "</span></button>" + "</td>");
+                                        + "</span></button></td>");
                                 out.print("</tr>");
                             }
                         }
@@ -77,7 +77,7 @@
     </div>
 </div>
 <div id="divMensaje">
-    <div style="padding: 5px;">
+    <div style="padding: 0px;">
 
     </div>
 </div>
