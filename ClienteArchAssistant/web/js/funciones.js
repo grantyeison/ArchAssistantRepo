@@ -95,8 +95,7 @@ function SeleccionarPatrones() {
 }
 
 $(document).ready(function () {
-
-
+    //funcion que llamamos cuando seleccionamos una tactica
 
     $('#submit').click(function (event) {
         var porNombre = document.getElementsByName("tacticaSel");
@@ -156,6 +155,8 @@ $(document).ready(function () {
             $('this').show();
         }
     });
+    //Funcion que se ejecuta cuando se va a crear un modulo se hace cuando se esta en el paso add4
+
     $('#btnCrearModulo').click(function (event) {
         var nom = $("#txtNomMod").val();
         var desc = $("#txtDesMod").val();
@@ -169,9 +170,19 @@ $(document).ready(function () {
                 nombreModulo: nom,
                 descripcionModulo: desc
             }, function (responseText) {
+                $('#tblModulos').empty();
                 $('#tblModulos').html(responseText);
             });
         }
+    });
+    $.post('ADD4', {
+        //nombre: nombreVar,
+        //apellido: apellidoVar,
+        //edad: edadVar
+        mensaje: "listar"
+    }, function (responseText) {
+        $('#tblModulos').empty();
+        $('#tblModulos').html(responseText);
     });
 
     $('#btnCrearResp').click(function (event) {
@@ -198,6 +209,14 @@ $(document).ready(function () {
             });
         }
     });
+    $.post('ADD5', {
+        //nombre: nombreVar,
+        //apellido: apellidoVar,
+        //edad: edadVar
+        mensaje: "listar"
+    }, function (responseText) {
+        $('#tblResponsabilidades').html(responseText);
+    });
 
     $('#btnCrearInter').click(function (event) {
         var nom = $("#txtNom").val();
@@ -223,9 +242,18 @@ $(document).ready(function () {
                 $("#txtTipo").val(" Sintaxis de operaciones");
                 $("#selModulo").val(null);
                 $("#tblAux").hide();
-                $('#tblResponsabilidades').html(responseText);
+                $('#tblInterfaces').html(responseText);
             });
         }
+    });
+
+    $.post('ADD6', {
+        //nombre: nombreVar,
+        //apellido: apellidoVar,
+        //edad: edadVar
+        mensaje: "listar"
+    }, function (responseText) {
+        $('#tblInterfaces').html(responseText);
     });
 
     $("#txtEditor").Editor();
@@ -260,12 +288,21 @@ $(document).ready(function () {
         mensaje: "obtener"
 
     }, function (responseText) {
-        $("#txtEditor").Editor('setText', responseText);
+        alert("Obtener mediante la funcion post llamado ajax post " + responseText);
+        var arreglo = responseText.split("-----");
+        if (arreglo.length == 2) {
+            alert("Igual a 2");
+            $("#txtEditor").Editor('setText', arreglo[0]);
+            $("#divListaArchivos").empty();
+            $("#divListaArchivos").html(arreglo[1]);
+        } else {
+            $("#txtEditor").Editor('setText', arreglo[0]);
+        }
+        //$("#txtEditor").Editor('setText', responseText);
     });
 
     $("#multiform").submit(function (e)
     {
-
         var formObj = $(this);
         var formURL = formObj.attr("action");
         var formData = new FormData(this);
@@ -285,6 +322,8 @@ $(document).ready(function () {
                         + "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
                         + "<strong>Archivo subido con exito!</strong> </div>");
                 $("#divMensaje").hide(6000);
+                $("#divListaArchivos").empty();
+                alert(data);
                 $("#divListaArchivos").html(data);
             },
             error: function (jqXHR, textStatus, errorThrown)
@@ -317,18 +356,16 @@ function listarModulos(id) {
         mensaje: "modulos",
         id: id
     }, function (responseText) {
-        $("#txtEditor").Editor('setText', responseText);
-        alert("Rationale del modulo  "+ responseText);
-        $.post('Rationale', {
-            //nombre: nombreVar,
-            //apellido: apellidoVar,
-            //edad: edadVar
-            jd: "guardar"
-        }, function (responseText1) {
-            //$("#divListaArchivos")
-            alert("exito llamado para listar los archivos "+ responseText1);
-            $("#divListaArchivos").Html(responseText1);
-        });        
+        alert(responseText);
+        var arreglo = responseText.split("-----");
+        if (arreglo.length == 2) {
+            alert("Igual a 2");
+            $("#txtEditor").Editor('setText', arreglo[0]);
+            $("#divListaArchivos").empty();
+            $("#divListaArchivos").html(arreglo[1]);
+        } else {
+            $("#txtEditor").Editor('setText', arreglo[0]);
+        }
     });
 }
 
