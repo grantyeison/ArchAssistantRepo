@@ -143,6 +143,7 @@
                                                 }
                                             }else{
                                             if (estado.equals("Descomposicion")) {
+                                                //session.setAttribute("padreActual",mod);
                                                 out.println("<input checked type = 'radio' name = 'selPadre' onchange='SeleccionPadre()' value = '" + mod.getModId() + "' checked />");
                                             } else {
                                                 if (estado.equals("Procesado")) {
